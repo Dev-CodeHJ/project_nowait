@@ -1,0 +1,5 @@
+package ezen.nowait.store.service;
+
+public interface MenuService {
+
+}
