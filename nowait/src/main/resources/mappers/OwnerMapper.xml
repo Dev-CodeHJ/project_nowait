@@ -27,4 +27,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="deleteOwner">
 		delete from owner where owner_id = #{ownerId}
 	</delete>
+	
+	<select id="idChk" resultType="_int" parameterType="string">
+		select count(*) from owner where owner_id = #{ownerId}
+	</select>
 </mapper>

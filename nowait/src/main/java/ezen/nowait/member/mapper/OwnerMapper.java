@@ -11,4 +11,6 @@ public interface OwnerMapper {
 	public int updateOwner(OwnerVO oVO);
 	
 	public int deleteOwner(String ownerId);
+	
+	public int idChk(String ownerId);
 }

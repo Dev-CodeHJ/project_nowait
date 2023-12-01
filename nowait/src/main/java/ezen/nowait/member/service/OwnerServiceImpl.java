@@ -61,8 +61,15 @@ public class OwnerServiceImpl implements OwnerService{
 				return 1;
 			}
 			log.info("login fail...pw different");
+			return 0;
 		}
 		log.info("ownerId is null.........");
-		return 0;
+		return -1;
 	}
+
+	@Override
+	public int idChk(String ownerId) {
+		return ownerMapper.idChk(ownerId);
+	}
+	
 }

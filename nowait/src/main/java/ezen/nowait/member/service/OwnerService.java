@@ -13,4 +13,6 @@ public interface OwnerService {
 	public int deleteOwner(String ownerId, String ownerPw);
 	
 	public int loginOwner(String ownerId, String ownerPw);
+	
+	public int idChk(String ownerId);
 }

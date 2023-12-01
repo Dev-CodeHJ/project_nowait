@@ -9,21 +9,23 @@
   <section class="food_section layout_padding-bottom">
     <div class="container">
       <div class="heading_container heading_center">
-      	<h2>사장님 로그인페이지</h2>
       </div>
-      <form id="frm" action="/owner/login" method="post" style="padding: 100px;">
+      <form id="frm" action="/owner/ownerLogin" method="post" style="padding: 100px;">
+      	<h2 align="center">사장님 로그인</h2>
       	<table style="margin: auto; border-collapse: separate; border-spacing: 20px 20px;">
       		<tr>
       			<th>아이디</th>
-      			<td><input type="text" name="ownerId"></td>
+      			<td><input type="text" name="ownerId" id="ownerId"></td>
       		</tr>
       		<tr>
       			<th>비밀번호</th>
-      			<td><input type="password" name="ownerPw"></td>
+      			<td><input type="password" name="ownerPw" id="ownerPw"></td>
       		</tr>
       		<tr>
       			<td colspan="2" align="center">
-		       		<button type="button" class="btn-box" onclick="return login_chk()">로그인</button>
+		       		<div class="btn-box">
+		       			<a href="#" onclick="return login_chk()">로그인</a>
+		       		</div>
 			    </td>
 		    </tr>
 		    <tr>
@@ -37,37 +39,28 @@
   <!-- end food section -->
   <%@include file="../includes/footer.jsp" %>
 <script type="text/javascript">
-	$(document).ready(
-		/*function(){
-			var result = '<c:out value="${result}"/>';
- 		
- 		checkModal(result);
- 		
- 		function checkModal(result) {
- 			if(result === '') {
- 				return;
- 			} else {
- 				alert(result + "의 글이 등록되었습니다.")
- 			}
- 		}
-		$("#regBtn").on("click",
-				function() {
-					self.location="/board/register";
-				});
-		}*/
-		
+	$(document).ready(function() {
+		if(${result}==0){
+			alert("비밀번호가 일치하지 않습니다!");
+		} else if(${result}==-1){
+			alert("아이디가 일치하지 않습니다!");
+		}
+	});
+</script>
+<script type="text/javascript">
 		function login_chk() {
 		if(document.getElementById("ownerId").value==''){
-			alert("아이디를 입력해주십시오.");
+			alert("아이디를 입력해주세요!");
+			$("#ownerId").focus();
 			return false;
 		}
 		if(document.getElementById("ownerPw").value==''){
-			alert("비밀번호를 입력해주십시오.");
+			alert("비밀번호를 입력해주세요!");
+			$("#ownerPw").focus();
 			return false;
 		}
 		document.getElementById('frm').submit();
 		}
-	);
 </script>
 </body>
 </html>
