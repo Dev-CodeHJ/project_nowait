@@ -59,7 +59,7 @@
 		              </li>
 				    </ul>
 				    <div class="user_option">
-				    	<a href="/choice" class="order_online">로그인</a>
+				    	<a href="/choice" class="order_online">회원가입/로그인</a>
 				    </div>
 				</div>  
               </c:when>
@@ -82,9 +82,6 @@
 				              	<li class="nav-item active">
 					                <a class="nav-link" href="/owner/ownerHome">${member.ownerId}님, 환영합니다<span class="sr-only">(current)</span></a>
 				              	</li>
-		              			<li class="nav-item">
-					            	<a class="nav-link" href="/owner/ownerMypage">내정보</a>
-					            </li>
 					            <li class="nav-item">
 					            	<a class="nav-link" href="/store/newRegister">새 가게등록</a>
 					            </li>
@@ -93,6 +90,9 @@
 					            </li>
 			    			</ul>
 				            <div class="user_option">
+				            	<a href="/owner/ownerMypage" class="user_link">
+					            	<i class="fa fa-user" aria-hidden="true"></i>
+					            </a>
 				            	<a class="order_online" href="/owner/ownerLogout">로그아웃</a>
 				            </div>
 		            	</div>

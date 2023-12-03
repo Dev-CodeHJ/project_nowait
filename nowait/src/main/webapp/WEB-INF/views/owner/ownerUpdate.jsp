@@ -17,6 +17,7 @@
     <div class="container">
     	<form id="frm" action="/owner/ownerUpdate" method="post" style="padding: 50px;">
          <h2 align="center" style="padding: 10px; margin: 10px;">내 정보</h2>
+         <p align="center" style="color: grey;">(*표시는 필수 입력사항)</p>
          <table>
          	<tr>
                <th>*아이디</th>
@@ -38,10 +39,15 @@
 					<input type="text" name="ownerName" id="ownerName" value="${member.ownerName}">
 				</td>
 			</tr>
+			<!-- <tr style="display: none;">
+				<td>
+					<input type="text" name="ownerBirth1" id="ownerBirth1" value="${member.ownerBirth}">
+				</td>
+			</tr> -->
 			<tr>
 				<td>생일</td>
 				<td>
-					<input id="datepicker" type="text" name="ownerBirth" id="ownerBirth" value="${member.ownerBirth}">
+					<input id="datepicker" type="text" name="ownerBirth" value="${member.ownerBirth}">
 				</td>
 			</tr>
 			<tr style="display: none;">
@@ -62,9 +68,8 @@
 			</tr>
             <tr>
             	<td colspan="2">
-           			<button type="button" class="btn btn-primary" style="margin: 20px;" onclick="location.href='/owner/ownerMypage'">마이페이지</button>
-           			<button type="submit" class="btn btn-success" style="margin: 20px;" onclick="return update_chk()" id="btn_update">수정 완료</button>
-           			<button type="button" class="btn btn-danger" style="margin: 20px;" onclick="location.href='/owner/ownerDelete'">회원 탈퇴</button>
+           			<button type="button" class="btn btn-primary" style="margin: 20px;" onclick="location.href='/owner/ownerMypage'">돌아가기</button>
+           			<button type="submit" class="btn btn-success" style="margin: 20px;" onclick="return update_chk()" id="btn_update">수정완료</button>
             	</td>
           	</tr>
          </table>
@@ -177,9 +182,8 @@
            ,maxDate: "-3Y" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)
        	   ,yearRange: '1930:2020'  
        });                    
-       
-       //초기값을 오늘 날짜로 설정해줘야 합니다.
-       $('#datepicker').datepicker('setDate', ''); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)            
+       //var ownerBirth = $('#ownerBirth1').val();
+       //$('#datepicker').datepicker('setDate', ownerBirth); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)            
    });
 </script>
 </body>
