@@ -102,8 +102,7 @@
     $("#btn_join").click(function join_chk() {
       
     	  var tel1_pattern = /(^01[01789]$)/;
-    	  var tel2_pattern = /^[0-9+]{3,4}$/;
-    	  var tel3_pattern = /^[0-9+]{4,4}$/;
+    	  var tel_pattern = /^[0-9+]{4,4}$/;
     	  
 	      if ($("#ownerId").val() == "") {
 	          alert("아이디 중복체크를 통해 아이디를 입력해주세요!");
@@ -153,8 +152,8 @@
           	alert("전화번호를 입력해주세요!");
               $("#tel2").focus();
               return false;
-          } else if (!tel2_pattern.test($("#tel2").val())) {
-              alert("전화번호 입력 형식이 올바르지 않습니다!(3~4자리숫자)");
+          } else if (!tel_pattern.test($("#tel2").val())) {
+              alert("전화번호 입력 형식이 올바르지 않습니다!(4자리숫자)");
               $("#tel2").focus();
               return false;
           
@@ -166,7 +165,7 @@
           	alert("전화번호를 입력해주세요!");
               $("#tel3").focus();
               return false;
-          } else if (!tel3_pattern.test($("#tel3").val())) {
+          } else if (!tel_pattern.test($("#tel3").val())) {
         	  alert("전화번호 입력 형식이 올바르지 않습니다!(4자리숫자)");
               $("#tel3").focus();
               return false;

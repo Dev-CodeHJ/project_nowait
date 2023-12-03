@@ -15,8 +15,7 @@
 </style>
   <section class="food_section layout_padding-bottom">
     <div class="container">
-      <div class="heading_container heading_center">
-      </div>
+    	<form id="frm" action="/owner/ownerUpdate" method="post" style="padding: 50px;">
          <h2 align="center" style="padding: 10px; margin: 10px;">내 정보</h2>
          <table>
          	<tr>
@@ -46,13 +45,13 @@
 				</td>
 			</tr>
 			<tr style="display: none;">
-				<td><input type="text" name="ownerPhone" id="ownerPhone"></td>
+				<td><input type="text" name="ownerPhone" id="ownerPhone" value="${member.ownerPhone}"></td>
 			</tr>
 			<tr>
 				<th>*전화번호</th>
 				<td>
-					<input type="text" name="tel1" id="tel1" size="10" value="${member.ownerPhone.substring(0,3)}"> - <input type="text" name="tel2" id="tel2" size="10" value="${member.ownerPhone.substring(4,-5)}"> - <input type="text" name="tel3" id="tel3" size="10"><br>
-					<p style="color: grey;">*앞자리는 010,011,017,018,019로 입력</p>
+					<input type="text" name="tel1" id="tel1" size="10" value="${member.ownerPhone.substring(0,3)}"> - <input type="text" name="tel2" id="tel2" size="10" value="${member.ownerPhone.substring(4,8)}"> - <input type="text" name="tel3" id="tel3" size="10" value="${member.ownerPhone.substring(9,13)}"><br>
+					<p style="color: grey; margin-bottom: 0;">*앞자리는 010,011,017,018,019로 입력</p>
 				</td>
 			</tr>
 			<tr>
@@ -62,124 +61,16 @@
 				</td>
 			</tr>
             <tr>
-            	<td colspan="2" align="center">
-                   <div class="btn-box">
-                      <a href="#" onclick="return join_chk()" id="btn_join">회원정보 수정</a>
-                   </div>
-            	</td>
-          	</tr>
-			<tr>
-				<td>생일</td>
-				<td>${member.ownerBirth}</td>
-			</tr>
-			<tr>
-				<th>전화번호</th>
-				<td>${member.ownerPhone}</td>
-			</tr>
-			<tr>
-				<td>이메일</td>
-				<td>${member.ownerEmail}</td>
-			</tr>
-            <tr>
             	<td colspan="2">
-           			<button type="button" class="btn btn-primary" style="margin: 30px;" onclick="location.href='/owner/ownerUpdate'">회원정보 수정</button>
-           			<button type="button" class="btn btn-danger" style="margin: 30px;" onclick="location.href='/owner/ownerDelete'">회원 탈퇴</button>
+           			<button type="button" class="btn btn-primary" style="margin: 20px;" onclick="location.href='/owner/ownerMypage'">마이페이지</button>
+           			<button type="submit" class="btn btn-success" style="margin: 20px;" onclick="return update_chk()" id="btn_update">수정 완료</button>
+           			<button type="button" class="btn btn-danger" style="margin: 20px;" onclick="location.href='/owner/ownerDelete'">회원 탈퇴</button>
             	</td>
           	</tr>
          </table>
+    	</form>
     </div>
   </section>
-  
-  
-  <%@include file="../includes/footer.jsp" %>
-</body>
-</html>
-
-  <section class="food_section layout_padding-bottom">
-    <div class="container">
-      <div class="heading_container heading_center">
-      </div>
-      <form id="frm" action="/owner/ownerJoin" method="post" style="padding: 100px;">
-         <h2 align="center">내 정보</h2>
-         <p align="center" style="color: grey;">(*표시는 필수 입력사항)</p>
-         <table style="margin: auto; border-collapse: separate; border-spacing: 20px 20px;">
-            <tr>
-               <th>*아이디</th>
-               <td>
-	               <input type="text" name="ownerId" id="ownerId" readonly="readonly" placeholder="4~15자 영문,숫자">${id}
-	               <input type=button class="btn btn-sm btn-danger" value="아이디중복체크" id="idcheck">
-               </td>
-            </tr>
-            <tr>
-               <th>*비밀번호</th>
-               <td><input type="password" name="ownerPw" id="ownerPw"></td>
-            </tr>
-            <tr>
-               <th>*비밀번호 확인</th>
-               <td><input type="password" name="ownerPw2" id="ownerPw2"></td>
-            </tr>
-            <tr>
-				<th>*이름</th>
-				<td>
-					<input type="text" name="ownerName" id="ownerName">
-				</td>
-			</tr>
-			<tr>
-				<td>생일</td>
-				<td>
-					<input id="datepicker" type="text" name="ownerBirth" id="ownerBirth">
-				</td>
-			</tr>
-			<tr style="display: none;">
-				<td><input type="text" name="ownerPhone" id="ownerPhone"></td>
-			</tr>
-			<tr>
-				<th>*전화번호</th>
-				<td>
-					<input type="text" name="tel1" id="tel1" size="10"> - <input type="text" name="tel2" id="tel2" size="10"> - <input type="text" name="tel3" id="tel3" size="10"><br>
-					<p style="color: grey;">*앞자리는 010,011,017,018,019로 입력</p>
-				</td>
-			</tr>
-			<tr>
-				<td>이메일</td>
-				<td>
-					<input type="email" name="ownerEmail" id="ownerEmail"> 
-				</td>
-			</tr>
-            <tr>
-            	<td colspan="2" align="center">
-                   <div class="btn-box">
-                      <a href="#" onclick="return join_chk()" id="btn_join">회원가입</a>
-                   </div>
-            	</td>
-          	</tr>
-         </table>
-      </form>
-      
-	  <!-- id중복체크 -->
-	  <div id="dialog" title="아이디 중복체크" style="display:none;">
-		<table class="table">
-			<tr>
-				<th>아이디</th>
-				<td>
-					<input type=text name="id" size=15 class="input-sm" id="id" placeholder="4~15자 영문,숫자">
-					<input type=button class="btn btn-sm btn-success" id="idBtn" value="아이디체크">
-				</td>
-			</tr>
-			<tr align="center">
-				<td id="result" colspan="2"></td>
-			</tr>
-			<tr id="okid" align="center">
-				<td colspan="2">
-					<input type=button class="btn btn-sm btn-info" id="okBtn" value="아이디 사용">
-				</td>
-			</tr>
-		</table>
-	    </div>
-    </div>
-  </section>
-  
-  
   <%@include file="../includes/footer.jsp" %>
   <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
   <link rel="stylesheet" href="/resources/demos/style.css">
@@ -188,18 +79,12 @@
   <script type="text/javascript" src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-    $("#btn_join").click(function join_chk() {
+    $("#btn_update").click(function update_chk() {
       
     	  var tel1_pattern = /(^01[01789]$)/;
-    	  var tel2_pattern = /^[0-9+]{3,4}$/;
-    	  var tel3_pattern = /^[0-9+]{4,4}$/;
+    	  var tel_pattern = /^[0-9+]{4,4}$/;
     	  
-	      if ($("#ownerId").val() == "") {
-	          alert("아이디 중복체크를 통해 아이디를 입력해주세요!");
-	          $("#idcheck").focus();
-	          return false;
-	          
-	      } else if ($("#ownerPw").val() == "") {
+	      if ($("#ownerPw").val() == "") {
 	          alert("비밀번호를 입력해주세요!");
 	          $("#ownerPw").focus();
 	          return false;
@@ -242,8 +127,8 @@
           	alert("전화번호를 입력해주세요!");
               $("#tel2").focus();
               return false;
-          } else if (!tel2_pattern.test($("#tel2").val())) {
-              alert("전화번호 입력 형식이 올바르지 않습니다!(3~4자리숫자)");
+          } else if (!tel_pattern.test($("#tel2").val())) {
+              alert("전화번호 입력 형식이 올바르지 않습니다!(4자리숫자)");
               $("#tel2").focus();
               return false;
           
@@ -255,14 +140,14 @@
           	alert("전화번호를 입력해주세요!");
               $("#tel3").focus();
               return false;
-          } else if (!tel3_pattern.test($("#tel3").val())) {
+          } else if (!tel_pattern.test($("#tel3").val())) {
         	  alert("전화번호 입력 형식이 올바르지 않습니다!(4자리숫자)");
               $("#tel3").focus();
               return false;
 	
 	      } else {
 	    	  $('#ownerPhone').val($('#tel1').val() + '-' + $('#tel2').val() + '-' + $('#tel3').val());
-	          alert("회원가입이 완료되었습니다!!");
+	          alert("회원정보가 수정되었습니다, 다시 로그인해주세요!");
 	      }
 		  $("#ownerBirth").datepicker();
 	      document.getElementById('frm').submit();
@@ -297,98 +182,5 @@
        $('#datepicker').datepicker('setDate', ''); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)            
    });
 </script>
-<script type="text/javascript">
-  $(function(){
-	  
-	  var regex = /^[A-Za-z0-9+]{4,15}$/;
-	  
-		$('#okid').hide();
-	    $('#idcheck').click(function(){
-	    	$('#id').val('');
-	    	$('#result').empty();
-	    	$('#okid').hide();
-	    	$("#dialog").dialog({
-	    		autoOpen:false,
-	    		width:450,
-	    		height:250,
-	    		modal:true
-	    	}).dialog("open");
-	    })
-	    
-	    $('#okBtn').click(function(){
-	    	if(res==='YES') {
-		    	$('#ownerId').val($('#id').val());
-		    	$('#dialog').dialog("close");
-	    	} else {
-	    		alert('사용중인 아이디는 사용할 수 없습니다!');
-	    	}
-	    })
-	    
-	    $('#dialog').on('hide', function () {
-	    	$(this).removeData();
-		});
-	    
-	    $('#postBtn').click(function(){
-	    	new daum.Postcode({
-				oncomplete:function(data)
-				{
-					$('#post').val(data.zonecode)
-					$('#addr1').val(data.address)
-				}
-			}).open()
-	    })
-	    
-	    $('#idBtn').on("click",function(){
-	    	let id=$('#id').val();
-	    	if(id.trim()==="") {
-	    		let msg='<span style="color:red">4자~15자 사이의 영문 대소문자와 숫자로만 입력해주세요!</span>';
-	    		//let msg='<span style="color:orange">아이디를 입력해주세요!!</span>';
-				$('#result').html(msg);
-				$('#okid').hide();
-	    		$('#id').focus(); // 태그 $('.클래스'), $('#아이디') , $('태그명')
-	    		//  $refs.ref명 ==> vuejs,react
-	    		// node => 서버측 사이드 (Spring)
-	    		// app.get('../a.do',function(request,response){처리})
-	    		return;
-	    	} else if (!regex.test($("#id").val())) {
-	    		let msg='<span style="color:red">4자~15자 사이의 영문 대소문자와 숫자로만 입력해주세요!</span>';
-	    		$('#result').html(msg);
-	    		$('#okid').hide();
-		        $("#id").focus();
-	    		return;
-		    }
-	    	
-	    	// 스프링서버로 전송 
-	    	/*
-	    	    axios.get(url,{params:{}}).then()
-	    	    axios.post(url,)
-	    	*/
-	    	$.ajax({
-	    		type:'post',
-	    		url:'/owner/ownerIdCheck',
-	    		data: {"id":id},
-	    		success:function(result)
-	    		{
-	    			res=result.trim();
-	    			if(res==='YES') {
-	    				/*
-	    				if(confirm('(' + id + ") 이 아이디를 사용하시겠습니까?")){
-	    					$('#ownerId').val($('#id').val())
-	    			    	$('#dialog').dialog("close");
-	    				}
-	    				*/
-	    				let msg='<span style="color:blue">'+id+'는(은) 사용 가능한 아이디입니다.</span>';
-	    				$('#result').html(msg);
-	    				$('#okid').show();
-	    			} else {
-	    				let msg='<span style="color:red">'+id+'는(은) 사용중인 아이디입니다</span>';
-	    				$('#result').html(msg)
-	    				$('#okid').hide();
-	    			}
-	    		}
-	    	});
-	    });
-	  });
-  </script>
 </body>
 </html>

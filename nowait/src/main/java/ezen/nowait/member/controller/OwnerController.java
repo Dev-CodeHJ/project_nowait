@@ -20,7 +20,6 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 @RequestMapping("/owner")
 @AllArgsConstructor
-
 public class OwnerController {
 
 	private OwnerService ownerService;
@@ -109,7 +108,7 @@ public class OwnerController {
 		
 		int result = ownerService.updateOwner(oVO);
 		if(result == 1) {
-			return "/owner/ownerLogout";
+			return "redirect:/owner/ownerLogout";
 		}
 		return "/owner/ownerUpdate";
 	}

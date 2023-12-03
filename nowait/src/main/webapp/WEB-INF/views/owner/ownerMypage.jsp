@@ -15,8 +15,6 @@
 </style>
   <section class="food_section layout_padding-bottom">
     <div class="container">
-      <div class="heading_container heading_center">
-      </div>
          <h2 align="center" style="padding: 10px; margin: 10px;">내 정보</h2>
          <table>
             <tr>
