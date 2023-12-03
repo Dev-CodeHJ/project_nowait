@@ -44,9 +44,9 @@ public class OwnerController {
 		int result = ownerService.loginOwner(ownerId, ownerPw);
 		
 		if(result == 1) {	/* ownerService.loginOwner(ownerId, ownerPw)
-									1 : 濡쒓렇�씤 �꽦怨�
-									0 : 鍮꾨�踰덊샇 遺덉씪移�
-									-1 : �븘�씠�뵒 遺덉씪移� */
+									1 : 로그인 성공
+									0 : 비밀번호 불일치
+									-1 : 아이디 불일치 */
 			session.setAttribute("member", ownerService.findOwner(ownerId));
 			session.setAttribute("list", storeService.findByOwnerId(ownerId));
 			session.setAttribute("result", result);
