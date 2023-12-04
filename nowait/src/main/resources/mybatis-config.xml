@@ -4,9 +4,17 @@
 	"http://mybatis.org/dtd/mybatis-3-config.dtd">
 	<configuration>
 	
-		<!-- VO&DTO를 등록하세요 (별칭 설정)--> 
+		<!-- VO&DTO를 등록하세요 (별칭 설정)
 		<typeAliases>
-			<typeAlias type="ezen.nowait.member.domain.UserVO" alias="UserVO"/>
-		</typeAliases>
+			<typeAlias type="ezen.nowait.store.domain.StoreVO" alias="StoreVO"/>
+		</typeAliases>--> 
+		
+		<!--
+		<mappers>
+			<mapper resource="mappers/StoreMapper.xml"/> 
+		</mappers> --> 
+		<settings>
+	        <setting name="mapUnderscoreToCamelCase" value="true"/>
+	    </settings>
 
 	</configuration>
