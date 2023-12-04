@@ -9,11 +9,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="userGet" resultType="ezen.nowait.member.domain.UserVO">
 		select * from user where user_id = #{userId}
 	</select>
+	
+	<insert id="userInsert"> 
+		insert into user(user_id,user_pw,user_name,user_birth,user_phone,user_email,user_addr,grade) values(#{userId},#{userPw},#{userName},#{userBirth},#{userPhone},#{userEmail},#{userAddr},#{grade})
+	</insert>
+
 
 	<update id="userUpdate">
 		update user
-		set 
-		user_pw = #{userPw},
+		set user_pw = #{userPw},
 		user_name = #{userName},
 		user_birth = #{userBirth},
 		user_phone = #{userPhone},
@@ -28,6 +32,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete from user where user_id = #{userId}
 	</delete>
 
-
+	<select id="idCheck" resultType="_int" parameterType="string">
+		select count(*) from user where user_id = #{userId}
+	</select>
 
 </mapper>

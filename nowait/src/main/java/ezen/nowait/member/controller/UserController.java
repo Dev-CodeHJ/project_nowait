@@ -24,9 +24,12 @@ import lombok.extern.log4j.Log4j;
 @AllArgsConstructor
 public class UserController {
 
-	private final UserService userservice;
+	private UserService userservice;
 	
 	private StoreService storeService;
+	
+	@GetMapping("/userHome")
+	public void home() {}
 		
 	//손님회원가입 페이지로 이동 
 	@GetMapping("/userJoinForm")
@@ -35,8 +38,13 @@ public class UserController {
 	//회원가입 완료 후 페이지 이동
 	@PostMapping("/userJoinForm")
 	public String join(UserVO uVO) {
-		userservice.userInsert(uVO);
-		return "user/userLogin";
+		
+		int result = userservice.userInsert(uVO);
+		
+		if(result == 1) {
+			return "/user/userLogin";
+		}
+		return "/user/userJoinForm";
 	}
 	
 	//손님로그인 페이지로 이동 
@@ -58,8 +66,7 @@ public class UserController {
                            0 : 비밀번호 불일치
                            -1 : 아이디 불일치 */
    
-         UserVO uVO = userservice.userGet(userId);
-         session.setAttribute("member", uVO);
+         session.setAttribute("member", userservice.userGet(userId));
          session.setAttribute("result", 2);
          model.addAttribute("list", storeService.findAll());
          System.out.println("로그인 성공");
@@ -67,7 +74,7 @@ public class UserController {
       } else {
     	  System.out.println("로그인 실패");
     	  rttr.addFlashAttribute("result", result);
-    	  return "/user/userLogin";    	  
+    	  return "redirect:/user/userLogin";    	  
       }
     }
 	
@@ -96,19 +103,14 @@ public class UserController {
 	      return result;
 	      
 	   }
-
-	
 		
 	@GetMapping("/userGet")
-	public void userget() {	}
-
-	
+	public void userget() {}
 	
 	@GetMapping({"/serviceCenter"})
 	public void get(@RequestParam(value="/serviceCenter", required=false) String serviceCenter) {
 		log.info("/servicecenter");
 	}
-
 
 	@GetMapping("/userModify")
 	public void userModify() {
@@ -120,15 +122,13 @@ public class UserController {
 		System.out.println("회원정보 수정페이지");
 
 		int result = userservice.userModify(uVO);
-	    if(result==1) {
+	    if(result == 1) {
 	    	System.out.println("수정 성공");
 	        
 	        return "redirect:/user/userLogout"; //정보 업데이트 성공 시 로그아웃으로
-	    }else {
-	    	System.out.println("수정 실패");
-	        return "/user/userModify";
 	    }
-
+    	System.out.println("수정 실패");
+        return "/user/userModify";
 	}
 
 	@GetMapping("/userRemove")

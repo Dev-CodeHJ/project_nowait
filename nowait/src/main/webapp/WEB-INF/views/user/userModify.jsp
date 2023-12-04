@@ -72,7 +72,7 @@
 	        </tr>
 	        <tr>  
 	                <th>회원등급</th>
-	                <td><input type="text" name='grade' value="${member.grade}" readonly="readonly"></td>
+	                <td><input type="number" name='grade' value="${member.grade}" readonly="readonly"></td>
 	        </tr>
 	        <tr>    
 	                <th>가입날짜</th>

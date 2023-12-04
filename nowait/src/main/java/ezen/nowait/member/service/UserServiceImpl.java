@@ -15,8 +15,8 @@ public class UserServiceImpl implements UserService {
 	private UserMapper userMapper;
 	
 	@Override
-	public void userInsert(UserVO uVO){
-		userMapper.userInsert(uVO);		
+	public int userInsert(UserVO uVO){
+		return userMapper.userInsert(uVO);		
 	}	
 	
 	//아이디 중복체크

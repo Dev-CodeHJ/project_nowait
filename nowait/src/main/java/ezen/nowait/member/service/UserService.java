@@ -11,7 +11,9 @@ public interface UserService {
 	public int userCheckPw(String userId, String userPw);
 
 	public int userIdCheck(String id);
-	public void userInsert(UserVO uVO);
+	
+	public int userInsert(UserVO uVO);
+	
 	public int userLogin(String userId, String userPw);
 
 	public int userRemove(String userId, String userPw);

@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,7 +34,7 @@ public class OwnerController {
 	public void login() {}
 	
 	@PostMapping("/ownerLogin")
-	public String login(String ownerId, String ownerPw, HttpServletRequest request, RedirectAttributes rttr) {
+	public String login(String ownerId, String ownerPw, HttpServletRequest request, Model model, RedirectAttributes rttr) {
 		
 		log.info("id : " + ownerId);
 		log.info("pw : " + ownerPw);
@@ -47,8 +48,8 @@ public class OwnerController {
 									0 : 비밀번호 불일치
 									-1 : 아이디 불일치 */
 			session.setAttribute("member", ownerService.findOwner(ownerId));
-			session.setAttribute("list", storeService.findByOwnerId(ownerId));
 			session.setAttribute("result", result);
+			model.addAttribute("list", storeService.findByOwnerId(ownerId));
 			return "/owner/ownerHome";
 		}
 		rttr.addFlashAttribute("result", result);
@@ -69,14 +70,11 @@ public class OwnerController {
 	public void join() {}
 	
 	@PostMapping("/ownerJoin")
-	public String join(OwnerVO oVO, HttpServletRequest request) {
+	public String join(OwnerVO oVO) {
 		
 		log.info("ownerJoin................");
 		
-		HttpSession session = request.getSession();
-		
 		int result = ownerService.addOwner(oVO);
-		session.setAttribute("result", result);
 		
 		if(result == 1) {
 			return "/owner/ownerLogin";
