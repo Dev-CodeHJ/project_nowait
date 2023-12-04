@@ -1,5 +1,8 @@
 package ezen.nowait.store.domain;
 
-public class MenuVO {
+import lombok.Data;
 
+@Data
+public class MenuVO {
+	
 }

@@ -19,8 +19,8 @@ public class StoreController {
 
 	private StoreService storeService;
 	
-	@GetMapping("/storeHome")
-	public void storeHome(Model model, String crNum) {
+	@GetMapping({"/storeUserGet", "/storeOwnerGet"})
+	public void storeGet(Model model, String crNum) {
 		log.info("storeHome");
 		model.addAttribute("store", storeService.findByCrNum(crNum));
 	}
@@ -36,13 +36,30 @@ public class StoreController {
 //		model.addAttribute("list", storeService.findByOwnerId(ownerId));
 //	}
 	@GetMapping("/storeNewRegister")
-	public void storeNewRegister() {}
+	public void register() {}
 	
 	@PostMapping("storeNewRegister")
-	public String storeNewRegister(StoreVO sVO) {
+	public String register(StoreVO sVO) {
 		
+		int result = storeService.addStore(sVO);
 		
+		if(result == 1) {
+			return "/owner/ownerHome";
+		}
+		return "/store/storeNewRegister";
+	}
+	
+	@GetMapping("/storeExistRegister")
+	public void load() {}
+	
+	@PostMapping("storeExistRegister")
+	public String load(String ownerId, String crNum, String secretCode) {
 		
-		return "";
+		int result = storeService.addOwnerStore(ownerId, crNum, secretCode);
+		
+		if(result == 1) {
+			return "/owner/ownerHome";
+		}
+		return "/store/storeExistRegister";
 	}
 }

@@ -69,14 +69,9 @@ public class OwnerController {
 	public void join() {}
 	
 	@PostMapping("/ownerJoin")
-	public String join(OwnerVO oVO, HttpServletRequest request) {
-		
-		log.info("ownerJoin................");
-		
-		HttpSession session = request.getSession();
+	public String join(OwnerVO oVO) {
 		
 		int result = ownerService.addOwner(oVO);
-		session.setAttribute("result", result);
 		
 		if(result == 1) {
 			return "/owner/ownerLogin";
