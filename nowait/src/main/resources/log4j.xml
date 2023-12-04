@@ -11,7 +11,7 @@
 	</appender>
 	
 	<!-- Application Loggers -->
-	<logger name="ezen.nowait.controller">
+	<logger name="ezen.nowait.member.comtroller">
 		<level value="info" />
 	</logger>
 	
