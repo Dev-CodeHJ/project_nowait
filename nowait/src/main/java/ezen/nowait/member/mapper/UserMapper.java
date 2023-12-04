@@ -6,10 +6,12 @@ public interface UserMapper {
 
 	public UserVO userGet(String userId);
 	
-	public void userInsert(UserVO userId);
+	public void userInsert(UserVO uVO);
 	
 	public int userDelete(String userId);
+
+	public int userUpdate(UserVO uVO);
 	
-	public int userUpdate(UserVO userId);
-	
+	public int idCheck(String userId);
+
 }
