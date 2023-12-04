@@ -52,4 +52,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete from store where cr_num = #{crNum}
 	</delete>
 	
+	<delete id="deleteOwnerStore">
+		delete from owner_store where cr_num = #{crNum} and secret_code = #{secretCode}
+	</delete>
+	
+	<update id=""></update>
+	
 </mapper>

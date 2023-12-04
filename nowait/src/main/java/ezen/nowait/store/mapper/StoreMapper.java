@@ -20,5 +20,7 @@ public interface StoreMapper {
 	
 	public int updateStore(StoreVO sVO);
 	
-	public int deleteStore(String crNum, String secretCode);
+	public int deleteStore(String crNum);
+	
+	public int deleteOwnerStore(String crNum, String secretCode);
 }

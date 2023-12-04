@@ -65,9 +65,13 @@ public class StoreServiceImpl implements StoreService {
 
 	@Override
 	public int deleteStore(String crNum, String secretCode) {
-		log.info("deleteStore......crNum : " + crNum);
-		log.info("deleteStore......secretCode : " + secretCode);
-		return storeMapper.deleteStore(crNum, secretCode);
+
+		int result = storeMapper.deleteOwnerStore(crNum, secretCode);
+		
+		if(result >= 1) {
+			return storeMapper.deleteStore(crNum);
+		}
+		return 0;
 	}
 	
 	

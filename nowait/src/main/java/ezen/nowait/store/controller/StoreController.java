@@ -3,8 +3,10 @@ package ezen.nowait.store.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import ezen.nowait.store.domain.StoreVO;
 import ezen.nowait.store.service.StoreService;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -17,27 +19,30 @@ public class StoreController {
 
 	private StoreService storeService;
 	
-	@GetMapping("/getAll")
-	public void getAll(Model model) {
-		log.info("getAll");
-		model.addAttribute("list", storeService.findAll());
+	@GetMapping("/storeHome")
+	public void storeHome(Model model, String crNum) {
+		log.info("storeHome");
+		model.addAttribute("store", storeService.findByCrNum(crNum));
 	}
 	
-	@GetMapping("/getByCategory")
-	public void getByCategory(Model model, int storeCategory) {
-		log.info("getByCategory");
-		model.addAttribute("getByCategory", storeService.findByCategory(storeCategory));
-	}
+//	@GetMapping("/getByCategory")
+//	public void getByCategory(Model model, int storeCategory) {
+//		log.info("getByCategory");
+//		model.addAttribute("getByCategory", storeService.findByCategory(storeCategory));
+//	}
+//	@GetMapping("/getByOwnerId")
+//	public void getByOwnerId(Model model, String ownerId) {
+//		log.info("getByOwnerId");
+//		model.addAttribute("list", storeService.findByOwnerId(ownerId));
+//	}
+	@GetMapping("/storeNewRegister")
+	public void storeNewRegister() {}
 	
-	@GetMapping("/getByOwnerId")
-	public void getByOwnerId(Model model, String ownerId) {
-		log.info("getByOwnerId");
-		model.addAttribute("getByOwnerId", storeService.findByOwnerId(ownerId));
-	}
-	
-	@GetMapping("/getByCrNum")
-	public void getByCrNum(Model model, String crNum) {
-		log.info("getByCrNum");
-		model.addAttribute("getByCrNum", storeService.findByCrNum(crNum));
+	@PostMapping("storeNewRegister")
+	public String storeNewRegister(StoreVO sVO) {
+		
+		
+		
+		return "";
 	}
 }
