@@ -10,57 +10,64 @@
 
  <%@include file="../includes/header.jsp" %>
 
-<body>
-	<h1>탈퇴확인</h1>
-    <input type="hidden" name="userId" value="${uVO.userId }" readonly>
-    <form method="post" action="/user/userRemove" name="delete" >
 
-	  <table class="table table-bordered table-hover" style="text-align: center; border: 1px solid #ddddddd">
-	   <thead>
-	    <tr>
-	     <th colspan="3"><h4>회원탈퇴</h4></th>
-	    </tr>
-	   </thead>
-	    <tbody>
-	    <tr>
-	      <td style="width:110px;"><h5>아이디</h5></td>
-	      <td><h5>${uVO.userId }</h5>
-	      <input type="hidden" name="id" value="${uVO.userId }"></td>
-	     </tr>
-		 <tr>
-	      <td style="width:150px;"><h5>비밀번호입력 : </h5></td>
-	      <td colspan="3"><input class="form-control" id="userPw" type="password" name="userPw" maxlength="20" value="" placeholder="비밀번호를 입력하세요."></td>
-	     </tr>
-	   	<tr>
-			<td colspan="2" align="center">
-			<input class="btn btn-primary" type="submit" value="회원탈퇴" onClick="removeCheck()"/>&nbsp;&nbsp;
-			<input class="btn btn-primary" type="button" value="취소" onclick="location.href='/user/userGet?userId=<c:out value="${uVO.userId}"/>'">
-			</td>
-			<td style="text-align: left;" colspan="3"><h5 style="color: red;" id="passwordCheckMessage"></h5>   
-		</tr>				
-  			</tbody>
-  		</table>
-	</form>
-<script>
-function removeCheck() {
-	if(userPw.value.trim().length == 0){
-        alert("비밀번호를 입력해주세요.");
-        userPw.focus();
-        return false;
-    }
+	
+	 <section class="food_section layout_padding-bottom">
+    <div class="container">
+      <div class="heading_container heading_center">
+      </div>
+      <form id="frm" action="/user/userRemove" method="post" style="padding: 100px;">
+      	<h2 align="center">회원 탈퇴</h2>
+      	<table style="margin: auto; border-collapse: separate; border-spacing: 20px 20px;">
+      		<tr>
+      			<th>아이디</th>
+      			<td>
+	               <input type="text" name="userId" id="userId" readonly="readonly" value="${member.userId}" style="text-align: center; background-color: silver;" >
+               </td>
+      		</tr>
+      		<tr>
+      			<th>비밀번호</th>
+      			<td><input type="password" name="userPw" id="userPw"></td>
+      		</tr>
+      		<tr>
+      			<td colspan="2" align="center">
+		       		<div class="btn-box">
+		       			<a href="#" onclick="return delete_chk()">비밀번호 입력</a>
+		       		</div>
+			    </td>
+		    </tr>
+		    <tr>
+		    	<td align="center" colspan="2">
+	       		</td>
+       		</tr>
+      	</table>
+      </form>
+    </div>
+  </section>
 
-
-	if(window.confirm("정말탈퇴하시겠습니까?")== true){
-		alert("탈퇴가 완료되었습니다. 그동안 서비스를 이용해 주셔서 감사합니다");
-		return ;
-	}else{
-		alert("탈퇴취소.");
-		return false;
-	}
-}
-
-</script>
 
 <%@include file="../includes/footer.jsp" %>
+<script type="text/javascript">
+	$(document).ready(function() {
+		if(${deleteOk}==0){
+			alert("비밀번호가 일치하지 않습니다!");
+		} else if(${deleteOk}==1) {
+			alert("회원정보가 성공적으로 탈퇴처리 되셨습니다.");
+			location.replace("/user/userLogout");
+		}
+	});
+</script>
+<script type="text/javascript">
+	function delete_chk() {
+		if(document.getElementById("userPw").value==''){
+			alert("비밀번호를 입력해주세요!");
+			$("#userPw").focus();
+			return false;
+		} else if(!confirm("정말로 탈퇴하시겠습니까?\n*탈퇴 후에는 회원정보는 복구되지 않습니다.")) {
+			return false;
+		}
+		document.getElementById('frm').submit();
+	}
+</script>
 </body>
 </html>

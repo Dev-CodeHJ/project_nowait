@@ -37,8 +37,6 @@ public class HomeController {
 		return "home";
 	}
 	
-	@GetMapping
+	@GetMapping("/choice")
 	public void choice() {}
-	
-	
 }

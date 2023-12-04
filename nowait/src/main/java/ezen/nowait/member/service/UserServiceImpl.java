@@ -2,6 +2,7 @@ package ezen.nowait.member.service;
 
 import org.springframework.stereotype.Service;
 
+import ezen.nowait.member.domain.OwnerVO;
 import ezen.nowait.member.domain.UserVO;
 import ezen.nowait.member.mapper.UserMapper;
 import lombok.AllArgsConstructor;
@@ -58,10 +59,20 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public int userRemove(String userId) {
-	    return userMapper.userDelete(userId);
+	public int userRemove(String userId, String userPw) {
+		UserVO uVO = userMapper.userGet(userId);
+		if(uVO != null) {
+			if(uVO.getUserPw().equals(userPw)) {
+				return userMapper.userDelete(userId);
+			}
+		}
+		return 0;
+
 	}
 
+
+	
+	
 	@Override
 	public int userCheckPw(String userId, String userPw) {
 		log.info("checkPw................");

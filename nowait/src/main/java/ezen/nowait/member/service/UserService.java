@@ -8,11 +8,11 @@ public interface UserService {
 
 	public int userModify(UserVO uVO) ;
 
-	public int userRemove(String userId);
-
 	public int userCheckPw(String userId, String userPw);
 
 	public int userIdCheck(String id);
 	public void userInsert(UserVO uVO);
 	public int userLogin(String userId, String userPw);
+
+	public int userRemove(String userId, String userPw);
 }
