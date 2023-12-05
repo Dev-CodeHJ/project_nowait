@@ -27,11 +27,11 @@ public class StoreServiceImpl implements StoreService {
 		return storeMapper.selectAll();
 	}
 
-	@Override
-	public List<StoreVO> findByCategory(int storeCategory) {
-		log.info("findByCategory......" + storeCategory);
-		return storeMapper.selectByCategory(storeCategory);
-	}
+//	@Override
+//	public List<StoreVO> findByCategory(int storeCategory) {
+//		log.info("findByCategory......" + storeCategory);
+//		return storeMapper.selectByCategory(storeCategory);
+//	}
 
 	@Override
 	public List<StoreVO> findByOwnerId(String ownerId) {
@@ -54,17 +54,17 @@ public class StoreServiceImpl implements StoreService {
 	@Override
 	public int addOwnerStore(String ownerId, String crNum, String secretCode) {
 		
-		Map<String, Object> map = new HashMap<String, Object>();
 		int result = 0;
-		
-		map.put("ownerId", ownerId);
-		map.put("crNum", crNum);
-		map.put("secretCode", secretCode);
 		
 		StoreVO sVO = storeMapper.selectStoreByCrNum(crNum);
 		
 		if(sVO.getCrNum() != null) {
 			if(sVO.getSecretCode().equals(secretCode)) {
+				
+				Map<String, Object> map = new HashMap<String, Object>();
+				
+				map.put("ownerId", ownerId);
+				map.put("crNum", crNum);
 				
 				result = storeMapper.insertOwnerStore(map);
 			} 
@@ -78,20 +78,53 @@ public class StoreServiceImpl implements StoreService {
 
 	@Override
 	public int updateStore(StoreVO sVO) {
-		log.info("updateStore......" + sVO);
 		return storeMapper.updateStore(sVO);
 	}
 
 	@Override
 	public int deleteStore(String crNum, String secretCode) {
 
-		int result = storeMapper.deleteOwnerStore(crNum, secretCode);
+		int result = 0;
 		
-		if(result >= 1) {
-			return storeMapper.deleteStore(crNum);
+		StoreVO sVO = storeMapper.selectStoreByCrNum(crNum);
+		
+		if(sVO.getCrNum() != null) {
+			if(sVO.getSecretCode().equals(secretCode)) {
+				
+				result = storeMapper.deleteAllByCrNum(crNum);
+
+				if(result >= 1) {
+					
+					return storeMapper.deleteStore(crNum);
+				}
+			} 
+		} else {
+			result = -1;
 		}
-		return 0;
+		
+		return result;
 	}
-	
-	
+
+	@Override
+	public int deleteOwnerStoreOneByOwnerId(String ownerId, String crNum, String secretCode) {
+		
+		int result = 0;
+		
+		StoreVO sVO = storeMapper.selectStoreByCrNum(crNum);
+		
+		if(sVO.getCrNum() != null) {
+			if(sVO.getSecretCode().equals(secretCode)) {
+				
+				Map<String, Object> map = new HashMap<String, Object>();
+				
+				map.put("ownerId", ownerId);
+				map.put("crNum", crNum);
+				
+				result = storeMapper.deleteOwnerStoreOneByOwnerId(map);
+			} 
+		} else {
+			result = -1;
+		}
+		return result;
+	}
 }

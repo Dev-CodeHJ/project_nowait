@@ -26,8 +26,9 @@ public class StoreController {
 	
 	HttpSession session;
 	
-	@GetMapping({"/storeUserGet", "/storeOwnerGet"})
+	@GetMapping({"/storeUserGet", "/storeOwnerGet", "/storeUpdate", "/storeDelete"})
 	public void storeGet(Model model, String crNum) {
+		System.out.println("crNum : " + crNum);
 		model.addAttribute("store", storeService.findByCrNum(crNum));
 	}
 	
@@ -81,4 +82,20 @@ public class StoreController {
 		}
 		return "/store/storeExistRegister";
 	}
+	
+	@PostMapping("/storeUpdate")
+	public String update(@RequestParam("ownerId")String ownerId, StoreVO sVO) {
+		
+		int result = storeService.updateStore(sVO);
+		
+		if(result == 1) {
+			return "redirect:/owner/ownerHome";
+		}
+		return "/store/storeUpdate";
+	}
+	
+//	@PostMapping("/storeDelete")
+//	public String delete(String crNum, String secretCode) {
+//		
+//	}
 }

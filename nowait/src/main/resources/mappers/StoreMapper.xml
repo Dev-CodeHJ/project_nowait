@@ -9,9 +9,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from store order by order_cnt desc
 	</select>
 	
-	<select id="selectByCategory" resultType="ezen.nowait.store.domain.StoreVO">
+	<!-- <select id="selectByCategory" resultType="ezen.nowait.store.domain.StoreVO">
 		select * from store where store_category = #{storeCategory} order by order_cnt desc
-	</select>
+	</select> -->
 	
 	<select id="selectByOwnerId" resultType="ezen.nowait.store.domain.StoreVO">
 		select * from store
@@ -34,12 +34,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- (owner_id, cr_num, secret_code) -->
 	<insert id="insertOwnerStore" parameterType="hashMap">
 		insert into owner_store
-		values(#{ownerId}, #{crNum}, #{secretCode})
+		values(#{ownerId}, #{crNum})
 	</insert>
 	
 	<update id="updateStore">
 		update store
 		set store_name = #{storeName},
+		secret_code = #{secretCode},
 		store_category = #{storeCategory},
 		store_addr = #{storeAddr},
 		store_tel = #{storeTel},
@@ -49,12 +50,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where cr_num = #{crNum}
 	</update>
 	
+	<!-- <update id="updateOwnerStore">
+		update owner_store
+		set secret_code = #{secretCode}
+		where cr_num = #{crNum}
+	</update> -->
+	
 	<delete id="deleteStore">
 		delete from store where cr_num = #{crNum}
 	</delete>
 	
-	<delete id="deleteOwnerStore">
-		delete from owner_store where cr_num = #{crNum} and secret_code = #{secretCode}
+	<delete id="deleteAllByCrNum" parameterType="hashMap">
+		delete from owner_store where cr_num = #{crNum}
+	</delete>
+	
+	<delete id="deleteOwnerStoreOneByOwnerId" parameterType="hashMap">
+		delete from owner_store where cr_num = #{crNum} and owner_id = #{ownerId}
+	</delete>
+	
+	<delete id="deleteAllByOwnerId">
+		delete from owner_store where owner_id = #{ownerId}
 	</delete>
 	
 </mapper>

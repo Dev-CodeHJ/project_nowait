@@ -8,7 +8,7 @@ public interface StoreService {
 
 	public List<StoreVO> findAll();
 	
-	public List<StoreVO> findByCategory(int storeCategory);
+//	public List<StoreVO> findByCategory(int storeCategory);
 	
 	public List<StoreVO> findByOwnerId(String ownerId);
 	
@@ -21,4 +21,6 @@ public interface StoreService {
 	public int updateStore(StoreVO sVO);
 	
 	public int deleteStore(String crNum, String secretCode);
+
+	public int deleteOwnerStoreOneByOwnerId(String ownerId, String crNum, String secretCode);
 }

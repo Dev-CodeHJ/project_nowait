@@ -40,12 +40,9 @@
 		                  </h5>
 		                  <p>
 			                  <c:choose>
-			                  	<c:when test="${store.storeInfo eq ''}">
-			                  		(가게정보 없음)
-			                  	</c:when>
-			                    <c:otherwise>
-			                    	${store.storeInfo}
-			                    </c:otherwise>
+			                  	<c:when test="${store.storeInfo eq ''}">(가게정보 없음)</c:when>
+			                  	<c:when test="${store.storeInfo eq null}">(가게정보 없음)</c:when>
+			                    <c:otherwise>${store.storeInfo}</c:otherwise>
 			                  </c:choose>
 		                  </p>
 		                  <div class="options">

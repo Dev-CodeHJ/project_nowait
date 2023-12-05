@@ -9,7 +9,7 @@ public interface StoreMapper {
 
 	public List<StoreVO> selectAll();
 	
-	public List<StoreVO> selectByCategory(int storeCategory);
+//	public List<StoreVO> selectByCategory(int storeCategory);
 	
 	public List<StoreVO> selectByOwnerId(String ownerId);
 	
@@ -22,7 +22,13 @@ public interface StoreMapper {
 	
 	public int updateStore(StoreVO sVO);
 	
+//	public int updateOwnerStore(StoreVO sVO);
+	
 	public int deleteStore(String crNum);
 	
-	public int deleteOwnerStore(String crNum, String secretCode);
+	public int deleteAllByCrNum(String crNum);
+	
+	public int deleteOwnerStoreOneByOwnerId(Map<String, Object> map);
+	
+	public int deleteAllByOwnerId(String ownerId);
 }

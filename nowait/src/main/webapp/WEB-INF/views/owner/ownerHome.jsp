@@ -28,15 +28,15 @@
 		            <div class="box">
 		              <div>
 		                <div class="img-box">
-		                  <img src="/resources/images/f1.png" alt="" onclick="location.href='/store'">
+		                  <!-- <input type="image" src="/resources/images/f1.png" onclick="location.href='/store/storeOwnerGet"> -->
+		                  <a href="/store/storeOwnerGet?crNum=${store.crNum}">
+		                  	<img src="/resources/images/f1.png" alt="">
+		                  	<!-- <input type="hidden" name="crNum" value="${store.crNum}">-->
+		                  </a>
 		                </div>
 		                <div class="detail-box">
-		                  <h5>
-		                    ${store.crNum}
-		                  </h5>
-		                  <p>
-		                    ${store.storeName}
-		                  </p>
+		                  <h5>${store.crNum}</h5>
+		                  <p>${store.storeName}</p>
 		                </div>
 		              </div>
 		            </div>
