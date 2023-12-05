@@ -10,21 +10,21 @@
     <div class="container">
       <div class="heading_container heading_center">
       </div>
-      <form id="frm" action="/owner/ownerLogin" method="post" style="padding: 100px;">
-      	<h2 align="center">사장님 로그인</h2>
+      <form id="frm" action="/store/storeExistRegister" method="post" style="padding: 100px;">
+      	<h2 align="center">(기존)가게 등록 페이지</h2>
       	<table style="margin: auto; border-collapse: separate; border-spacing: 20px 20px;">
       		<tr>
-      			<th>아이디</th>
-      			<td><input type="text" name="ownerId" id="ownerId"></td>
+      			<th>사업자 등록번호</th>
+      			<td><input type="text" name="crNum" id="crNum"></td>
       		</tr>
       		<tr>
-      			<th>비밀번호</th>
-      			<td><input type="password" name="ownerPw" id="ownerPw"></td>
+      			<th>가게 비밀번호</th>
+      			<td><input type="password" name="secretCode" id="secretCode"></td>
       		</tr>
       		<tr>
       			<td colspan="2" align="center">
 		       		<div class="btn-box">
-		       			<a href="#" onclick="return login_chk()">로그인</a>
+		       			<a href="#" onclick="return login_chk()">등록하기</a>
 		       		</div>
 			    </td>
 		    </tr>
@@ -43,20 +43,20 @@
 		if(${result}==0){
 			alert("비밀번호가 일치하지 않습니다!");
 		} else if(${result}==-1){
-			alert("아이디가 일치하지 않습니다!");
+			alert("존재하지 않는 사업자 등록번호입니다!");
 		}
 	});
 </script>
 <script type="text/javascript">
 		function login_chk() {
-		if(document.getElementById("ownerId").value==''){
-			alert("아이디를 입력해주세요!");
-			$("#ownerId").focus();
+		if(document.getElementById("crNum").value==''){
+			alert("사업자 등록번호를 입력해주세요!");
+			$("#crNum").focus();
 			return false;
 		}
-		if(document.getElementById("ownerPw").value==''){
+		if(document.getElementById("secretCode").value==''){
 			alert("비밀번호를 입력해주세요!");
-			$("#ownerPw").focus();
+			$("#secretCode").focus();
 			return false;
 		}
 		document.getElementById('frm').submit();

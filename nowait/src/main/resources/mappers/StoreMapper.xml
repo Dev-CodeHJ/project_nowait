@@ -15,7 +15,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="selectByOwnerId" resultType="ezen.nowait.store.domain.StoreVO">
 		select * from store
-		where cr_num = (
+		where cr_num in(
 			select cr_num
 			from owner_store
 			where owner_id = #{ownerId}
@@ -28,10 +28,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<insert id="insertStore">
 		insert into store
-		values(#{crNum}, #{storeName}, #{storeCategory}, #{storeAddr}, #{storeTel}, #{storeEmail}, #{opentime}, #{storeInfo}, default, default)
+		values(#{crNum}, #{secretCode}, #{storeName}, #{storeCategory}, #{storeAddr}, #{storeTel}, #{storeEmail}, #{opentime}, #{storeInfo}, default, default)
 	</insert>
 	
-	<insert id="insertOwnerStore">
+	<!-- (owner_id, cr_num, secret_code) -->
+	<insert id="insertOwnerStore" parameterType="hashMap">
 		insert into owner_store
 		values(#{ownerId}, #{crNum}, #{secretCode})
 	</insert>
@@ -55,7 +56,5 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="deleteOwnerStore">
 		delete from owner_store where cr_num = #{crNum} and secret_code = #{secretCode}
 	</delete>
-	
-	<update id=""></update>
 	
 </mapper>

@@ -6,48 +6,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-  <c:choose>
-  	<c:when test="${result eq 1}">
-  	
-  		<%-- food section --%>
-	
-		<section class="food_section layout_padding-bottom">
-	    <div class="container">
-	      <div class="heading_container heading_center" style="padding-top: 20px;">
-	        <h2>
-	          내 가게 리스트
-	        </h2>
-	      </div>
-	
-	      <div class="filters-content">
-	        <div class="row grid">
-		      <c:forEach items="${list}" var="store">
-	            <div class="box">
-	              <div>
-	                <div class="img-box">
-	                  <img src="/resources/images/f1.png" alt="">
-	                </div>
-	                <div class="detail-box">
-	                  <h5>
-	                    ${store.crNum}
-	                  </h5>
-	                  <p>
-	                    ${store.storeName}
-	                  </p>
-	                </div>
-	              </div>
-	            </div>
-		      </c:forEach>
-		      </div>
-	      </div>
-	    </div>
-	  </section>
-	  <%-- end food section --%>
-	  
-  	</c:when>
-  	
-  	<c:otherwise>
-  	
 	  <%-- food section --%>
 	
 	  <section class="food_section layout_padding-bottom">
@@ -81,7 +39,14 @@
 		                    ${store.storeName}
 		                  </h5>
 		                  <p>
-		                    ${store.storeInfo}
+			                  <c:choose>
+			                  	<c:when test="${store.storeInfo eq ''}">
+			                  		(가게정보 없음)
+			                  	</c:when>
+			                    <c:otherwise>
+			                    	${store.storeInfo}
+			                    </c:otherwise>
+			                  </c:choose>
 		                  </p>
 		                  <div class="options">
 		                    <h6>
@@ -106,9 +71,6 @@
 	    </div>
 	  </section>
 	  <%-- end food section --%>
-	  
-  	</c:otherwise>
-  </c:choose>
   <%@include file="includes/footer.jsp" %>
 </body>
 </html>

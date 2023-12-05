@@ -1,5 +1,7 @@
 package ezen.nowait.member.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -12,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ezen.nowait.member.domain.OwnerVO;
 import ezen.nowait.member.service.OwnerService;
+import ezen.nowait.store.domain.StoreVO;
 import ezen.nowait.store.service.StoreService;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -26,8 +29,28 @@ public class OwnerController {
 	
 	private StoreService storeService;
 	
+	HttpSession session;
+	
 	@GetMapping("/ownerHome")
-	public void home() {}
+	public String home(HttpServletRequest request) {
+		
+		session = request.getSession();
+		
+		if(session.getAttribute("member") != null) {
+			
+			OwnerVO oVO = (OwnerVO) session.getAttribute("member");
+			
+			if(session.getAttribute("list") != null) {
+				session.removeAttribute("list");
+			}
+			
+			List<StoreVO> list = storeService.findByOwnerId(oVO.getOwnerId());
+			session.setAttribute("list", list);
+			return "/owner/ownerHome";
+		} else {
+			return "redirect:/";
+		}
+	}
 	
 	@GetMapping("/ownerLogin")
 	public void login() {}
@@ -38,7 +61,7 @@ public class OwnerController {
 		log.info("id : " + ownerId);
 		log.info("pw : " + ownerPw);
 		
-		HttpSession session = request.getSession();
+		session = request.getSession();
 		
 		int result = ownerService.loginOwner(ownerId, ownerPw);
 		
@@ -46,10 +69,10 @@ public class OwnerController {
 									1 : 로그인 성공
 									0 : 비밀번호 불일치
 									-1 : 아이디 불일치 */
-			session.setAttribute("member", ownerService.findOwner(ownerId));
-			session.setAttribute("list", storeService.findByOwnerId(ownerId));
+			OwnerVO oVO = ownerService.findOwner(ownerId);
+			session.setAttribute("member", oVO);
 			session.setAttribute("result", result);
-			return "/owner/ownerHome";
+			return "redirect:/owner/ownerHome";
 		}
 		rttr.addFlashAttribute("result", result);
 		return "redirect:/owner/ownerLogin";
@@ -58,7 +81,9 @@ public class OwnerController {
 	
 	@GetMapping("/ownerLogout")
 	public String logout(HttpServletRequest request) {
-		HttpSession session = request.getSession(false);
+		
+		session = request.getSession(false);
+		
 		if(session != null) {
 			session.invalidate();
 		}
@@ -105,6 +130,7 @@ public class OwnerController {
 		log.info("ownerUpdate................");
 		
 		int result = ownerService.updateOwner(oVO);
+		
 		if(result == 1) {
 			return "redirect:/owner/ownerLogout";
 		}
@@ -116,11 +142,15 @@ public class OwnerController {
 	
 	@PostMapping("/ownerDelete")
 	public String delete(String ownerId, String ownerPw, RedirectAttributes rttr) {
+		
 		int deleteOk = ownerService.deleteOwner(ownerId, ownerPw);
+		
 		System.out.println("deleteOk : " + deleteOk);
 		System.out.println("ownerId : " + ownerId);
 		System.out.println("ownerPw : " + ownerPw);
+		
 		rttr.addFlashAttribute("deleteOk", deleteOk);
+		
 		return "redirect:/owner/ownerDelete";
 	}
 }

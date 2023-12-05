@@ -1,6 +1,7 @@
 package ezen.nowait.store.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import ezen.nowait.store.domain.StoreVO;
 
@@ -16,7 +17,8 @@ public interface StoreMapper {
 	
 	public int insertStore(StoreVO sVO);
 	
-	public int insertOwnerStore(String ownerId, String crNum, String secretCode);
+//	public int insertOwnerStore(String ownerId, String crNum, String secretCode);
+	public int insertOwnerStore(Map<String, Object> map);
 	
 	public int updateStore(StoreVO sVO);
 	

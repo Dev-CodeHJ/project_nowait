@@ -1,11 +1,16 @@
 package ezen.nowait.store.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import ezen.nowait.member.domain.OwnerVO;
 import ezen.nowait.store.domain.StoreVO;
 import ezen.nowait.store.service.StoreService;
 import lombok.AllArgsConstructor;
@@ -19,9 +24,10 @@ public class StoreController {
 
 	private StoreService storeService;
 	
+	HttpSession session;
+	
 	@GetMapping({"/storeUserGet", "/storeOwnerGet"})
 	public void storeGet(Model model, String crNum) {
-		log.info("storeHome");
 		model.addAttribute("store", storeService.findByCrNum(crNum));
 	}
 	
@@ -39,12 +45,21 @@ public class StoreController {
 	public void register() {}
 	
 	@PostMapping("storeNewRegister")
-	public String register(StoreVO sVO) {
+	public String register(@RequestParam("ownerId")String ownerId, StoreVO sVO) {
+		System.out.println("ownerId : " + ownerId);
+		System.out.println("crNum : " + sVO.getCrNum());
 		
 		int result = storeService.addStore(sVO);
 		
 		if(result == 1) {
-			return "/owner/ownerHome";
+			String crNum = (String)sVO.getCrNum();
+			System.out.println("crNum : " + crNum);
+			
+			int result2 = storeService.addOwnerStore(ownerId, crNum, sVO.getSecretCode());
+			System.out.println("result2 : " + result2);
+			if(result2 == 1) {
+				return "redirect:/owner/ownerHome";
+			}
 		}
 		return "/store/storeNewRegister";
 	}
@@ -53,12 +68,16 @@ public class StoreController {
 	public void load() {}
 	
 	@PostMapping("storeExistRegister")
-	public String load(String ownerId, String crNum, String secretCode) {
+	public String load(String crNum, String secretCode, HttpServletRequest request) {
 		
-		int result = storeService.addOwnerStore(ownerId, crNum, secretCode);
+		session = request.getSession();
+		OwnerVO oVO = (OwnerVO)session.getAttribute("member");
+		
+		System.out.println("OwnerId : "+ oVO.getOwnerId());
+		int result = storeService.addOwnerStore(oVO.getOwnerId(), crNum, secretCode);
 		
 		if(result == 1) {
-			return "/owner/ownerHome";
+			return "redirect:/owner/ownerHome";
 		}
 		return "/store/storeExistRegister";
 	}

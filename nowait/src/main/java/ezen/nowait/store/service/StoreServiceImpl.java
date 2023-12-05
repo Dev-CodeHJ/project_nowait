@@ -1,6 +1,8 @@
 package ezen.nowait.store.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,10 +53,27 @@ public class StoreServiceImpl implements StoreService {
 
 	@Override
 	public int addOwnerStore(String ownerId, String crNum, String secretCode) {
-		log.info("addOwnerStore......ownerId : " + ownerId);
-		log.info("addOwnerStore......crNum : " + crNum);
-		log.info("addOwnerStore......secretCode : " + secretCode);
-		return storeMapper.insertOwnerStore(ownerId, crNum, secretCode);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		int result = 0;
+		
+		map.put("ownerId", ownerId);
+		map.put("crNum", crNum);
+		map.put("secretCode", secretCode);
+		
+		StoreVO sVO = storeMapper.selectStoreByCrNum(crNum);
+		
+		if(sVO.getCrNum() != null) {
+			if(sVO.getSecretCode().equals(secretCode)) {
+				
+				result = storeMapper.insertOwnerStore(map);
+			} 
+		} else {
+			result = -1;
+		}
+		
+		System.out.println("result : " + result);
+		return result;
 	}
 
 	@Override
