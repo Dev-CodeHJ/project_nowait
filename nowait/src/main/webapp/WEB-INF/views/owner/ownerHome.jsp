@@ -29,7 +29,7 @@
 		              <div>
 		                <div class="img-box">
 		                  <!-- <input type="image" src="/resources/images/f1.png" onclick="location.href='/store/storeOwnerGet"> -->
-		                  <a href="/store/storeOwnerGet?crNum=${store.crNum}">
+		                  <a href="/store/storeOwnerGet/${store.crNum}">
 		                  	<img src="/resources/images/f1.png" alt="">
 		                  	<!-- <input type="hidden" name="crNum" value="${store.crNum}">-->
 		                  </a>

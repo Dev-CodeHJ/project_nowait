@@ -10,7 +10,7 @@
     <div class="container">
       <div class="heading_container heading_center">
       </div>
-      <form id="frm" action="/store/storeNewRegister" method="post" style="padding: 100px;">
+      <form id="frm" action="/store/storeUpdate" method="post" style="padding: 100px;">
          <h2 align="center">가게정보 수정페이지</h2>
          <p align="center" style="color: grey;">(*표시는 필수 입력사항)</p>
          <table style="margin: auto; border-collapse: separate; border-spacing: 20px 20px;">
@@ -19,7 +19,7 @@
 			</tr>
             <tr>
                <th>*사업자 등록번호</th>
-               <td><input type="text" name="crNum" id="crNum">${store.crNum}</td>
+               <td><input type="text" name="crNum" id="crNum" value="${store.crNum}"></td>
             </tr>
             <tr>
                <th>*가게 비밀번호</th>
@@ -36,39 +36,42 @@
             </tr>
 			<tr>
 				<th>*가게 이름</th>
-				<td><input type="text" name="storeName" id="storeName"></td>
+				<td><input type="text" name="storeName" id="storeName" value="${store.storeName}"></td>
 			</tr>
             <tr>
 				<th>*카테고리</th>
 				<td>
 					<select name="storeCategory">
-						<option value="1" selected="selected">한식</option>
-						<option value="2">일식</option>
-						<option value="3">중식</option>
-						<option value="4">양식</option>
-						<option value="5">카페&디저트</option>
+						<c:forEach items="${categoryList}" var="category">
+							<option value="${category.name}"
+								<c:if test='${store.storeCategory eq category.name}'>
+									selected="selected"
+								</c:if>>
+								${category.value}
+							</option>
+						</c:forEach>
 					</select>
 				</td>
 			</tr>
 			<tr>
 				<th>*주소</th>
-				<td><input type="text" name="storeAddr" id="storeAddr"></td>
+				<td><input type="text" name="storeAddr" id="storeAddr" value="${store.storeAddr}"></td>
 			</tr>
 			<tr>
 				<td>전화번호</td>
-				<td><input type="text" name="storeTel" id="storeTel"></td>
+				<td><input type="text" name="storeTel" id="storeTel" value="${store.storeTel}"></td>
 			</tr>
 			<tr>
 				<td>이메일</td>
-				<td><input type="text" name="storeEmail" id="storeEmail"></td>
+				<td><input type="text" name="storeEmail" id="storeEmail" value="${store.storeEmail}"></td>
 			</tr>
 			<tr>
 				<td>영업시간</td>
-				<td><input type="text" name="opentime" id="opentime"></td>
+				<td><input type="text" name="opentime" id="opentime" value="${store.opentime}"></td>
 			</tr>
 			<tr>
 				<td>공지사항</td>
-				<td><input type="text" name="storeInfo" id="storeInfo"></td>
+				<td><input type="text" name="storeInfo" id="storeInfo" value="${store.storeInfo}"></td>
 			</tr>
             <tr>
             	<td colspan="2" align="center">

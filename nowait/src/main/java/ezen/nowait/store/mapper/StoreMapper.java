@@ -24,11 +24,15 @@ public interface StoreMapper {
 	
 //	public int updateOwnerStore(StoreVO sVO);
 	
+	//pk를 받아 store table에 있는 가게 정보 삭제
 	public int deleteStore(String crNum);
 	
+	//모든 사장들에게서 동일 가게 정보 삭제, (deleteStore)실행 전에 실행돼야함
 	public int deleteAllByCrNum(String crNum);
 	
+	//ownerId, crNum받아서 사장님 가게 목록의 선택한 가게 정보 삭제
 	public int deleteOwnerStoreOneByOwnerId(Map<String, Object> map);
 	
+	//사장님이 등록한 모든 가게정보 사장님에게서만 삭제
 	public int deleteAllByOwnerId(String ownerId);
 }

@@ -26,15 +26,15 @@
 				<td>${store.storeName}</td>
 			</tr>
 			<tr>
-				<td>카테고리</td>
-				<td>${store.storeCategory}</td>
+				<th>카테고리</th>
+				<td>${storeCategory.value}</td>
 			</tr>
 			<tr>
 				<th>주소</th>
 				<td>${store.storeAddr}</td>
 			</tr>
 			<tr>
-				<th>전화번호</th>
+				<td>전화번호</td>
 				<td>${store.storeTel}</td>
 			</tr>
 			<tr>
@@ -42,7 +42,7 @@
 				<td>${store.storeEmail}</td>
 			</tr>
 			<tr>
-				<th>영업시간</th>
+				<td>영업시간</td>
 				<td>${store.opentime}</td>
 			</tr>
 			<tr>
@@ -51,7 +51,7 @@
 			</tr>
             <tr>
             	<td colspan="2">
-           			<button type="button" class="btn btn-primary" style="margin: 30px;" onclick="location.href='/store/storeUpdate'">가게정보 수정</button>
+           			<button type="button" class="btn btn-primary" style="margin: 30px;" onclick="location.href='/store/storeUpdate/${store.crNum}'">가게정보 수정</button>
            			<button type="button" class="btn btn-danger" style="margin: 30px;" onclick="location.href='/store/storeDelete'">가게정보 삭제</button>
             	</td>
           	</tr>

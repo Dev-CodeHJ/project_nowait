@@ -10,8 +10,8 @@
     <div class="container">
       <div class="heading_container heading_center">
       </div>
-      <form id="frm" action="/store/storeExistRegister" method="post" style="padding: 100px;">
-      	<h2 align="center">(기존)가게 등록 페이지</h2>
+      <form id="frm" action="/store/storeDelete" method="post" style="padding: 100px;">
+      	<h2 align="center">가게정보 삭제페이지</h2>
       	<table style="margin: auto; border-collapse: separate; border-spacing: 20px 20px;">
       		<tr>
       			<th>사업자 등록번호</th>
@@ -24,7 +24,7 @@
       		<tr>
       			<td colspan="2" align="center">
 		       		<div class="btn-box">
-		       			<a href="#" onclick="return login_chk()">등록하기</a>
+		       			<a href="#" onclick="return login_chk()">삭제하기</a>
 		       		</div>
 			    </td>
 		    </tr>
