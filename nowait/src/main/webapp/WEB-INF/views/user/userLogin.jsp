@@ -37,7 +37,7 @@
     </div>
   </section>
   <!-- end food section -->
-  <%@include file="../includes/footer.jsp" %>
+ <%@include file="../includes/footer.jsp" %>
 <script type="text/javascript">
 	$(document).ready(function() {
 		if(${result}==0){
