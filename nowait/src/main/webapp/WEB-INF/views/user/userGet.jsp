@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@include file="../includes/header.jsp" %>
+<html>
 <style>
 	table {
 	margin: auto;
@@ -13,6 +14,7 @@
     padding: 10px;
     }
 </style>
+<body>
   <section class="food_section layout_padding-bottom">
     <div class="container">
          <h2 align="center" style="padding: 10px; margin: 10px;">내 정보</h2>

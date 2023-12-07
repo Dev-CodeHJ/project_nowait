@@ -45,8 +45,8 @@
     </div>
   </section>
 
-
 <%@include file="../includes/footer.jsp" %>
+
 <script type="text/javascript">
 	$(document).ready(function() {
 		if(${deleteOk}==0){
@@ -69,5 +69,6 @@
 		document.getElementById('frm').submit();
 	}
 </script>
+
 </body>
 </html>

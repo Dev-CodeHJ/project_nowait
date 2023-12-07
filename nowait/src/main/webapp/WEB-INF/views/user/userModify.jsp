@@ -72,16 +72,16 @@
 	        </tr>
 	        <tr>  
 	                <th>회원등급</th>
-	                <td><input type="text" name='grade' value="${member.grade}" readonly="readonly"></td>
+	                <td><input type="text" name='grade' value="${member.grade}" readonly="readonly"  disabled="disabled"></td>
 	        </tr>
 	        <tr>    
 	                <th>가입날짜</th>
-	                <td><input type="text" name='userRegdate' value="${member.userRegdate}" readonly="readonly"></td>
+	                <td><input type="text" name='userRegdate' value="${member.userRegdate}" readonly="readonly"  disabled="disabled"></td>
 	        </tr>
             <tr>
             	<td colspan="2">
            			<button type="button" class="btn btn-primary" style="margin: 20px;" onclick="location.href='/user/userGet'">돌아가기</button>
-           			<button type="submit" class="btn btn-success" style="margin: 20px;" onclick="return update_chk()" id="btn_update">수정완료</button>
+           			<button type="submit" class="btn btn-success" style="margin: 20px;" onclick="" id="btn_update">수정완료</button>
             	</td>
           	</tr>
          </table>
@@ -94,6 +94,7 @@
   <script src="https://code.jquery.com/jquery.js"></script>
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
   <script type="text/javascript" src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+  
 <script type="text/javascript">
 	$(document).ready(function() {
     $("#btn_update").click(function update_chk() {
@@ -198,8 +199,8 @@
        //var ownerBirth = $('#ownerBirth1').val();
        //$('#datepicker').datepicker('setDate', ownerBirth); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)            
    });
-   
 
 </script>
+
 </body>
 </html>

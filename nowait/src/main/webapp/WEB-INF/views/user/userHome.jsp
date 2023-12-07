@@ -36,7 +36,7 @@
 	                </div>
 	                <div class="detail-box">
 	                  <h5>
-	                    ${store.storeName}
+	                   <a class="store-name" href="/order/menuOrder">${store.storeName}</a><!-- 온클릭시 스토어유저겟 -->
 	                  </h5>
 	                  <p>
 	                    ${store.storeInfo}

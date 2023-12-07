@@ -115,7 +115,7 @@
 					                <a class="nav-link" href="/user/userHome">${member.userId}님, 환영합니다<span class="sr-only">(current)</span></a>
 				              	</li>
 		              			<li class="nav-item">
-					            	<a class="nav-link" href="/user/userOrder">주문내역</a>
+					            	<a class="nav-link" href="/order/userOrderList">주문내역</a>
 					            </li>
 					            <li class="nav-item">
 					            	<a class="nav-link" href="/user/userReview">리뷰내역</a>
@@ -128,7 +128,7 @@
 				              <a href="/user/userGet" class="user_link">
 				                <i class="fa fa-user" aria-hidden="true"></i>
 				              </a>
-				              <a class="cart_link" href="#">
+				              <a href="/order/orderCart" class="cart_link" >
 				                <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
 				                  <g>
 				                    <g>
