@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import ezen.nowait.member.service.UserService;
 import ezen.nowait.store.domain.StoreVO;
 import ezen.nowait.store.service.StoreService;
 import lombok.AllArgsConstructor;
@@ -22,6 +23,8 @@ import lombok.AllArgsConstructor;
 public class HomeController {
 	
 	private StoreService storeService;
+	
+	private UserService userservice;
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
