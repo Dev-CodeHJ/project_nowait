@@ -8,10 +8,12 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ezen.nowait.code.domain.CodeVO;
 import ezen.nowait.code.service.CodeService;
@@ -110,8 +112,10 @@ public class StoreController {
 		return "/store/storeExistRegister";
 	}
 	
-	@GetMapping(path = "/storeUpdate/{crNum}")
-	public String update(@PathVariable String crNum, Model model) {
+	//@GetMapping(path = "/storeUpdate/{crNum}")
+	@GetMapping("/storeUpdate")
+	public void update(String crNum, Model model) {
+		
 		System.out.println("crNum : " + crNum);
 		
 		StoreVO sVO = storeService.findByCrNum(crNum);
@@ -119,8 +123,6 @@ public class StoreController {
 		
 		List<CodeVO> categoryList = codeService.findList("store_category");
 		model.addAttribute("categoryList", categoryList);
-		
-		return "/store/storeUpdate";
 	}
 	
 	@PostMapping("/storeUpdate")
@@ -134,31 +136,66 @@ public class StoreController {
 		return "/store/storeUpdate";
 	}
 	
+//	@GetMapping(path = "/storeDelete/{crNum}")
 	@GetMapping("/storeDelete")
-	public void deleteStore() {}
+	public void deleteStore(String crNum, Model model) {
+		
+		System.out.println("storeDelete enter");
+		System.out.println("crNum : " + crNum);
+		model.addAttribute("crNum", crNum);
+	}
+	
+	@GetMapping(path = "/storeDeleteAction/{crNum}")
+	public String storeDeleteAction(@PathVariable String crNum, Model model) {
+		
+		System.out.println("deleteStoreAction enter");
+		System.out.println("crNum : " + crNum);
+		
+		model.addAttribute("crNum", crNum);
+		
+		return "/store/storeDeleteAction";
+	}
 	
 	@PostMapping("/storeDelete")
-	public String deleteStore(String crNum, String secretCode) {
+	public String deleteStore(@RequestParam("crNum") String crNum, String crNum2, String secretCode, Model model, RedirectAttributes rttr) {
 		
-		int result = storeService.deleteStore(crNum, secretCode);
+		System.out.println("가게삭제--- PostMapping enter");
+		System.out.println("crNum : " + crNum);
+		System.out.println("crNum2 : " + crNum2);
+		System.out.println("secretCode : " + secretCode);
 		
-		if(result == 1) {
-			return "redirect:/owner/ownerHome";
-		}
-		return "/store/storeDelete";
+		int deleteOk = storeService.deleteStore(crNum, crNum2, secretCode);
+		
+		System.out.println("deleteOk" + deleteOk);
+		
+		model.addAttribute("crNum", crNum);
+		rttr.addFlashAttribute("deleteOk", deleteOk);
+		
+		return "redirect:/store/storeDeleteAction/"+crNum;
 	}
 	
 	@PostMapping("/ownerStoreDelete")
-	public String deleteOwnerStore(String crNum, String secretCode, HttpServletRequest request) {
+	public String deleteOwnerStore(@RequestParam("crNum") String crNum,  String crNum2, String secretCode, HttpServletRequest request, Model model, RedirectAttributes rttr) {
+		
+		System.out.println("내 가게 목록에서 가게삭제 PostMapping enter");
+		System.out.println("crNum : " + crNum);
+		System.out.println("crNum2 : " + crNum2);
+		System.out.println("secretCode : " + secretCode);
 		
 		session = request.getSession();
 		OwnerVO oVO = (OwnerVO) session.getAttribute("member");
 		
-		int result = storeService.deleteOwnerStoreOneByOwnerId(oVO.getOwnerId(), crNum, secretCode);
+		System.out.println("OwnerId : " + oVO.getOwnerId());
 		
-		if(result == 1) {
-			return "redirect:/owner/ownerHome";
-		}
-		return "/store/storeDelete";
+		int deleteOk = storeService.deleteOwnerStoreOneByOwnerId(oVO.getOwnerId(), crNum, crNum2, secretCode);
+		
+		System.out.println("deleteOk" + deleteOk);
+		
+		model.addAttribute("crNum", crNum);
+		System.out.println("controller post crNum : " + crNum);
+		
+		rttr.addFlashAttribute("deleteOk", deleteOk);
+		
+		return "redirect:/store/storeDeleteAction/"+crNum;
 	}
 }

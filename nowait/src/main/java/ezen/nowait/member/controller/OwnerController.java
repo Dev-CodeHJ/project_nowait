@@ -7,8 +7,10 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -46,6 +48,17 @@ public class OwnerController {
 			
 			List<StoreVO> list = storeService.findByOwnerId(oVO.getOwnerId());
 			session.setAttribute("list", list);
+			
+//			String crNum2 = (String) session.getAttribute("crNum");
+//			
+//			System.out.println("Owner Controller crNum : " + crNum);
+//			System.out.println("Owner Controller crNum2 : " + crNum2);
+//			
+//			if(crNum != null) {
+//				
+//				request.setAttribute("crNum", crNum);
+//				System.out.println("ownerController === " + crNum);
+//			}
 			return "/owner/ownerHome";
 		} else {
 			return "redirect:/";

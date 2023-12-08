@@ -19,7 +19,7 @@
 			</tr>
             <tr>
                <th>*사업자 등록번호</th>
-               <td><input type="text" name="crNum" id="crNum" value="${store.crNum}"></td>
+               <td><input type="text" name="crNum" id="crNum" value="${store.crNum}" readonly="readonly"  style="text-align: center; background-color: silver;"></td>
             </tr>
             <tr>
                <th>*가게 비밀번호</th>
@@ -74,7 +74,12 @@
 				<td><input type="text" name="storeInfo" id="storeInfo" value="${store.storeInfo}"></td>
 			</tr>
             <tr>
-            	<td colspan="2" align="center">
+            	<td align="center">
+		       		<div class="btn-box">
+		       			<a href="/store/storeOwnerGet/${store.crNum}" style="background-color: green;">가게정보페이지</a>
+		       		</div>
+			    </td>
+            	<td align="center">
                    <div class="btn-box">
                       <a href="#" onclick="return join_chk()" id="btn_join">등록하기</a>
                    </div>

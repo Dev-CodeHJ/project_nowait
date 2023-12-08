@@ -21,8 +21,8 @@ public interface StoreService {
 	public int updateStore(StoreVO sVO);
 	
 	//owner_store table에서 해당 가게정보를 가지고 있는 모든 사장에게서 가게 정보 삭제 후 해당 가게 정보 삭제
-	public int deleteStore(String crNum, String secretCode);
+	public int deleteStore(String crNum, String crNum2, String secretCode);
 
 	//해당 사장님의 가게 목록에서만 가게 정보 삭제
-	public int deleteOwnerStoreOneByOwnerId(String ownerId, String crNum, String secretCode);
+	public int deleteOwnerStoreOneByOwnerId(String ownerId, String crNum, String crNum2, String secretCode);
 }

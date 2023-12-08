@@ -13,18 +13,33 @@
       <form id="frm" action="/store/storeDelete" method="post" style="padding: 100px;">
       	<h2 align="center">가게정보 삭제페이지</h2>
       	<table style="margin: auto; border-collapse: separate; border-spacing: 20px 20px;">
+      		<tr style="display: none;">
+				<td><input type="text" name="crNum" value="${crNum}"></td>
+			</tr>
       		<tr>
       			<th>사업자 등록번호</th>
-      			<td><input type="text" name="crNum" id="crNum"></td>
+      			<td><input type="text" name="crNum2" id="crNum2"></td>
       		</tr>
       		<tr>
       			<th>가게 비밀번호</th>
       			<td><input type="password" name="secretCode" id="secretCode"></td>
       		</tr>
       		<tr>
-      			<td colspan="2" align="center">
+      			<td align="center">
 		       		<div class="btn-box">
-		       			<a href="#" onclick="return login_chk()">삭제하기</a>
+		       			<a href="/store/storeOwnerGet/${crNum}" style="background-color: green;">가게정보페이지</a>
+		       		</div>
+			    </td>
+      			<td align="center">
+		       		<div class="btn-box">
+		       			<a href="#" style="background-color: red;" onclick="return delete_chk()">가게정보 삭제</a>
+		       		</div>
+			    </td>
+		    </tr>
+		    <tr>
+			    <td colspan="2" align="center">
+		       		<div class="btn-box">
+		       			<a href="#" onclick="return myStoreListDelete_chk()">내 가게 목록에서 삭제</a>
 		       		</div>
 			    </td>
 		    </tr>
@@ -39,19 +54,10 @@
   <!-- end food section -->
   <%@include file="../includes/footer.jsp" %>
 <script type="text/javascript">
-	$(document).ready(function() {
-		if(${result}==0){
-			alert("비밀번호가 일치하지 않습니다!");
-		} else if(${result}==-1){
-			alert("존재하지 않는 사업자 등록번호입니다!");
-		}
-	});
-</script>
-<script type="text/javascript">
-		function login_chk() {
-		if(document.getElementById("crNum").value==''){
+	function delete_chk() {
+		if(document.getElementById("crNum2").value==''){
 			alert("사업자 등록번호를 입력해주세요!");
-			$("#crNum").focus();
+			$("#crNum2").focus();
 			return false;
 		}
 		if(document.getElementById("secretCode").value==''){
@@ -59,8 +65,29 @@
 			$("#secretCode").focus();
 			return false;
 		}
-		document.getElementById('frm').submit();
+		if(!confirm("해당 가게를 완전히 삭제하시겠습니까?\n*삭제 시 가게정보는 모든 회원들로부터 완전히 사라집니다.")) {
+			return false;
 		}
+		document.getElementById('frm').submit();
+	}
+	
+	function myStoreListDelete_chk() {
+		if(document.getElementById("crNum2").value==''){
+			alert("사업자 등록번호를 입력해주세요!");
+			$("#crNum2").focus();
+			return false;
+		}
+		if(document.getElementById("secretCode").value==''){
+			alert("비밀번호를 입력해주세요!");
+			$("#secretCode").focus();
+			return false;
+		}
+		if(!confirm("해당 가게를 내 가게 목록에서 삭제하시겠습니까?\n*삭제 후 가게정보는 남아있지만 내 가게 목록에서는 사라집니다.")) {
+			return false;
+		}
+	    document.getElementById('frm').action="/store/ownerStoreDelete";
+		document.getElementById('frm').submit();
+	}
 </script>
 </body>
 </html>
