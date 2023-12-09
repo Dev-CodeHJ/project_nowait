@@ -13,4 +13,33 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from code where id = #{id} and name = #{name}
 	</select>
 	
+	<select id="selectListByCrNum" resultType="ezen.nowait.code.domain.CodeVO">
+		select * from code where cr_num = #{crNum}
+	</select>
+	
+	<select id="selectMenuCategory" parameterType="hashMap" resultType="ezen.nowait.code.domain.CodeVO">
+		select * from code where cr_num = #{crNum} and name = #{name}
+	</select>
+	
+	<select id="selectCnt" resultType="ezen.nowait.code.domain.CodeVO">
+		select count(*) from code where cr_num = #{crNum} and name = #{name}
+	</select>
+	
+	<insert id="insertMenuCategory" parameterType="ezen.nowait.code.domain.CodeVO">
+		insert into code
+		values(#{crNum}, #{id}, #{name}, #{value})
+	</insert>
+	
+	<update id="updateMenuCategory" parameterType="hashMap">
+		update code
+		set name = #{setName},
+		value = #{value}
+		where cr_num = #{crNum}
+		and name = #{name}
+	</update>
+	
+	<delete id="deleteMenuCategory" parameterType="hashMap">
+		delete from code where cr_num = #{crNum} and name = #{name}
+	</delete>
+	
 </mapper>

@@ -43,60 +43,40 @@
 		
 		<!-- body -->
 		  <div class="col-md-9">
-         		<h2 style="padding: 10px; margin-left: 32%;">메뉴관리 페이지</h2>
+         		<h2 style="padding: 10px; margin-left: 32%;">카테고리관리 페이지</h2>
 				  <section class="food_section layout_padding-bottom">
 				    <div class="container">
-			            <c:forEach items="${menuList}" var="menu">
-				        	<form id="frm${menu.menuNum}" action="/menu/menuUpdate">
+						<c:forEach items="${menuCategoryList}" var="menuCategory">
+				        	<form id="frm${menuCategory.name}" action="/menu/categoryUpdate">
 					        	<table>
-					            	<tr>
-					            		<th rowspan="3">
-					            			메뉴이름<br>${menu.menuName}
-				            			</th>
-					            		<td>가격 : ${menu.price}원</td>
-					            		<th rowspan="3"><img src="/resources/images/f2.png" alt=""></th>
-					            	</tr>
-					            	<tr>
-					            		<td>
-					            			<c:choose>
-						            			<c:when test="${menu.popularity eq 1}">
-						            				인기메뉴
-						            			</c:when>
-						            			<c:otherwise>-</c:otherwise>
-					            			</c:choose>
-					            		</td>
-				            		</tr>
-				            		<tr>
-					            		<td>
-					            		<c:choose>
-						            			<c:when test="${menu.menuStatus eq 1}">
-						            				상태 : 품절
-						            			</c:when>
-						            			<c:otherwise>상태 : 판매가능</c:otherwise>
-					            			</c:choose>
-					            		
-					            		</td>
-				            		</tr>
-						            <tr>
-						            	<td colspan="3">
-						       				<button type="submit" class="btn btn-primary" style="margin: 30px;" onclick="menuUpdate_move(${menu.menuNum})">메뉴정보 수정</button>
-						           			<button type="submit" class="btn btn-danger" style="margin: 30px;" onclick="menuDelete_move(${menu.menuNum})">메뉴정보 삭제</button>
-						            	</td>
-						          	</tr>
-						          	<tr style="display: none;">
+					            	<tr style="display: none;">
 						          		<td>
-					           				<input type="text" name="menuNum" value="${menu.menuNum}">
+					           				<input type="text" name="crNum" value="${menuCategory.crNum}">
+			    							<input type="text" name="name" value="${menuCategory.name}">
 						       			</td>
 						   			</tr>
+					            	<tr>
+					            		<th>카테고리 번호</th>
+					            		<td>${menuCategory.name}</td>
+					            	</tr>
+					            	<tr>
+					            		<th>카테고리 이름</th>
+					            		<td>${menuCategory.value}</td>
+					            	</tr>
+						            <tr>
+						            	<td colspan="2">
+						       				<button type="submit" class="btn btn-primary" style="margin: 30px;" onclick="categoryUpdate_move(${menuCategory.name})">카테고리 수정</button>
+						           			<button type="submit" class="btn btn-danger" style="margin: 30px;" onclick="categoryDelete_move(${menuCategory.name})">카테고리 삭제</button>
+						            	</td>
+						          	</tr>
 					        	</table>
 				        	</form>
 			            </c:forEach>
 			            <form id="frm" action="/menu/menuList">
 	           				<input type="hidden" name="crNum" value="${crNum}">
 	           			</form>
-			            <div class="btn-box" style="margin-right: 20%;">
-					    	<a href="#" onclick="menuRegister_move()">메뉴 등록</a>
-					    	<a href="#" onclick="category_move()" style="margin-left: 20px;">카테고리 관리</a>
+			            <div class="btn-box">
+					    	<a href="#" onclick="categoryRegister_move()">카테고리 등록</a>
 					    </div>
 			            <!-- 
 			             style="cursor:pointer;color:#blue;" onClick="location.href='/menu/menuGet?menuNum=${menu.menuNum}'"
@@ -108,6 +88,15 @@
 	</div>
 
   <%@include file="../includes/footer.jsp" %>
+<script type="text/javascript">
+	$(document).ready(function() {
+	  if(${insertOk}==0){
+			alert("이미 존재하는 카테고리 번호입니다!");
+			document.getElementById('frm').action="/menu/categoryRegister";
+			document.getElementById('frm').submit();
+		}
+    });
+</script>
 <script type="text/javascript">
 	function storeUpdate_move() {
 		document.getElementById('frm').action="/store/storeUpdate";
@@ -124,25 +113,20 @@
 		document.getElementById('frm').submit();
 	}
 	
-	function menuUpdate_move(menuNum) {
-		document.getElementById('frm'+menuNum).action="/menu/menuUpdate";
-		document.getElementById('frm'+menuNum).submit();
+	function categoryUpdate_move(num) {
+		document.getElementById('frm'+num).action="/menu/categoryUpdate";
+		document.getElementById('frm'+num).submit();
 	}
 	
-	function menuDelete_move(menuNum) {
+	function categoryDelete_move(num) {
 	    if(confirm("선택하신 메뉴를 정말 삭제하시겠습니까?")) {
-			document.getElementById('frm'+menuNum).action="/menu/menuDelete";
-			document.getElementById('frm'+menuNum).submit();
+			document.getElementById('frm'+num).action="/menu/categoryDelete";
+			document.getElementById('frm'+num).submit();
 	    }
 	}
 	
-	function menuRegister_move() {
-		document.getElementById('frm').action="/menu/menuRegister";
-		document.getElementById('frm').submit();
-	}
-	
-	function category_move() {
-		document.getElementById('frm').action="/menu/menuCategory";
+	function categoryRegister_move() {
+		document.getElementById('frm').action="/menu/categoryRegister";
 		document.getElementById('frm').submit();
 	}
 </script>
