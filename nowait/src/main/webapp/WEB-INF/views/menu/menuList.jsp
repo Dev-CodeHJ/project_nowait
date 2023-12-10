@@ -5,8 +5,6 @@
 <%@include file="../includes/header.jsp" %>
 <style>
 	table {
-	margin-left: 15%;
-	width: 550px;
     border: 1px solid black;
     border-collapse: collapse;
 	}
@@ -43,71 +41,78 @@
 		
 		<!-- body -->
 		  <div class="col-md-9">
-         		<h2 style="padding: 10px; margin-left: 32%;">메뉴관리 페이지</h2>
-				  <section class="food_section layout_padding-bottom">
-				    <div class="container">
-			            <c:forEach items="${menuList}" var="menu">
-				        	<form id="frm${menu.menuNum}" action="/menu/menuUpdate">
-					        	<table>
-					            	<tr>
-					            		<th rowspan="3">
-					            			메뉴이름<br>${menu.menuName}
-				            			</th>
-					            		<td>가격 : ${menu.price}원</td>
-					            		<th rowspan="3"><img src="/resources/images/f2.png" alt=""></th>
-					            	</tr>
-					            	<tr>
-					            		<td>
-					            			<c:choose>
-						            			<c:when test="${menu.popularity eq 1}">
-						            				인기메뉴
-						            			</c:when>
-						            			<c:otherwise>-</c:otherwise>
-					            			</c:choose>
-					            		</td>
-				            		</tr>
-				            		<tr>
-					            		<td>
-					            		<c:choose>
-						            			<c:when test="${menu.menuStatus eq 1}">
-						            				상태 : 품절
-						            			</c:when>
-						            			<c:otherwise>상태 : 판매가능</c:otherwise>
-					            			</c:choose>
-					            		
-					            		</td>
-				            		</tr>
-						            <tr>
-						            	<td colspan="3">
-						       				<button type="submit" class="btn btn-primary" style="margin: 30px;" onclick="menuUpdate_move(${menu.menuNum})">메뉴정보 수정</button>
-						           			<button type="submit" class="btn btn-danger" style="margin: 30px;" onclick="menuDelete_move(${menu.menuNum})">메뉴정보 삭제</button>
-						            	</td>
-						          	</tr>
-						          	<tr style="display: none;">
-						          		<td>
-					           				<input type="text" name="menuNum" value="${menu.menuNum}">
-						       			</td>
-						   			</tr>
-					        	</table>
-				        	</form>
-			            </c:forEach>
-			            <form id="frm" action="/menu/menuList">
-	           				<input type="hidden" name="crNum" value="${crNum}">
-	           			</form>
-			            <div class="btn-box" style="margin-right: 20%;">
-					    	<a href="#" onclick="menuRegister_move()">메뉴 등록</a>
-					    	<a href="#" onclick="category_move()" style="margin-left: 20px;">카테고리 관리</a>
-					    </div>
+			  <section class="food_section layout_padding-bottom">
+			    <div class="container">
+         			<h2 style="padding: 10px; margin-left: 25%;">메뉴관리 페이지</h2>
+		            <c:forEach items="${menuList}" var="menu">
+			        	<form id="frm${menu.menuNum}" action="/menu/menuUpdate">
+				        	<table>
+				            	<tr>
+				            		<th>메뉴 이름</th><th>메뉴 카테고리</th><th>가격</th><th>인기메뉴 여부</th><th>품절 여부</th><th rowspan="2"><img src="${menu.menuImg}" alt=""></th>
+				            	</tr>
+				            	<tr>
+				            		<td>${menu.menuName}</td>
+				            		<td>
+				            			<c:forEach items="${menuCategoryList}" var="menuCategory">
+					            			<c:if test="${menu.menuCategory eq menuCategory.name}">
+					            				${menuCategory.value}
+					            			</c:if>
+				            			</c:forEach>
+				            		</td>
+				            		<td>${menu.price}원</td>
+				            		<td>
+				            			<c:forEach items="${popularityList}" var="popular">
+					            			<c:if test="${menu.popularity eq popular.name}">
+					            				${popular.value}
+					            			</c:if>
+				            			</c:forEach>
+				            		</td>
+				            		<td>
+				            			<c:forEach items="${menuStatusList}" var="status">
+					            			<c:if test="${menu.menuStatus eq status.name}">
+					            				${status.value}
+					            			</c:if>
+				            			</c:forEach>
+				            		</td>
+			            		</tr>
+					            <tr>
+					            	<td colspan="6">
+					       				<button type="submit" class="btn btn-primary" style="margin: 30px;" onclick="menuUpdate_move(${menu.menuNum})">메뉴정보 수정</button>
+					           			<button type="button" class="btn btn-danger" style="margin: 30px;" onclick="menuDelete_move(${menu.menuNum})">메뉴정보 삭제</button>
+					            	</td>
+					          	</tr>
+					          	<tr style="display: none;">
+					          		<td>
+				           				<input type="text" name="menuNum" value="${menu.menuNum}">
+					       			</td>
+					   			</tr>
+				        	</table>
+			        	</form>
+		            </c:forEach>
+		            <form id="frm" action="/menu/menuList">
+           				<input type="hidden" name="crNum" value="${crNum}">
+           			</form>
+		            <div class="btn-box" style="margin-right: 30%;">
+				    	<a href="#" onclick="category_move()">카테고리 관리</a>
+				    	<a href="#" onclick="menuRegister_move()" style="margin-left: 20px; background-color: green;">메뉴 등록</a>
+				    </div>
 			            <!-- 
 			             style="cursor:pointer;color:#blue;" onClick="location.href='/menu/menuGet?menuNum=${menu.menuNum}'"
 			             -->
-				    </div>
-				  </section>
+			    </div>
+			  </section>
 	      </div>
 	  </div>
 	</div>
 
   <%@include file="../includes/footer.jsp" %>
+<script type="text/javascript">
+	$(document).ready(function() {
+	  if(${deleteOk}==1){
+			alert("메뉴가 성공적으로 삭제되었습니다");
+		}
+    });
+</script>
 <script type="text/javascript">
 	function storeUpdate_move() {
 		document.getElementById('frm').action="/store/storeUpdate";

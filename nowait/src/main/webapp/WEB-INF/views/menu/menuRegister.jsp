@@ -71,7 +71,7 @@
 							</tr>
 							<tr>
 								<td>메뉴 사진</td>
-								<td><input type="file" name="menuImg" id="menuImg"></td>
+								<td><input type="file" name="file"></td>
 							</tr>
 							<tr>
 								<th>가격</th>
@@ -105,13 +105,16 @@
 							</tr>
 				            <tr>
 				            	<td colspan="2" align="center">
-				                   <div class="btn-box">
-				                      <a href="#" onclick="category_move()" style="background-color: blue;">카테고리관리</a>
-				                      <a href="#" onclick="return register_chk()" id="btn_register" style="background-color: green; margin-left: 20px;">등록하기</a>
+				                   <div class="btn-box" style="margin-top: 10px;">
+				                      <a href="#" onclick="menu_move()">메뉴 관리</a>
+				                      <a href="#" onclick="category_move()" style="margin-left: 20px; background-color: orange;">카테고리 관리</a>
 				                   </div>
 				            	</td>
 				          	</tr>
 				  	  	</table>
+				  	  	<div class="btn-box">
+	                    	<a href="#" onclick="return register_chk()" id="btn_register" style="background-color: green; margin-left: 20px;">등록하기</a>
+	                    </div>
 					</form>
 			      	<form id="frm" action="/menu/menuList">
 	          			<input type="hidden" name="crNum" value="${crNum}">

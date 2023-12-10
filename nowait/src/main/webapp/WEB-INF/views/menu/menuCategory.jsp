@@ -75,8 +75,9 @@
 			            <form id="frm" action="/menu/menuList">
 	           				<input type="hidden" name="crNum" value="${crNum}">
 	           			</form>
-			            <div class="btn-box">
-					    	<a href="#" onclick="categoryRegister_move()">카테고리 등록</a>
+			            <div class="btn-box" style="margin-right: 20%;">
+				    		<a href="#" onclick="menu_move()">메뉴 관리</a>
+					    	<a href="#" onclick="categoryRegister_move()" style="margin-left: 20px; background-color: green;">카테고리 등록</a>
 					    </div>
 			            <!-- 
 			             style="cursor:pointer;color:#blue;" onClick="location.href='/menu/menuGet?menuNum=${menu.menuNum}'"

@@ -21,7 +21,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from code where cr_num = #{crNum} and name = #{name}
 	</select>
 	
-	<select id="selectCnt" resultType="ezen.nowait.code.domain.CodeVO">
+	<select id="selectCnt" parameterType="hashMap" resultType="_int">
 		select count(*) from code where cr_num = #{crNum} and name = #{name}
 	</select>
 	

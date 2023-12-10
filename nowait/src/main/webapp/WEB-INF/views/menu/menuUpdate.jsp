@@ -60,9 +60,10 @@
 								<th>메뉴 카테고리</th>
 								<td>
 									<select name="menuCategory" id="menuCategory">
-										<option value="99" selected="selected">-선택-</option>
 										<c:forEach items="${menuCategoryList}" var="menuCategory">
-											<option value="${menuCategory.name}">
+											<option value="${menuCategory.name}"
+												<c:if test="${menu.menuCategory eq menuCategory.name}">selected="selected"</c:if>
+											>
 												${menuCategory.value}
 											</option>
 										</c:forEach>
@@ -81,9 +82,10 @@
 								<th>인기메뉴 여부</th>
 								<td>
 									<select name="popularity" id="popularity">
-										<option value="99" selected="selected">-선택-</option>
 										<c:forEach items="${popularityList}" var="popular">
-											<option value="${popular.name}">
+											<option value="${popular.name}"
+												<c:if test="${menu.popularity eq popular.name}">selected="selected"</c:if>
+											>
 												${popular.value}
 											</option>
 										</c:forEach>
@@ -94,9 +96,10 @@
 								<th>품절 여부</th>
 								<td>
 									<select name="menuStatus" id="menuStatus">
-										<option value="99" selected="selected">-선택-</option>
 										<c:forEach items="${menuStatusList}" var="status">
-											<option value="${status.name}">
+											<option value="${status.name}"
+												<c:if test="${menu.menuStatus eq status.name}">selected="selected"</c:if>
+											>
 												${status.value}
 											</option>
 										</c:forEach>
@@ -114,7 +117,7 @@
 				  	  	</table>
 					</form>
 			      	<form id="frm" action="/menu/menuList">
-	          			<input type="hidden" name="crNum" value="${crNum}">
+	          			<input type="hidden" name="crNum" value="${menu.crNum}">
 	          		</form>
 			    </div>
 			  </section>

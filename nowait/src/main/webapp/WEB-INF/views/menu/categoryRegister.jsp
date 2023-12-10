@@ -67,7 +67,8 @@
 				            	<td colspan="2" align="center">
 				                   <div class="btn-box">
 				                      <a href="#" onclick="category_move()" style="background-color: blue;">카테고리관리</a>
-				                      <button type="button" class="btn btn-success" onclick="return register_chk()" id="btn_register" style="margin: 30px;">등록하기</button>
+				                      <a href="#" onclick="return register_chk()" id="btn_register" style="margin-left: 30px; background-color: green;">등록하기</a>
+				                      <!-- <button type="button" class="btn btn-success" onclick="return register_chk()" id="btn_register" style="margin: 30px;">등록하기</button> -->
 				                   </div>
 				            	</td>
 				          	</tr>
@@ -106,9 +107,6 @@
 	      document.getElementById('frm1').submit();
           return true;
 	  });
-	  if(${insertOk}==0){
-			alert("이미 존재하는 카테고리 번호입니다!");
-		}
     });
 </script>
 <script type="text/javascript">

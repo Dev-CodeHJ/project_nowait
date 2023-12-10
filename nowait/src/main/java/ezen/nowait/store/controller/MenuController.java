@@ -1,14 +1,20 @@
 package ezen.nowait.store.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ezen.nowait.code.domain.CodeVO;
@@ -16,18 +22,21 @@ import ezen.nowait.code.service.CodeService;
 import ezen.nowait.store.domain.MenuVO;
 import ezen.nowait.store.service.MenuService;
 import ezen.nowait.store.service.StoreService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequestMapping("/menu")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class MenuController {
 
-	private MenuService menuService;
+	private final MenuService menuService;
 	
-	private StoreService storeService;
+	private final StoreService storeService;
 	
-	private CodeService codeService;
+	private final CodeService codeService;
+	
+	@Value("C:\\Users\\user\\git\\project_nowait\\nowait\\src\\main\\webapp\\resources\\images\\")
+    private String fileDir;
 	
 	HttpSession session;
 	
@@ -37,7 +46,13 @@ public class MenuController {
 		System.out.println("/menu/menulist crNum : " + crNum);
 		
 		List<MenuVO> menuList = menuService.findMenuList(crNum);
+		List<CodeVO> list = codeService.findListByCrNum(crNum);
+		List<CodeVO> popularityList = codeService.findList("popularity");
+		List<CodeVO> menuStatusList = codeService.findList("menu_status");
 		
+		model.addAttribute("menuCategoryList", list);
+		model.addAttribute("popularityList", popularityList);
+		model.addAttribute("menuStatusList", menuStatusList);
 		model.addAttribute("crNum", crNum);
 		model.addAttribute("menuList", menuList);
 	}
@@ -57,10 +72,17 @@ public class MenuController {
 		model.addAttribute("crNum", crNum);
 	}
 	
+	@ResponseBody
 	@PostMapping("/menuRegister")
-	public String menuRegister(MenuVO mVO, Model model) {
+	public String menuRegister(@ModelAttribute MultipartFile file, MenuVO mVO, Model model) throws IOException {
 		
 		System.out.println("--post--/menu/menuRegister");
+		
+		if (!file.isEmpty()) {
+            String fullPath = fileDir + file.getOriginalFilename();
+            file.transferTo(new File(fullPath));
+            mVO.setMenuImg("/resources/images/"+file.getOriginalFilename());
+        }
 		
 		int result = menuService.addMenu(mVO);
 		
@@ -68,7 +90,7 @@ public class MenuController {
 		
 		model.addAttribute("menuList", menuList);
 		
-		return "/menu/menuList";
+		return "redirect:/menu/menuList";
 	}
 	
 	@GetMapping("/menuCategory")
@@ -123,10 +145,16 @@ public class MenuController {
 	}
 	
 	@GetMapping("/menuDelete")
-	public void delete(int menuNum) {
+	public String delete(int menuNum, RedirectAttributes rttr) {
 		
 		System.out.println("/menu/menuDelete menuNum : " + menuNum);
 		
-		int result = menuService.deleteMenu(menuNum);
+		rttr.addAttribute("crNum", menuService.findMenu(menuNum).getCrNum());
+		
+		int deleteOk = menuService.deleteMenu(menuNum);
+		
+		rttr.addFlashAttribute("deleteOk", deleteOk);
+		
+		return "redirect:/menu/menuList";
 	}
 }
