@@ -11,23 +11,35 @@
 	    	<div class="heading_container heading_center" style="padding-top: 20px;">
 	        	<h2>내 가게 관리</h2>
 	      	</div>
+	      	
+	      <ul class="filters_menu">
+	        <li class="active" data-filter="*">All</li>
+	        <li data-filter=".1">한식</li>
+	        <li data-filter=".2">일식</li>
+	        <li data-filter=".3">중식</li>
+	        <li data-filter=".4">양식</li>
+	        <li data-filter=".5">카페&디저트</li>
+	      </ul>
+	
 	      	<div class="filters-content">
 		        <div class="row grid">
 			      <c:forEach items="${list}" var="store">
+			      <div class="col-sm-6 col-lg-4 all ${store.storeCategory}">
 		            <div class="box">
 		              <div>
 		                <div class="img-box">
-		                  <img src="/resources/images/f1.png" alt="">
+		                  <!-- <input type="image" src="/resources/images/f1.png" onclick="location.href='/store/storeOwnerGet"> -->
+		                  <a href="/store/storeOwnerGet/${store.crNum}">
+		                  	<img src="/resources/images/f1.png" alt="">
+		                  	<!-- <input type="hidden" name="crNum" value="${store.crNum}">-->
+		                  </a>
 		                </div>
 		                <div class="detail-box">
-		                  <h5>
-		                    ${store.crNum}
-		                  </h5>
-		                  <p>
-		                    ${store.storeName}
-		                  </p>
+		                  <h5>${store.crNum}</h5>
+		                  <p>${store.storeName}</p>
 		                </div>
 		              </div>
+		            </div>
 		            </div>
 			      </c:forEach>
 			    </div>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ezen.nowait.store.mapper.MenuMapper">
+
+	<select id="selectMenuList" resultType="ezen.nowait.store.domain.MenuVO">
+		select * from menu where cr_num = #{crNum}
+	</select>
+	
+	<select id="selectMenu" resultType="ezen.nowait.store.domain.MenuVO">
+		select * from menu where menu_num = #{menuNum}
+	</select>
+	
+	<insert id="insertMenu">
+		insert into menu
+		values(null, #{crNum}, #{menuCategory}, #{menuName}, #{menuImg}, #{price}, #{popularity}, #{menuStatus})
+	</insert>
+	
+	<update id="updateMenu">
+		update menu
+		set menu_category = #{menuCategory},
+		menu_name = #{menuName},
+		menu_img = #{menuImg},
+		price = #{price},
+		popularity = #{popularity},
+		menu_status = #{menuStatus}
+		where menu_num = #{menuNum}
+	</update>
+	
+	<delete id="deleteMenu">
+		delete from menu where menu_num = #{menuNum}
+	</delete>
+	
+</mapper>

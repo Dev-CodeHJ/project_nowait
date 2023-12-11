@@ -22,7 +22,7 @@
          	<tr>
                <th>*아이디</th>
                <td>
-	               <input type="text" name="ownerId" id="ownerId" readonly="readonly" value="${member.ownerId}" style="text-align: center; background-color: silver;" >
+	               <input type="text" name="ownerId" id="ownerId" readonly="readonly" value="${member.ownerId}" style="text-align: center; background-color: silver;">
                </td>
             </tr>
             <tr>

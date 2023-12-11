@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 
 import ezen.nowait.member.domain.OwnerVO;
 import ezen.nowait.member.mapper.OwnerMapper;
+import ezen.nowait.store.mapper.StoreMapper;
+import ezen.nowait.store.service.StoreService;
 import lombok.AllArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -16,6 +18,9 @@ public class OwnerServiceImpl implements OwnerService{
 	
 	@Setter(onMethod_ = @Autowired)
 	private OwnerMapper ownerMapper;
+	
+	@Setter(onMethod_ = @Autowired)
+	private StoreMapper storeMapper;
 	
 	@Override
 	public OwnerVO findOwner(String ownerId) {
@@ -42,8 +47,14 @@ public class OwnerServiceImpl implements OwnerService{
 		log.info("deleteOwner............." + ownerPw);
 		OwnerVO oVO = ownerMapper.selectOwner(ownerId);
 		if(oVO != null) {
+			
 			if(oVO.getOwnerPw().equals(ownerPw)) {
-				return ownerMapper.deleteOwner(ownerId);
+			
+				int result = storeMapper.deleteAllByOwnerId(ownerId);
+				if(result >= 1) {
+					
+					return ownerMapper.deleteOwner(ownerId);
+				}
 			}
 		}
 		return 0;

@@ -6,6 +6,7 @@ import lombok.Data;
 public class StoreVO {
 
 	private String crNum;
+	private String secretCode;
 	private String storeName;
 	private int storeCategory;
 	private String storeAddr;
