@@ -1,16 +1,18 @@
 package ezen.nowait.store.controller;
 
-import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,6 +22,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ezen.nowait.code.domain.CodeVO;
 import ezen.nowait.code.service.CodeService;
 import ezen.nowait.store.domain.MenuVO;
+import ezen.nowait.store.domain.UploadFile;
+import ezen.nowait.store.service.FileStore;
 import ezen.nowait.store.service.MenuService;
 import ezen.nowait.store.service.StoreService;
 import lombok.RequiredArgsConstructor;
@@ -35,8 +39,7 @@ public class MenuController {
 	
 	private final CodeService codeService;
 	
-	@Value("C:\\Users\\user\\git\\project_nowait\\nowait\\src\\main\\webapp\\resources\\images\\")
-    private String fileDir;
+	private final FileStore	fileStore;
 	
 	HttpSession session;
 	
@@ -72,23 +75,91 @@ public class MenuController {
 		model.addAttribute("crNum", crNum);
 	}
 	
-	@ResponseBody
 	@PostMapping("/menuRegister")
-	public String menuRegister(@ModelAttribute MultipartFile file, MenuVO mVO, Model model) throws IOException {
+	public String menuRegister(@ModelAttribute MultipartFile file, MenuVO mVO, RedirectAttributes rttr) throws IOException {
 		
 		System.out.println("--post--/menu/menuRegister");
 		
 		if (!file.isEmpty()) {
-            String fullPath = fileDir + file.getOriginalFilename();
-            file.transferTo(new File(fullPath));
-            mVO.setMenuImg("/resources/images/"+file.getOriginalFilename());
+			
+            UploadFile uploadFile = fileStore.storeFile(file);
+            System.out.println("uploadFile : " + uploadFile);
+            
+//            mVO.setMenuImg("/resources/images/"+uploadFile.getStoreFileName());
+            mVO.setUploadFileName(uploadFile.getUploadFileName());
+            mVO.setStoreFileName(uploadFile.getStoreFileName());
         }
 		
-		int result = menuService.addMenu(mVO);
+		int insertOk = menuService.addMenu(mVO);
 		
-		List<MenuVO> menuList = menuService.findMenuList(mVO.getCrNum());
+		System.out.println("insertOk : " + insertOk);
 		
-		model.addAttribute("menuList", menuList);
+		rttr.addFlashAttribute("insertOk", insertOk);
+		rttr.addAttribute("crNum", mVO.getCrNum());
+		
+		return "redirect:/menu/menuList";
+	}
+	
+	@ResponseBody
+    @GetMapping("/images/{filename}")
+    public Resource downloadImage(@PathVariable String filename) throws MalformedURLException {
+        return (Resource) new UrlResource("file:" + fileStore.getFullPath(filename));
+    }
+	
+	@GetMapping("/menuUpdate")
+	public void menuUpdate(int menuNum, Model model) {
+		
+		System.out.println("/menu/menuUpdate menuNum : " + menuNum);
+		
+		MenuVO mVO = menuService.findMenu(menuNum);
+		
+		List<CodeVO> list = codeService.findListByCrNum(mVO.getCrNum());
+		List<CodeVO> popularityList = codeService.findList("popularity");
+		List<CodeVO> menuStatusList = codeService.findList("menu_status");
+		
+		model.addAttribute("menuCategoryList", list);
+		model.addAttribute("popularityList", popularityList);
+		model.addAttribute("menuStatusList", menuStatusList);
+		model.addAttribute("menu", mVO);
+	}
+	
+	@PostMapping("/menuUpdate")
+	public String menuUpdate(@ModelAttribute MultipartFile file, MenuVO mVO, RedirectAttributes rttr) throws IOException {
+		
+		System.out.println("--post--/menu/menuUpdate");
+		
+		if (!file.isEmpty()) {
+			
+            UploadFile uploadFile = fileStore.storeFile(file);
+            System.out.println("uploadFile : " + uploadFile);
+            
+//            mVO.setMenuImg("/resources/images/"+uploadFile.getStoreFileName());
+            mVO.setUploadFileName(uploadFile.getUploadFileName());
+            mVO.setStoreFileName(uploadFile.getStoreFileName());
+        }
+		
+		System.out.println("category : " + mVO.getMenuCategory());
+		
+		int updateOk = menuService.updateMenu(mVO);
+		
+		System.out.println("updateOk : " + updateOk);
+		
+		rttr.addFlashAttribute("updateOk", updateOk);
+		rttr.addAttribute("crNum", mVO.getCrNum());
+		
+		return "redirect:/menu/menuList";
+	}
+	
+	@GetMapping("/menuDelete")
+	public String menuDelete(int menuNum, RedirectAttributes rttr) {
+		
+		System.out.println("/menu/menuDelete menuNum : " + menuNum);
+		
+		rttr.addAttribute("crNum", menuService.findMenu(menuNum).getCrNum());
+		
+		int deleteOk = menuService.deleteMenu(menuNum);
+		
+		rttr.addFlashAttribute("deleteOk", deleteOk);
 		
 		return "redirect:/menu/menuList";
 	}
@@ -127,34 +198,44 @@ public class MenuController {
 		return "redirect:/menu/menuCategory";
 	}
 	
-	@GetMapping("/menuUpdate")
-	public void update(int menuNum, Model model) {
+	@GetMapping("/categoryUpdate")
+	public void categoryRegister(String crNum, int name, Model model) {
 		
-		System.out.println("/menu/menuUpdate menuNum : " + menuNum);
+		System.out.println("/menu/categoryUpdate crNum : " + crNum);
+		System.out.println("/menu/categoryUpdate name : " + name);
 		
-		MenuVO mVO = menuService.findMenu(menuNum);
+		CodeVO cVO = codeService.findMenuCategory(crNum, name);
 		
-		List<CodeVO> list = codeService.findListByCrNum(mVO.getCrNum());
-		List<CodeVO> popularityList = codeService.findList("popularity");
-		List<CodeVO> menuStatusList = codeService.findList("menu_status");
-		
-		model.addAttribute("menuCategoryList", list);
-		model.addAttribute("popularityList", popularityList);
-		model.addAttribute("menuStatusList", menuStatusList);
-		model.addAttribute("menu", mVO);
+		model.addAttribute("category", cVO);
 	}
 	
-	@GetMapping("/menuDelete")
-	public String delete(int menuNum, RedirectAttributes rttr) {
+	@PostMapping("/categoryUpdate")
+	public String categoryUpdate(int getName, CodeVO cVO, RedirectAttributes rttr) {
 		
-		System.out.println("/menu/menuDelete menuNum : " + menuNum);
+		System.out.println("/menu/categoryUpdate getName : " + getName);
 		
-		rttr.addAttribute("crNum", menuService.findMenu(menuNum).getCrNum());
+		int updateOk = codeService.updateMenuCategory(getName, cVO);
 		
-		int deleteOk = menuService.deleteMenu(menuNum);
+		System.out.println("updateOk : " + updateOk);
+		
+		rttr.addFlashAttribute("updateOk", updateOk);
+		rttr.addAttribute("crNum", cVO.getCrNum());
+		
+		return "redirect:/menu/menuCategory";
+	}
+	
+	@GetMapping("/categoryDelete")
+	public String categoryDelete(String crNum, int name, RedirectAttributes rttr) {
+		
+		System.out.println("/menu/categoryDelete");
+		
+		int deleteOk = codeService.deleteMenuCategory(crNum, name);
+
+		System.out.println("deleteOk : " + deleteOk);
 		
 		rttr.addFlashAttribute("deleteOk", deleteOk);
+		rttr.addAttribute("crNum", crNum);
 		
-		return "redirect:/menu/menuList";
+		return "redirect:/menu/menuCategory";
 	}
 }

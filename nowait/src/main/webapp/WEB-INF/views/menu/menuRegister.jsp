@@ -130,6 +130,8 @@
 	$(document).ready(function() {
     $("#btn_register").click(function register_chk() {
     	  
+    	var num_pattern = /\d/;
+    	
 	      if ($("#menuName").val() == "") {
 	          alert("메뉴 이름을 입려해주세요!");
 	          $("#menuName").focus();
@@ -138,6 +140,11 @@
 	      } else if ($("#menuCategory").val() == "99") {
 	          alert("메뉴 카테고리를 선택해주세요!");
 	          $("#menuCategory").focus();
+	          return false;
+	          
+	      } else if (!num_pattern.test($("#price").val())) {
+	          alert("가격에는 숫자만 들어갈 수 있습니다!");
+	          $("#price").focus();
 	          return false;
 	          
 	      } else if ($("#popularity").val() == "99") {

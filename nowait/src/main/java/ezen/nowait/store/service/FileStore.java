@@ -15,7 +15,7 @@ import ezen.nowait.store.domain.UploadFile;
 @Component
 public class FileStore {
 
-	@Value("C:\\Users\\user\\git\\project_nowait\\nowait\\src\\main\\webapp\\resources\\images\\")
+	@Value("C:\\Users\\admin\\git\\project_nowait\\nowait\\src\\main\\webapp\\resources\\images\\")
     private String fileDir;
 
     public String getFullPath(String filename) {

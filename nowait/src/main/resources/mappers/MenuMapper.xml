@@ -15,18 +15,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<insert id="insertMenu">
 		insert into menu
-		values(null, #{crNum}, #{menuCategory}, #{menuName}, #{menuImg}, #{price}, #{popularity}, #{menuStatus})
+		values(null, #{crNum}, #{menuCategory}, #{menuName}, #{uploadFileName}, #{storeFileName}, #{price}, #{popularity}, #{menuStatus})
 	</insert>
 	
 	<update id="updateMenu">
 		update menu
 		set menu_category = #{menuCategory},
 		menu_name = #{menuName},
-		menu_img = #{menuImg},
+		upload_file_name = #{uploadFileName},
+		store_file_name = #{storeFileName},
 		price = #{price},
 		popularity = #{popularity},
 		menu_status = #{menuStatus}
 		where menu_num = #{menuNum}
+	</update>
+	
+	<update id="updateMenuCategory" parameterType="hashMap">
+		update menu
+		set menu_category = #{setCategory}
+		where cr_num = #{crNum}
+		and menu_category = #{menuCategory}
 	</update>
 	
 	<delete id="deleteMenu">

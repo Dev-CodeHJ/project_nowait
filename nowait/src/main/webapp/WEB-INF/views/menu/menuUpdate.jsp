@@ -45,12 +45,13 @@
 		  <div class="col-md-9">
 			  <section class="food_section layout_padding-bottom">
 			    <div class="container">
-		            <form id="frm1" action="/menu/menuRegister" enctype="multipart/form-data" method="post" style="padding: 100px;">
+		            <form id="frm1" action="/menu/menuUpdate" enctype="multipart/form-data" method="post" style="padding: 100px;">
 				        <h2 align="center">메뉴 수정 페이지</h2>
 				         
 				        <table>
 				            <tr style="display: none;">
-								<td><input type="text" name="crNum" id="crNum" value="${crNum}"></td>
+								<td><input type="text" name="menuNum" id="menuNum" value="${menu.menuNum}"></td>
+								<td><input type="text" name="crNum" id="crNum" value="${menu.crNum}"></td>
 							</tr>
 				            <tr>
 				               <th>메뉴 이름</th>
@@ -72,11 +73,11 @@
 							</tr>
 							<tr>
 								<td>메뉴 사진</td>
-								<td><input type="file" name="menuImg" id="menuImg"></td>
+								<td><input type="file" name="file" id="file" value="${menu.uploadFileName}"></td>
 							</tr>
 							<tr>
 								<th>가격</th>
-								<td><input type="text" name="price" id="price"></td>
+								<td><input type="text" name="price" id="price" value="${menu.price}"></td>
 							</tr>
 							<tr>
 								<th>인기메뉴 여부</th>
@@ -110,7 +111,7 @@
 				            	<td colspan="2" align="center">
 				                   <div class="btn-box">
 				                      <a href="#" onclick="category_move()" style="background-color: blue;">카테고리관리</a>
-				                      <a href="#" onclick="return register_chk()" id="btn_register" style="background-color: green; margin-left: 20px;">등록하기</a>
+				                      <a href="#" onclick="return register_chk()" id="btn_register" style="background-color: green; margin-left: 20px;">수정완료</a>
 				                   </div>
 				            	</td>
 				          	</tr>

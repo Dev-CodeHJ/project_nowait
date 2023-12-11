@@ -18,7 +18,7 @@ public interface CodeService {
 	
 	public int insertMenuCategory(CodeVO cVO);
 	
-	public int updateMenuCategory(String crNum, int name, CodeVO cVO);
+	public int updateMenuCategory(int name, CodeVO cVO);
 	
 	public int deleteMenuCategory(String crNum, int name);
 }

@@ -23,13 +23,13 @@
 	
 	      	<div class="filters-content">
 		        <div class="row grid">
-			      <c:forEach items="${list}" var="store">
+			      <c:forEach items="${list}" var="store" varStatus="status">
 			      <div class="col-sm-6 col-lg-4 all ${store.storeCategory}">
 		            <div class="box">
 		              <div>
 		                <div class="img-box">
 		                  <!-- <input type="image" src="/resources/images/f1.png" onclick="location.href='/store/storeOwnerGet"> -->
-		                  <a href="/store/storeOwnerGet/${store.crNum}">
+		                  <a href="#" onclick="storeGet_move(${status.index})">
 		                  	<img src="/resources/images/f1.png" alt="">
 		                  	<!-- <input type="hidden" name="crNum" value="${store.crNum}">-->
 		                  </a>
@@ -41,11 +41,20 @@
 		              </div>
 		            </div>
 		            </div>
+		            <form id="frm${status.index}" action="/store/storeOwnerGet">
+           				<input type="hidden" name="crNum" value="${store.crNum}">
+           			</form>
 			      </c:forEach>
 			    </div>
 	    	</div>
 	    </div>
   	</section>
   <%@include file="../includes/footer.jsp" %>
+<script type="text/javascript">
+	function store_move(num) {
+	    document.getElementById('frm'+num).action="/store/storeOwnerGet";
+		document.getElementById('frm'+num).submit();
+	}
+</script>
 </body>
 </html>

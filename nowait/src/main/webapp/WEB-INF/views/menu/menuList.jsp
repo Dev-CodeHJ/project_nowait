@@ -8,7 +8,14 @@
     border: 1px solid black;
     border-collapse: collapse;
 	}
-	th, td {
+	th {
+    text-align: center;
+    border: 1px solid black;
+    padding: 10px;
+    }
+    td {
+    color: orange;
+    font-weight: bold;
     text-align: center;
     border: 1px solid black;
     padding: 10px;
@@ -30,8 +37,7 @@
 			  </div>
 				<!-- 사이드바 메뉴목록1 -->
 				<ul class="list-group">
-				  <li class="list-group-item"><a href="#" onclick="storeUpdate_move()">가게정보 수정</a></li>
-				  <li class="list-group-item"><a href="#" onclick="storeDelete_move()">가게정보 삭제</a></li>
+				  <li class="list-group-item"><a href="#" onclick="store_move()">가게관리</a></li>
 				  <li class="list-group-item"><a href="#" onclick="menu_move()">메뉴관리</a></li>
 				  <li class="list-group-item"><a href="#">리뷰관리</a></li>
 				  <li class="list-group-item"><a href="#">주문&예약관리</a></li>
@@ -48,7 +54,11 @@
 			        	<form id="frm${menu.menuNum}" action="/menu/menuUpdate">
 				        	<table>
 				            	<tr>
-				            		<th>메뉴 이름</th><th>메뉴 카테고리</th><th>가격</th><th>인기메뉴 여부</th><th>품절 여부</th><th rowspan="2"><img src="${menu.menuImg}" alt=""></th>
+				            		<th>메뉴 이름</th><th>메뉴 카테고리</th><th>가격</th><th>인기메뉴 여부</th><th>품절 여부</th>
+				            		<th rowspan="3">
+				            			<!-- <img src="|/images/${imageFile.getStoreFileName()}|" width="300" height="300"/> -->
+				            			<img src="/resources/images/${menu.storeFileName}" alt="${menu.uploadFileName}" width="200" height="200">
+				            		</th>
 				            	</tr>
 				            	<tr>
 				            		<td>${menu.menuName}</td>
@@ -76,8 +86,8 @@
 				            		</td>
 			            		</tr>
 					            <tr>
-					            	<td colspan="6">
-					       				<button type="submit" class="btn btn-primary" style="margin: 30px;" onclick="menuUpdate_move(${menu.menuNum})">메뉴정보 수정</button>
+					            	<td colspan="5">
+					       				<button type="submit" class="btn btn-info" style="margin: 30px;" onclick="menuUpdate_move(${menu.menuNum})">메뉴정보 수정</button>
 					           			<button type="button" class="btn btn-danger" style="margin: 30px;" onclick="menuDelete_move(${menu.menuNum})">메뉴정보 삭제</button>
 					            	</td>
 					          	</tr>
@@ -109,18 +119,15 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 	  if(${deleteOk}==1){
-			alert("메뉴가 성공적으로 삭제되었습니다");
+			alert("메뉴가 성공적으로 삭제되었습니다.");
+		} else if(${deleteOk}==1){
+			alert("메뉴 삭제에 실패하셨습니다!");
 		}
     });
 </script>
 <script type="text/javascript">
-	function storeUpdate_move() {
-		document.getElementById('frm').action="/store/storeUpdate";
-		document.getElementById('frm').submit();
-	}
-	
-	function storeDelete_move() {
-	    document.getElementById('frm').action="/store/storeDelete";
+	function store_move() {
+	    document.getElementById('frm').action="/store/storeOwnerGet";
 		document.getElementById('frm').submit();
 	}
 	

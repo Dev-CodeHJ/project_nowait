@@ -35,6 +35,7 @@ public class MenuServiceImpl implements MenuService{
 	@Override
 	public int updateMenu(MenuVO mVO) {
 
+		System.out.println("service update : " + mVO);
 		return menuMapper.updateMenu(mVO);
 	}
 

@@ -25,7 +25,7 @@ import lombok.extern.log4j.Log4j;
 
 @Controller
 @Log4j
-@RequestMapping("/store/*")
+@RequestMapping("/store")
 @AllArgsConstructor
 public class StoreController {
 
@@ -41,15 +41,14 @@ public class StoreController {
 //		model.addAttribute("store", storeService.findByCrNum(crNum));
 //	}
 	
-	@GetMapping(path = "/storeUserGet/{crNum}")
-	public String userGet(@PathVariable String crNum, Model model) {
+	@GetMapping("/storeUserGet")
+	public void userGet(String crNum, Model model) {
 		System.out.println("crNum : " + crNum);
 		model.addAttribute("store", storeService.findByCrNum(crNum));
-		return "/store/storeUserGet";
 	}
 	
-	@GetMapping(path = "/storeOwnerGet/{crNum}")
-	public String ownerGet(@PathVariable String crNum, Model model) {
+	@GetMapping("/storeOwnerGet")
+	public void ownerGet(String crNum, Model model) {
 		System.out.println("crNum : " + crNum);
 		
 		StoreVO sVO = storeService.findByCrNum(crNum);
@@ -57,8 +56,6 @@ public class StoreController {
 		
 		CodeVO cVO = codeService.findOne("store_category", sVO.getStoreCategory());
 		model.addAttribute("storeCategory", cVO);
-		
-		return "/store/storeOwnerGet";
 	}
 	
 //	@GetMapping("/getByCategory")
