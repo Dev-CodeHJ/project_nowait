@@ -27,8 +27,8 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<OrderVO> getOrderDetailList(String userId) {
-		return orderMapper.getOrderDetailList(userId);
+	public OrderVO getOrderDetailList(int orderNum) {
+		return orderMapper.getOrderDetailList(orderNum);
 	}
 
 	@Override

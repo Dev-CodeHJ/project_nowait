@@ -99,7 +99,9 @@ public class UserController {
 
 	//손님 리뷰관리 이동
 	@GetMapping("/userReview")
-	public void userReview() {}
+	public void userReview() {
+		System.out.println("zzzz");
+	}
 	
 	//손님 로그아웃 처리 페이지이동
 	@GetMapping("/userLogout")

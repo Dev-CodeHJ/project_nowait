@@ -14,10 +14,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<select id="getOrderDetailList" resultType="ezen.nowait.order.domain.OrderVO">
-		SELECT
-		*
-		FROM `order`
-		WHERE user_id=#{userId}
+		select 	o.order_num AS orderNum
+				, o.user_id AS userId
+		        , o.cr_num AS crNum
+		        , o.reserv_check AS reservCheck
+				, o.pay_method AS payMethod
+		        , o.reserv_num AS reservNum
+		        , o.reserv_time AS reservTime
+		        , o.order_time AS orderTime
+		        , o.total_price AS totalPrice
+		        , o.request_msg AS requestMsg
+		        , ifnull(r.review_num, 0) AS reviewNum
+		        , '가게이름' as storeName
+		        , '주문메뉴' as menuName
+		from 	`order` AS o
+				Left outer join
+		        review AS r
+		        ON	o.user_id 	= r.user_id
+					AND o.cr_num	= r.cr_num
+		            AND o.order_num	= r.order_num
+		WHERE o.order_num=#{orderNum}
+		;
 	</select>
 
 	<insert id="orderInsert">

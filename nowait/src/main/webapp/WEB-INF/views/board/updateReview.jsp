@@ -42,12 +42,8 @@
 			alert("리뷰내용이 없습니다");
 			$("#reviewContent").focus();
 			return false;
-		} if (str.replace("blank_pattern", '' ) == "" ){
-		    alert("리뷰내용이 없습니다");
-			$("#reviewContent").focus();
-			return false;
 		}  else {
-			alert("수정완료")
+			alert("수정완료");
 			document.getElementById('frm').submit();
 		}				
 	}

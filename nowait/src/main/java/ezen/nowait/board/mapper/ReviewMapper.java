@@ -15,6 +15,8 @@ public interface ReviewMapper {
 	public int deleteReview(int reviewNum);
 	
 	public int updateReview(ReviewVO rVO);
+	
+	public ReviewVO getReview2(String reviewContent);
 
 	//public List<ReviewVO> getListWithPaging(int rVO);
 }

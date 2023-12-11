@@ -11,34 +11,29 @@
 	<h1>회원주문상세조회</h1>
 	
     
-    		<table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
-
-			 <c:forEach items="${orderDetail}" var="orderDetail">
-			 
-		    		<table class="order_table">
-
+    		<table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">			 
+		     <table class="order_table">
                    <tr style="text-align: center; ">
-				   <td style="vertical-align : middle;">
-					<fmt:formatDate pattern="yy-MM-dd" value="${orderDetail.orderTime}"/>
-                   </td>
-                   </tr>
-								    		
+					   <td style="vertical-align : middle;">
+							<fmt:formatDate pattern="yy-MM-dd" value="${orderDetail.orderTime}"/>
+	                   </td>
+                   </tr>				    		
 		            <tr>
-					<th>주문번호</th>
-                    <td><c:out value="${orderDetail.orderNum}" ></c:out><onclick="location.href='/order/orderListDetail'"></td>
+						<th>주문번호</th>
+	                    <td><c:out value="${orderDetail.orderNum}" ></c:out></td>
 	                </tr>
 		            <tr>
-					<th>가게이름</th>
-					<td><c:out value="${store.storeName}"></c:out></td>
+						<th>가게이름</th>
+						<td><c:out value="${orderDetail.storeName}"></c:out></td>
 					</tr>
                     <tr>    
-                    <th>주문메뉴</th>
-                    <td><c:out value="${menu.menuName}"></c:out></td>
+	                    <th>주문메뉴</th>
+	                    <td><c:out value="${orderDetail.menuName}"></c:out></td>
                     </tr>
                     <tr>   
                     <th>메뉴옵션</th>
-                    <td><c:out value="${menuOption.option}"></c:out></td>
-                    </tr>
+	                    <td><c:out value="${menuOption.option}"></c:out></td>
+	                    </tr>
                     <tr>    
                     <th>예약유형</th>
                     <td><c:out value="${orderDetail.reservCheck}"></c:out></td>
@@ -61,14 +56,17 @@
                     <tr>    
                     <th>총금액</th>
                     <td><c:out value="${orderDetail.totalPrice}"></c:out></td>
-                    </tr>
-    	
-        
-     </table>
-	
-    		<button type="submit" data-oper='goreview' onclick="location.href='/board/insertReview?orderNum=<c:out value="${order.orderNum}"/>'">Go Review</button>    	
-   
-	</c:forEach>
+                    </tr>                   
+     		</table>
+            <c:if test="${orderDetail.reviewNum eq 0}">
+        		<button type="button" data-oper='goreview' onclick="location.href='/board/insertReview?orderNum=<c:out value="${orderDetail.orderNum}"/>'">리뷰작성</button>    
+            </c:if>
+ 		 	<c:if test="${orderDetail.reviewNum != 0}">
+        		<div style = "font-size:15px; color:red; width:100%;">
+        			<span style="padding:50px;">** 리뷰작성완료</span>
+        		</div>    
+            </c:if>
+    			    	
 		
 
 		<%@include file="../includes/footer.jsp" %>	

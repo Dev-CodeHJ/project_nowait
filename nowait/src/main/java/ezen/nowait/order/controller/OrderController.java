@@ -1,7 +1,5 @@
 package ezen.nowait.order.controller;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
-
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,8 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import ezen.nowait.member.domain.OwnerVO;
 import ezen.nowait.member.domain.UserVO;
 import ezen.nowait.member.service.UserService;
 import ezen.nowait.order.domain.OrderVO;
@@ -51,20 +49,12 @@ public class OrderController {
 	
 	//손님 주문별 상세조회 이동
 	@GetMapping("/orderDetailList")
-	public void orderDetailList(Model model, HttpServletRequest request) {
-		
-		session = request.getSession();
- 		 UserVO uVO = (UserVO) session.getAttribute("member");
-  		 
- 		List<OrderVO> orderDetail = orderservice.getOrderDetailList(uVO.getUserId());
- 		 System.out.println("주문상세조회");
- 		 
-		model.addAttribute("orderDetail", orderDetail);
+	public void orderDetailList(@RequestParam("orderNum") int orderNum, Model model) {
+		model.addAttribute("orderDetail",orderservice.getOrderDetailList(orderNum));
 	}
 
 	//손님상세페이지에서 리뷰쓰기페이지 이동
   	@PostMapping("/orderDetailList")
- 
 	public String OrderDetailList(Model model, HttpServletRequest request) {
 
 		return "redirect:/user/insertReview";

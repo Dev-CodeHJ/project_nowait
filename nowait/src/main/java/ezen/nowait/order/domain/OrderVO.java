@@ -9,7 +9,7 @@ public class OrderVO {
 	
 	private int orderNum;
 	private String userId;
-	private int crNum;
+	private String crNum;
 	private int reservCheck;
 	private int payMethod;
 	private int reservNum;
@@ -17,5 +17,7 @@ public class OrderVO {
 	private Date orderTime;
 	private int totalPrice;
 	private String requestMsg;
-	
+	private int reviewNum;
+	private String storeName;
+	private String menuName;
 }

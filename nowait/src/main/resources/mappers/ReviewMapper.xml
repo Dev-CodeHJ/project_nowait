@@ -9,9 +9,13 @@
 	</select>
 	
 	<insert id="insertReview">
-		insert into review(user_id,review_content,review_img)
-		values(#{userId}, #{reviewContent}, #{reviewImg})
+		insert into review(user_id,cr_num,order_num,review_content,review_img)
+		values(#{userId}, #{crNum}, #{orderNum}, #{reviewContent}, #{reviewImg})
 	</insert>
+	
+	<select id="getReview2" resultType="ezen.nowait.board.domain.ReviewVO">
+		select * from review where review_Content=#{reviewContent}
+	</select>
 	
 	<select id="getReview" resultType="ezen.nowait.board.domain.ReviewVO">
 		select * from review where review_num=#{reviewNum}

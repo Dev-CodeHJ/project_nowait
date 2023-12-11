@@ -16,4 +16,5 @@ public interface ReviewService {
 	
 	public int deleteReview(int reviewNum);
 	
+	public ReviewVO getReview2(String reviewContent);
 }

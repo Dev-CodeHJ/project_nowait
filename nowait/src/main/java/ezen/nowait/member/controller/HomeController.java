@@ -22,9 +22,9 @@ import lombok.AllArgsConstructor;
  * Handles requests for the application home page.
  */
 @Controller
+@AllArgsConstructor
 public class HomeController {
 	
-
 	private StoreService storeService;
 	
 	private UserService userservice;

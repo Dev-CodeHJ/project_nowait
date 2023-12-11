@@ -13,6 +13,6 @@ public interface OrderMapper {
 	public void orderInsert(OrderVO odVO);
 
 
-	public List<OrderVO> getOrderDetailList(String userId);
+	public OrderVO getOrderDetailList(int orderNum);
 
 }

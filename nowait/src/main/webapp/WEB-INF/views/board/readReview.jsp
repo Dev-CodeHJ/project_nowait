@@ -52,8 +52,7 @@
 	<script type="text/javascript">
 	function delete_chk(){
 		
-		if(confirm("리뷰를 삭제하시겠습니까?")){
-			alert("삭제되었습니다.");
+		if(confirm("리뷰를 삭제하시겠습니까?")){			
 			document.getElementById('frm').submit();	
 		}else{			
 			return false;

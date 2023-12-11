@@ -46,4 +46,12 @@ public class ReviewServiceImpl implements ReviewService {
 	public List<ReviewVO> getList(String userId) {
 		return reviewmapper.getList(userId);
 	}
+
+	
+	@Override
+	public ReviewVO getReview2(String reviewContent) {
+		return reviewmapper.getReview2(reviewContent);
+	}
+	
+	
 }
