@@ -32,8 +32,7 @@
 			  </div>
 				<!-- 사이드바 메뉴목록1 -->
 				<ul class="list-group">
-				  <li class="list-group-item"><a href="#" onclick="storeUpdate_move()">가게정보 수정</a></li>
-				  <li class="list-group-item"><a href="#" onclick="storeDelete_move()">가게정보 삭제</a></li>
+				  <li class="list-group-item"><a href="#" onclick="store_move()">가게관리</a></li>
 				  <li class="list-group-item"><a href="#" onclick="menu_move()">메뉴관리</a></li>
 				  <li class="list-group-item"><a href="#">리뷰관리</a></li>
 				  <li class="list-group-item"><a href="#">주문&예약관리</a></li>
@@ -73,7 +72,7 @@
 							</tr>
 							<tr>
 								<td>메뉴 사진</td>
-								<td><input type="file" name="file" id="file" value="${menu.uploadFileName}"></td>
+								<td><input type="file" name="file" id="file" value="${menu.storeFileName}"></td>
 							</tr>
 							<tr>
 								<th>가격</th>
@@ -110,7 +109,7 @@
 				            <tr>
 				            	<td colspan="2" align="center">
 				                   <div class="btn-box">
-				                      <a href="#" onclick="category_move()" style="background-color: blue;">카테고리관리</a>
+				                      <a href="#" onclick="menu_move()" style="background-color: blue;">메뉴관리</a>
 				                      <a href="#" onclick="return register_chk()" id="btn_register" style="background-color: green; margin-left: 20px;">수정완료</a>
 				                   </div>
 				            	</td>
@@ -157,23 +156,13 @@
     });
 </script>
 <script type="text/javascript">
-	function storeUpdate_move() {
-		document.getElementById('frm').action="/store/storeUpdate";
-		document.getElementById('frm').submit();
-	}
-	
-	function storeDelete_move() {
-	    document.getElementById('frm').action="/store/storeDelete";
+	function store_move() {
+	    document.getElementById('frm').action="/store/storeOwnerGet";
 		document.getElementById('frm').submit();
 	}
 	
 	function menu_move() {
 	    document.getElementById('frm').action="/menu/menuList";
-		document.getElementById('frm').submit();
-	}
-	
-	function category_move() {
-		document.getElementById('frm').action="/menu/menuCategory";
 		document.getElementById('frm').submit();
 	}
 </script>

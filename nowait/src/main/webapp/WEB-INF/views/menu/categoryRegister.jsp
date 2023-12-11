@@ -32,8 +32,7 @@
 			  </div>
 				<!-- 사이드바 메뉴목록1 -->
 				<ul class="list-group">
-				  <li class="list-group-item"><a href="#" onclick="storeUpdate_move()">가게정보 수정</a></li>
-				  <li class="list-group-item"><a href="#" onclick="storeDelete_move()">가게정보 삭제</a></li>
+				  <li class="list-group-item"><a href="#" onclick="store_move()">가게관리</a></li>
 				  <li class="list-group-item"><a href="#" onclick="menu_move()">메뉴관리</a></li>
 				  <li class="list-group-item"><a href="#">리뷰관리</a></li>
 				  <li class="list-group-item"><a href="#">주문&예약관리</a></li>
@@ -115,13 +114,8 @@
     });
 </script>
 <script type="text/javascript">
-	function storeUpdate_move() {
-		document.getElementById('frm').action="/store/storeUpdate";
-		document.getElementById('frm').submit();
-	}
-	
-	function storeDelete_move() {
-	    document.getElementById('frm').action="/store/storeDelete";
+	function store_move() {
+	    document.getElementById('frm').action="/store/storeOwnerGet";
 		document.getElementById('frm').submit();
 	}
 	

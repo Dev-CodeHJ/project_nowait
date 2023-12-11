@@ -19,10 +19,10 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		if(${deleteOk} == 0){
-			alert("${crNum} 비밀번호가 일치하지 않습니다!");
+			alert("비밀번호가 일치하지 않습니다!");
 			document.getElementById('frm').submit();
 		} else if(${deleteOk} == -1){
-			alert("${crNum} 존재하지 않는 사업자 등록번호입니다!");
+			alert("사업자 등록번호가 일치하지 않습니다!");
 			document.getElementById('frm').submit();
 		} else if(${deleteOk} == 1) {
 			alert("가게정보가 성공적으로 삭제되었습니다.");

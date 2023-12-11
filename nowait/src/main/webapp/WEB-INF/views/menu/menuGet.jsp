@@ -87,7 +87,7 @@
 			            		</tr>
 					            <tr>
 					            	<td colspan="5">
-					       				<button type="submit" class="btn btn-primary" style="margin: 30px;" onclick="menuGet_move(${menu.menuNum})">상세정보</button>
+					       				<button type="submit" class="btn btn-info" style="margin: 30px;" onclick="menuGet_move(${menu.menuNum})">상세정보</button>
 					       				<button type="submit" class="btn btn-info" style="margin: 30px;" onclick="menuUpdate_move(${menu.menuNum})">수정</button>
 					           			<button type="button" class="btn btn-danger" style="margin: 30px;" onclick="menuDelete_move(${menu.menuNum})">삭제</button>
 					            	</td>

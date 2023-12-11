@@ -14,7 +14,7 @@ public interface StoreService {
 	
 	public StoreVO findByCrNum(String crNum);
 	
-	public int addStore(StoreVO sVO);
+	public int addStore(String ownerId, StoreVO sVO);
 	
 	public int addOwnerStore(String ownerId, String crNum, String secretCode);
 	

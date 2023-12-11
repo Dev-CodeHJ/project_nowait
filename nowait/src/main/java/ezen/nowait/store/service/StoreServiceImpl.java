@@ -46,9 +46,25 @@ public class StoreServiceImpl implements StoreService {
 	}
 
 	@Override
-	public int addStore(StoreVO sVO) {
-		log.info("addStore......" + sVO);
-		return storeMapper.insertStore(sVO);
+	public int addStore(String ownerId, StoreVO sVO) {
+		
+		int result = 0;
+		StoreVO findStore = storeMapper.selectStoreByCrNum(sVO.getCrNum());
+		
+		if(findStore == null) {
+			
+			result = storeMapper.insertStore(sVO);
+			if(result == 1) {
+				
+				Map<String, Object> map = new HashMap<String, Object>();
+				
+				map.put("ownerId", ownerId);
+				map.put("crNum", sVO.getCrNum());
+				
+				result = storeMapper.insertOwnerStore(map);
+			}
+		}
+		return result;
 	}
 
 	@Override
@@ -58,7 +74,7 @@ public class StoreServiceImpl implements StoreService {
 		
 		StoreVO sVO = storeMapper.selectStoreByCrNum(crNum);
 		
-		if(sVO.getCrNum() != null) {
+		if(sVO != null) {
 			if(sVO.getSecretCode().equals(secretCode)) {
 				
 				Map<String, Object> map = new HashMap<String, Object>();

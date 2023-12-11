@@ -75,8 +75,8 @@
 							</tr>
 				            <tr>
 				            	<td colspan="2">
-				       				<button type="submit" class="btn btn-primary" style="margin: 30px;" onclick="update_move()">가게정보 수정</button>
-				           			<button type="submit" class="btn btn-danger" style="margin: 30px;" onclick="delete_move()">가게정보 삭제</button>
+				       				<button type="submit" class="btn btn-primary" style="margin: 30px;" onclick="storeUpdate_move()">가게정보 수정</button>
+				           			<button type="submit" class="btn btn-danger" style="margin: 30px;" onclick="storeDelete_move()">가게정보 삭제</button>
 				            	</td>
 				          	</tr>
 				          	<tr style="display: none;">
@@ -106,6 +106,16 @@
 	
 	function menu_move() {
 	    document.getElementById('frm').action="/menu/menuList";
+		document.getElementById('frm').submit();
+	}
+	
+	function storeUpdate_move() {
+		document.getElementById('frm').action="/store/storeUpdate";
+		document.getElementById('frm').submit();
+	}
+	
+	function storeDelete_move() {
+	    document.getElementById('frm').action="/store/storeDelete";
 		document.getElementById('frm').submit();
 	}
 </script>

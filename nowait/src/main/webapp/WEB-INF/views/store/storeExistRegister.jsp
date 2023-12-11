@@ -22,7 +22,12 @@
       			<td><input type="password" name="secretCode" id="secretCode"></td>
       		</tr>
       		<tr>
-      			<td colspan="2" align="center">
+      			<td align="center">
+	            	<div class="btn-box">
+				       	<a href="#" onclick="owner_move()" style="background-color: green;">이전</a>
+	                </div>
+            	</td>
+      			<td align="center">
 		       		<div class="btn-box">
 		       			<a href="#" onclick="return login_chk()">등록하기</a>
 		       		</div>
@@ -39,15 +44,6 @@
   <!-- end food section -->
   <%@include file="../includes/footer.jsp" %>
 <script type="text/javascript">
-	$(document).ready(function() {
-		if(${result}==0){
-			alert("비밀번호가 일치하지 않습니다!");
-		} else if(${result}==-1){
-			alert("존재하지 않는 사업자 등록번호입니다!");
-		}
-	});
-</script>
-<script type="text/javascript">
 		function login_chk() {
 		if(document.getElementById("crNum").value==''){
 			alert("사업자 등록번호를 입력해주세요!");
@@ -61,6 +57,11 @@
 		}
 		document.getElementById('frm').submit();
 		}
+</script>
+<script type="text/javascript">
+	function owner_move() {
+		location.href="/owner/ownerHome";
+	}
 </script>
 </body>
 </html>
