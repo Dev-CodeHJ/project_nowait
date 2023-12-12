@@ -13,5 +13,5 @@ public class MenuVO {
     private String storeFileName; //서버 내부에서 관리하는 파일명
 	private int price;
 	private int popularity;
-	private int menuStatus;
+	private boolean menuStatus;
 }

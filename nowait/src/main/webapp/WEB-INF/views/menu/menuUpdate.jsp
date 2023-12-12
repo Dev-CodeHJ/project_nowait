@@ -72,7 +72,7 @@
 							</tr>
 							<tr>
 								<td>메뉴 사진</td>
-								<td><input type="file" name="file" id="file" value="${menu.storeFileName}"></td>
+								<td><input type="file" name="file" id="file" value="${menu.uploadFileName}"></td>
 							</tr>
 							<tr>
 								<th>가격</th>
@@ -96,13 +96,12 @@
 								<th>품절 여부</th>
 								<td>
 									<select name="menuStatus" id="menuStatus">
-										<c:forEach items="${menuStatusList}" var="status">
-											<option value="${status.name}"
-												<c:if test="${menu.menuStatus eq status.name}">selected="selected"</c:if>
-											>
-												${status.value}
-											</option>
-										</c:forEach>
+										<option value="0"
+											<c:if test="${menu.menuStatus eq false}">selected="selected"</c:if>
+										>판매가능</option>
+										<option value="1"
+											<c:if test="${menu.menuStatus eq true}">selected="selected"</c:if>
+										>품절</option>
 									</select>
 								</td>
 							</tr>

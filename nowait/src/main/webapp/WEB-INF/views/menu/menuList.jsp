@@ -78,11 +78,10 @@
 				            			</c:forEach>
 				            		</td>
 				            		<td>
-				            			<c:forEach items="${menuStatusList}" var="status">
-					            			<c:if test="${menu.menuStatus eq status.name}">
-					            				${status.value}
-					            			</c:if>
-				            			</c:forEach>
+				            			<c:choose>
+				            				<c:when test="${menu.menuStatus eq false}">판매가능</c:when>
+				            				<c:otherwise>품절</c:otherwise>
+				            			</c:choose>
 				            		</td>
 			            		</tr>
 					            <tr>
@@ -119,9 +118,27 @@
   <%@include file="../includes/footer.jsp" %>
 <script type="text/javascript">
 	$(document).ready(function() {
+	  if(${insertOk}==1){
+			alert("메뉴가 성공적으로 등록되었습니다.");
+		} else if(${insertOk}==0){
+			alert("메뉴 등록에 실패하셨습니다!");
+		}
+    });
+</script>
+<script type="text/javascript">
+	$(document).ready(function() {
+	  if(${updateOk}==1){
+			alert("메뉴가 성공적으로 수정되었습니다.");
+		} else if(${updateOk}==0){
+			alert("메뉴 수정에 실패하셨습니다!");
+		}
+    });
+</script>
+<script type="text/javascript">
+	$(document).ready(function() {
 	  if(${deleteOk}==1){
 			alert("메뉴가 성공적으로 삭제되었습니다.");
-		} else if(${deleteOk}==1){
+		} else if(${deleteOk}==0){
 			alert("메뉴 삭제에 실패하셨습니다!");
 		}
     });

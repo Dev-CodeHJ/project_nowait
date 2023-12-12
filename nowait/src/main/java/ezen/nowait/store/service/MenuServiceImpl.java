@@ -6,13 +6,13 @@ import org.springframework.stereotype.Service;
 
 import ezen.nowait.store.domain.MenuVO;
 import ezen.nowait.store.mapper.MenuMapper;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class MenuServiceImpl implements MenuService{
 
-	private MenuMapper menuMapper;
+	private final MenuMapper menuMapper;
 	
 	@Override
 	public List<MenuVO> findMenuList(String crNum) {
@@ -35,13 +35,26 @@ public class MenuServiceImpl implements MenuService{
 	@Override
 	public int updateMenu(MenuVO mVO) {
 
-		System.out.println("service update : " + mVO);
-		return menuMapper.updateMenu(mVO);
+		int result = 0;
+		
+		MenuVO find = menuMapper.selectMenu(mVO.getMenuNum());
+		
+		if(find != null) {
+			
+			result = menuMapper.updateMenu(mVO);
+		}
+		return result;
 	}
 
 	@Override
 	public int deleteMenu(int menuNum) {
 		
-		return menuMapper.deleteMenu(menuNum);
+		int result = 0;
+		MenuVO find = menuMapper.selectMenu(menuNum);
+		
+		if(find != null) {
+			result = menuMapper.deleteMenu(menuNum);
+		}
+		return result;
 	}
 }

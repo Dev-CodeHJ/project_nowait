@@ -9,5 +9,5 @@ public class MenuOptionVO {
 	private int menuNum;
 	private String option;
 	private int optionPrice;
-	private int optionStatus;
+	private boolean optionStatus;
 }

@@ -21,9 +21,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ezen.nowait.code.domain.CodeVO;
 import ezen.nowait.code.service.CodeService;
+import ezen.nowait.store.domain.MenuOptionVO;
 import ezen.nowait.store.domain.MenuVO;
 import ezen.nowait.store.domain.UploadFile;
 import ezen.nowait.store.service.FileStore;
+import ezen.nowait.store.service.MenuOptionService;
 import ezen.nowait.store.service.MenuService;
 import ezen.nowait.store.service.StoreService;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +36,8 @@ import lombok.RequiredArgsConstructor;
 public class MenuController {
 
 	private final MenuService menuService;
+	
+	private final MenuOptionService optionService;
 	
 	private final StoreService storeService;
 	
@@ -49,15 +53,37 @@ public class MenuController {
 		System.out.println("/menu/menulist crNum : " + crNum);
 		
 		List<MenuVO> menuList = menuService.findMenuList(crNum);
+		
 		List<CodeVO> list = codeService.findListByCrNum(crNum);
 		List<CodeVO> popularityList = codeService.findList("popularity");
-		List<CodeVO> menuStatusList = codeService.findList("menu_status");
 		
 		model.addAttribute("menuCategoryList", list);
 		model.addAttribute("popularityList", popularityList);
-		model.addAttribute("menuStatusList", menuStatusList);
 		model.addAttribute("crNum", crNum);
 		model.addAttribute("menuList", menuList);
+	}
+	
+	@GetMapping("/menuGet")
+	public void get(int menuNum, Model model) {
+		
+		System.out.println("/menu/menuGet menuNum : " + menuNum);
+		
+		MenuVO mVO = menuService.findMenu(menuNum);
+		int optionCnt = optionService.findOptionCnt(menuNum);
+		
+		if(optionCnt != 0) {
+			
+			List<MenuOptionVO> optionList = optionService.findOptionList(menuNum);
+			model.addAttribute("optionList", optionList);
+		}
+		
+		List<CodeVO> list = codeService.findListByCrNum(mVO.getCrNum());
+		List<CodeVO> popularityList = codeService.findList("popularity");
+		
+		model.addAttribute("menu", mVO);
+		
+		model.addAttribute("menuCategoryList", list);
+		model.addAttribute("popularityList", popularityList);
 	}
 	
 	@GetMapping("/menuRegister")
@@ -67,11 +93,9 @@ public class MenuController {
 		
 		List<CodeVO> list = codeService.findListByCrNum(crNum);
 		List<CodeVO> popularityList = codeService.findList("popularity");
-		List<CodeVO> menuStatusList = codeService.findList("menu_status");
 		
 		model.addAttribute("menuCategoryList", list);
 		model.addAttribute("popularityList", popularityList);
-		model.addAttribute("menuStatusList", menuStatusList);
 		model.addAttribute("crNum", crNum);
 	}
 	
@@ -115,11 +139,9 @@ public class MenuController {
 		
 		List<CodeVO> list = codeService.findListByCrNum(mVO.getCrNum());
 		List<CodeVO> popularityList = codeService.findList("popularity");
-		List<CodeVO> menuStatusList = codeService.findList("menu_status");
 		
 		model.addAttribute("menuCategoryList", list);
 		model.addAttribute("popularityList", popularityList);
-		model.addAttribute("menuStatusList", menuStatusList);
 		model.addAttribute("menu", mVO);
 	}
 	

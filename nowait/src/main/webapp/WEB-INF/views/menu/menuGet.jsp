@@ -49,67 +49,91 @@
 		  <div class="col-md-9">
 			  <section class="food_section layout_padding-bottom">
 			    <div class="container">
-         			<h2 style="padding: 10px; margin-left: 25%;">메뉴관리 페이지</h2>
-		            <c:forEach items="${menuList}" var="menu">
-			        	<form id="frm${menu.menuNum}" action="/menu/menuUpdate">
+         			<h2 style="padding: 10px; margin-left: 25%;">메뉴 상세정보</h2>
+		        	<form id="frm0" action="/menu/menuUpdate">
+			        	<table>
+			            	<tr>
+			            		<th>메뉴 이름</th><th>메뉴 카테고리</th><th>가격</th><th>인기메뉴 여부</th><th>품절 여부</th>
+			            		<th rowspan="3">
+			            			<!-- <img src="|/images/${imageFile.getStoreFileName()}|" width="300" height="300"/> -->
+			            			<img src="/resources/images/${menu.storeFileName}" alt="${menu.uploadFileName}" width="200" height="200">
+			            		</th>
+			            	</tr>
+			            	<tr>
+			            		<td>${menu.menuName}</td>
+			            		<td>
+			            			<c:forEach items="${menuCategoryList}" var="menuCategory">
+				            			<c:if test="${menu.menuCategory eq menuCategory.name}">
+				            				${menuCategory.value}
+				            			</c:if>
+			            			</c:forEach>
+			            		</td>
+			            		<td>${menu.price}원</td>
+			            		<td>
+			            			<c:forEach items="${popularityList}" var="popular">
+				            			<c:if test="${menu.popularity eq popular.name}">
+				            				${popular.value}
+				            			</c:if>
+			            			</c:forEach>
+			            		</td>
+			            		<td>
+			            			<c:choose>
+			            				<c:when test="${menu.menuStatus eq false}">판매가능</c:when>
+			            				<c:otherwise>품절</c:otherwise>
+			            			</c:choose>
+			            		</td>
+		            		</tr>
+				            <tr>
+				            	<td colspan="5">
+				       				<button type="button" class="btn btn-success" style="margin: 30px;" onclick="menu_move()">이전</button>
+				       				<button type="submit" class="btn btn-info" style="margin: 30px;" onclick="menuUpdate_move()">수정</button>
+				           			<button type="button" class="btn btn-danger" style="margin: 30px;" onclick="menuDelete_move()">삭제</button>
+				            	</td>
+				          	</tr>
+				          	<tr style="display: none;">
+				          		<td>
+			           				<input type="text" name="menuNum" value="${menu.menuNum}">
+				       			</td>
+				   			</tr>
+			        	</table>
+		        	</form>
+		            <form id="frm" action="/menu/menuList">
+           				<input type="hidden" name="crNum" value="${menu.crNum}">
+           			</form>
+		            <div class="btn-box" style="margin-right: 30%;">
+				    	<a href="#" onclick="optionRegister_move()" style="background-color: navy;">옵션 추가</a>
+				    </div>
+				    <c:forEach items="${optionList}" var="option">
+			        	<form id="frm${option.menuOptionNum}" action="/option/menuOptionUpdate">
 				        	<table>
 				            	<tr>
-				            		<th>메뉴 이름</th><th>메뉴 카테고리</th><th>가격</th><th>인기메뉴 여부</th><th>품절 여부</th>
-				            		<th rowspan="3">
-				            			<!-- <img src="|/images/${imageFile.getStoreFileName()}|" width="300" height="300"/> -->
-				            			<img src="/resources/images/${menu.storeFileName}" alt="${menu.uploadFileName}" width="200" height="200">
-				            		</th>
+				            		<th>옵션 이름</th><th>가격</th><th>품절 여부</th>
 				            	</tr>
 				            	<tr>
-				            		<td>${menu.menuName}</td>
+				            		<td>${option.option}</td>
+				            		<td>${option.optionPrice}원</td>
 				            		<td>
-				            			<c:forEach items="${menuCategoryList}" var="menuCategory">
-					            			<c:if test="${menu.menuCategory eq menuCategory.name}">
-					            				${menuCategory.value}
-					            			</c:if>
-				            			</c:forEach>
-				            		</td>
-				            		<td>${menu.price}원</td>
-				            		<td>
-				            			<c:forEach items="${popularityList}" var="popular">
-					            			<c:if test="${menu.popularity eq popular.name}">
-					            				${popular.value}
-					            			</c:if>
-				            			</c:forEach>
-				            		</td>
-				            		<td>
-				            			<c:forEach items="${menuStatusList}" var="status">
-					            			<c:if test="${menu.menuStatus eq status.name}">
+				            			<c:forEach items="${optionStatusList}" var="status">
+					            			<c:if test="${option.optionStatus eq status.name}">
 					            				${status.value}
 					            			</c:if>
 				            			</c:forEach>
 				            		</td>
 			            		</tr>
 					            <tr>
-					            	<td colspan="5">
-					       				<button type="submit" class="btn btn-info" style="margin: 30px;" onclick="menuGet_move(${menu.menuNum})">상세정보</button>
-					       				<button type="submit" class="btn btn-info" style="margin: 30px;" onclick="menuUpdate_move(${menu.menuNum})">수정</button>
-					           			<button type="button" class="btn btn-danger" style="margin: 30px;" onclick="menuDelete_move(${menu.menuNum})">삭제</button>
+					            	<td colspan="3">
+					       				<button type="button" class="btn btn-info" style="margin: 30px;" onclick="optionUpdate_move(${option.menuOptionNum})">수정</button>
+					           			<button type="button" class="btn btn-danger" style="margin: 30px;" onclick="optionDelete_move(${option.menuOptionNum})">삭제</button>
 					            	</td>
 					          	</tr>
 					          	<tr style="display: none;">
 					          		<td>
-				           				<input type="text" name="menuNum" value="${menu.menuNum}">
+				           				<input type="text" name="menuOptionNum" value="${option.menuOptionNum}">
 					       			</td>
 					   			</tr>
 				        	</table>
 			        	</form>
-		            </c:forEach>
-		            <form id="frm" action="/menu/menuList">
-           				<input type="hidden" name="crNum" value="${crNum}">
-           			</form>
-		            <div class="btn-box" style="margin-right: 30%;">
-				    	<a href="#" onclick="category_move()">카테고리 관리</a>
-				    	<a href="#" onclick="menuRegister_move()" style="margin-left: 20px; background-color: green;">메뉴 등록</a>
-				    </div>
-			            <!-- 
-			             style="cursor:pointer;color:#blue;" onClick="location.href='/menu/menuGet?menuNum=${menu.menuNum}'"
-			             -->
+				    </c:forEach>
 			    </div>
 			  </section>
 	      </div>
@@ -137,31 +161,33 @@
 		document.getElementById('frm').submit();
 	}
 	
-	function menuGet_move(menuNum) {
-		document.getElementById('frm'+menuNum).action="/menu/menuGet";
-		document.getElementById('frm'+menuNum).submit();
+	function menuUpdate_move() {
+		document.getElementById('frm0').action="/menu/menuUpdate";
+		document.getElementById('frm0').submit();
 	}
 	
-	function menuUpdate_move(menuNum) {
-		document.getElementById('frm'+menuNum).action="/menu/menuUpdate";
-		document.getElementById('frm'+menuNum).submit();
-	}
-	
-	function menuDelete_move(menuNum) {
+	function menuDelete_move() {
 	    if(confirm("선택하신 메뉴를 정말 삭제하시겠습니까?")) {
-			document.getElementById('frm'+menuNum).action="/menu/menuDelete";
-			document.getElementById('frm'+menuNum).submit();
+			document.getElementById('frm0').action="/menu/menuDelete";
+			document.getElementById('frm0').submit();
 	    }
 	}
 	
-	function menuRegister_move() {
-		document.getElementById('frm').action="/menu/menuRegister";
-		document.getElementById('frm').submit();
+	function optionRegister_move() {
+		document.getElementById('frm0').action="/option/menuOptionRegister";
+		document.getElementById('frm0').submit();
 	}
 	
-	function category_move() {
-		document.getElementById('frm').action="/menu/menuCategory";
-		document.getElementById('frm').submit();
+	function optionUpdate_move(num) {
+		document.getElementById('frm'+num).action="/option/menuOptionUpdate";
+		document.getElementById('frm'+num).submit();
+	}
+	
+	function optionDelete_move(num) {
+		if(confirm("선택하신 옵션을 정말 삭제하시겠습니까?")) {
+			document.getElementById('frm'+num).action="/option/menuOptionDelete";
+			document.getElementById('frm'+num).submit();
+		}
 	}
 </script>
 </body>

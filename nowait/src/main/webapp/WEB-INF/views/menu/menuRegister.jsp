@@ -94,11 +94,8 @@
 								<td>
 									<select name="menuStatus" id="menuStatus">
 										<option value="99" selected="selected">-선택-</option>
-										<c:forEach items="${menuStatusList}" var="status">
-											<option value="${status.name}">
-												${status.value}
-											</option>
-										</c:forEach>
+										<option value="0">판매가능</option>
+										<option value="1">품절</option>
 									</select>
 								</td>
 							</tr>
