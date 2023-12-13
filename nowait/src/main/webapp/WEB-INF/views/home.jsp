@@ -10,10 +10,8 @@
 	
 	  <section class="food_section layout_padding-bottom">
 	    <div class="container">
-	      <div class="heading_container heading_center">
-	        <h2>
-	          Food Category
-	        </h2>
+	      <div class="heading_container heading_center" style="padding-top: 20px;">
+	        <h2>가게 목록</h2>
 	      </div>
 	
 	      <ul class="filters_menu">

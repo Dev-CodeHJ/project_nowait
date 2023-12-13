@@ -25,7 +25,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="updateOption">
 		update menu_option
 		set menu_num = #{menuNum},
-		option = #{option},
+		`option` = #{option},
 		option_price = #{optionPrice},
 		option_status = #{optionStatus}
 		where menu_option_num = #{menuOptionNum}

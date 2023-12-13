@@ -4,22 +4,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ezen.nowait.store.domain.StoreVO;
 import ezen.nowait.store.mapper.StoreMapper;
-import lombok.AllArgsConstructor;
-import lombok.Setter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
 @Service
 @Log4j
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class StoreServiceImpl implements StoreService {
 
-	@Setter(onMethod_ = @Autowired)
-	private StoreMapper storeMapper;
+	private final StoreMapper storeMapper;
+	
+	private final MenuService menuService;
 
 	@Override
 	public List<StoreVO> findAll() {
@@ -111,7 +110,10 @@ public class StoreServiceImpl implements StoreService {
 
 				if(result >= 1) {
 					
-					return storeMapper.deleteStore(crNum2);
+					if(menuService.deleteAll(crNum2) == 1) {
+						
+						return storeMapper.deleteStore(crNum2);
+					}
 				}
 			} 
 		} else {

@@ -55,12 +55,12 @@
 						       			</td>
 						   			</tr>
 					            	<tr>
-					            		<th>카테고리 번호</th>
-					            		<th>카테고리 이름</th>
+					            		<td>카테고리 번호</td>
+					            		<td>카테고리 이름</td>
 					            	</tr>
 					            	<tr>
-					            		<td style="color: orange; font-weight: bold;">${menuCategory.name}</td>
-					            		<td style="color: orange; font-weight: bold;">${menuCategory.value}</td>
+					            		<th>${menuCategory.name}</th>
+					            		<th>${menuCategory.value}</th>
 					            	</tr>
 						            <tr>
 						            	<td colspan="2">
@@ -133,7 +133,7 @@
 	}
 	
 	function categoryDelete_move(num) {
-	    if(confirm("선택하신 메뉴를 정말 삭제하시겠습니까?")) {
+	    if(confirm("선택하신 카테고리를 정말 삭제하시겠습니까?")) {
 			document.getElementById('frm'+num).action="/menu/categoryDelete";
 			document.getElementById('frm'+num).submit();
 	    }

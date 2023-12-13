@@ -15,4 +15,6 @@ public interface MenuService {
 	public int updateMenu(MenuVO mVO);
 	
 	public int deleteMenu(int menuNum);
+	
+	public int deleteAll(String crNum);
 }

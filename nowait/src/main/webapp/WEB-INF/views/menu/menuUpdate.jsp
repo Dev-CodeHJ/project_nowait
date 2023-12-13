@@ -108,7 +108,7 @@
 				            <tr>
 				            	<td colspan="2" align="center">
 				                   <div class="btn-box">
-				                      <a href="#" onclick="menuGet_move()" style="background-color: blue;">이전</a>
+				                      <a href="#" onclick="menu_move()" style="background-color: blue;">이전</a>
 				                      <a href="#" onclick="return register_chk()" id="btn_register" style="background-color: green; margin-left: 20px;">수정완료</a>
 				                   </div>
 				            	</td>
@@ -117,9 +117,6 @@
 					</form>
 			      	<form id="frm" action="/menu/menuList">
 	          			<input type="hidden" name="crNum" value="${menu.crNum}">
-	          		</form>
-	          		<form id="frm0" action="/menu/menuGet">
-	          			<input type="hidden" name="menuNum" value="${menu.menuNum}">
 	          		</form>
 			    </div>
 			  </section>
@@ -166,11 +163,6 @@
 	function menu_move() {
 	    document.getElementById('frm').action="/menu/menuList";
 		document.getElementById('frm').submit();
-	}
-	
-	function menuGet_move() {
-	    document.getElementById('frm0').action="/menu/menuGet";
-		document.getElementById('frm0').submit();
 	}
 </script>
 </body>

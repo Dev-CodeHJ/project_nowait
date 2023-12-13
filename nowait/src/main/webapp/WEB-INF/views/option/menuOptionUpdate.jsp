@@ -44,12 +44,15 @@
 		  <div class="col-md-9">
 			  <section class="food_section layout_padding-bottom">
 			    <div class="container">
-		            <form id="frm1" action="/option/menuOptionRegister" method="post" style="padding: 100px;">
+		            <form id="frm1" action="/option/menuOptionUpdate" method="post" style="padding: 100px;">
 				        <h2 align="center">옵션 수정 페이지</h2>
 
 				        <table>
 				            <tr style="display: none;">
-								<td><input type="text" name="menuNum" id="menuNum" value="${option.menuNum}"></td>
+								<td>
+									<input type="text" name="menuOptionNum" id="menuOptionNum" value="${option.menuOptionNum}">
+									<input type="text" name="menuNum" id="menuNum" value="${option.menuNum}">
+								</td>
 							</tr>
 				            <tr>
 				               <th>옵션 이름</th>

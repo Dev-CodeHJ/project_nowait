@@ -18,4 +18,6 @@ public interface MenuMapper {
 	public int updateMenuCategory(Map<String, Object> map);
 	
 	public int deleteMenu(int menuNum);
+	
+	public int deleteAll(String crNum);
 }

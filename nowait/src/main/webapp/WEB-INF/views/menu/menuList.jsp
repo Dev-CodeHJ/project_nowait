@@ -8,11 +8,12 @@
     border: 1px solid black;
     border-collapse: collapse;
 	}
-	th {
+	th, td {
     text-align: center;
     border: 1px solid black;
     padding: 10px;
     }
+	<%--
     td {
     color: orange;
     font-weight: bold;
@@ -20,7 +21,6 @@
     border: 1px solid black;
     padding: 10px;
     }
-	<%--
     --%>
 </style>
 
@@ -50,47 +50,52 @@
 			  <section class="food_section layout_padding-bottom">
 			    <div class="container">
          			<h2 style="padding: 10px; margin-left: 25%;">메뉴관리 페이지</h2>
-		            <c:forEach items="${menuList}" var="menu">
-			        	<form id="frm${menu.menuNum}" action="/menu/menuUpdate">
+		            <c:forEach items="${menuList}" var="menu" varStatus="cnt">
+			        	<form id="frm${cnt.count}" action="/menu/menuUpdate">
 				        	<table>
 				            	<tr>
-				            		<th>메뉴 이름</th><th>메뉴 카테고리</th><th>가격</th><th>인기메뉴 여부</th><th>품절 여부</th>
-				            		<th rowspan="3">
+				            		<td>메뉴 이름</td><td>메뉴 카테고리</td><td>가격</td><td>인기메뉴 여부</td><td>품절 여부</td>
+				            		<td rowspan="3">
 				            			<!-- <img src="|/images/${imageFile.getStoreFileName()}|" width="300" height="300"/> -->
 				            			<img src="/resources/images/${menu.storeFileName}" alt="${menu.uploadFileName}" width="200" height="200">
-				            		</th>
+				            		</td>
 				            	</tr>
 				            	<tr>
-				            		<td>${menu.menuName}</td>
-				            		<td>
+				            		<th>${menu.menuName}</th>
+				            		<th>
 				            			<c:forEach items="${menuCategoryList}" var="menuCategory">
 					            			<c:if test="${menu.menuCategory eq menuCategory.name}">
 					            				${menuCategory.value}
 					            			</c:if>
 				            			</c:forEach>
-				            		</td>
-				            		<td>${menu.price}원</td>
-				            		<td>
-				            			<c:forEach items="${popularityList}" var="popular">
-					            			<c:if test="${menu.popularity eq popular.name}">
-					            				${popular.value}
-					            			</c:if>
-				            			</c:forEach>
-				            		</td>
+				            		</th>
+				            		<th>${menu.price}원</th>
+			            			<c:forEach items="${popularityList}" var="popular">
+				            			<c:if test="${menu.popularity eq popular.name}">
+					            			<c:choose>
+					            				<c:when test="${popular.value eq '인기메뉴'}">
+					            					<th style="color: orange">${popular.value}</th>
+					            				</c:when>
+					            				<c:otherwise>
+					            					<th>${popular.value}</th>
+					            				</c:otherwise>
+					            			</c:choose>
+				            			</c:if>
+			            			</c:forEach>
 				            		<c:choose>
 			            				<c:when test="${menu.menuStatus eq false}">
-						            		<td style="color: green;">판매가능</td>
+						            		<th style="color: green;">판매가능</th>
 			            				</c:when>
 			            				<c:otherwise>
-			            					<td style="color: red;">품절</td>
+			            					<th style="color: red;">품절</th>
 			            				</c:otherwise>
 			            			</c:choose>
 			            		</tr>
 					            <tr>
 					            	<td colspan="5">
-					       				<button type="submit" class="btn btn-primary" style="margin: 30px;" onclick="menuGet_move(${menu.menuNum})">상세정보</button>
-					       				<button type="submit" class="btn btn-info" style="margin: 30px;" onclick="menuUpdate_move(${menu.menuNum})">수정</button>
-					           			<button type="button" class="btn btn-danger" style="margin: 30px;" onclick="menuDelete_move(${menu.menuNum})">삭제</button>
+					       				<button type="submit" class="btn btn-primary" style="margin: 30px;" onclick="menuGet_move(${cnt.count})">상세정보</button>
+					       				<button type="submit" class="btn btn-info" style="margin: 30px;" onclick="menuUpdate_move(${cnt.count})">수정</button>
+					           			<button type="button" class="btn btn-danger" style="margin: 30px;" onclick="menuDelete_move(${cnt.count})">삭제</button>
 					            	</td>
 					          	</tr>
 					          	<tr style="display: none;">
