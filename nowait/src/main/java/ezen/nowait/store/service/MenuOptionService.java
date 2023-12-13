@@ -12,9 +12,9 @@ public interface MenuOptionService {
 	
 //	public int findOptionCnt(int menuNum);
 	
-	public int addOption(MenuOptionVO opVO);
+	public int addOption(MenuOptionVO moVO);
 	
-	public int updateOption(MenuOptionVO opVO);
+	public int updateOption(MenuOptionVO moVO);
 	
 	public int deleteOption(int menuOptionNum);
 }

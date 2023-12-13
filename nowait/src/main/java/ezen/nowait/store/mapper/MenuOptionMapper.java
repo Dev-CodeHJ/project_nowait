@@ -12,9 +12,11 @@ public interface MenuOptionMapper {
 	
 //	public int selectOptionCnt(int menuNum);
 	
-	public int insertOption(MenuOptionVO opVO);
+	public int insertOption(MenuOptionVO moVO);
 	
-	public int updateOption(MenuOptionVO opVO);
+	public int updateOption(MenuOptionVO moVO);
 	
 	public int deleteOption(int menuOptionNum);
+	
+	public int deleteAll(int menuNum);
 }

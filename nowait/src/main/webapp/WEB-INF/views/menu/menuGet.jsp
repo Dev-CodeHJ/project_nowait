@@ -76,12 +76,14 @@
 				            			</c:if>
 			            			</c:forEach>
 			            		</td>
-			            		<td>
-			            			<c:choose>
-			            				<c:when test="${menu.menuStatus eq false}">판매가능</c:when>
-			            				<c:otherwise>품절</c:otherwise>
-			            			</c:choose>
-			            		</td>
+			            		<c:choose>
+		            				<c:when test="${menu.menuStatus eq false}">
+					            		<td style="color: green;">판매가능</td>
+		            				</c:when>
+		            				<c:otherwise>
+		            					<td style="color: red;">품절</td>
+		            				</c:otherwise>
+		            			</c:choose>
 		            		</tr>
 				            <tr>
 				            	<td colspan="5">
@@ -100,40 +102,51 @@
 		            <form id="frm" action="/menu/menuList">
            				<input type="hidden" name="crNum" value="${menu.crNum}">
            			</form>
-		            <div class="btn-box" style="margin-right: 30%;">
+		            <div class="btn-box" style="margin-right: 30%; margin-bottom: 45px;">
 				    	<a href="#" onclick="optionRegister_move()" style="background-color: navy;">옵션 추가</a>
 				    </div>
-				    <c:forEach items="${optionList}" var="option">
-			        	<form id="frm${option.menuOptionNum}" action="/option/menuOptionUpdate">
-				        	<table>
-				            	<tr>
-				            		<th>옵션 이름</th><th>가격</th><th>품절 여부</th>
-				            	</tr>
-				            	<tr>
-				            		<td>${option.option}</td>
-				            		<td>${option.optionPrice}원</td>
-				            		<td>
-				            			<c:forEach items="${optionStatusList}" var="status">
-					            			<c:if test="${option.optionStatus eq status.name}">
-					            				${status.value}
-					            			</c:if>
-				            			</c:forEach>
-				            		</td>
-			            		</tr>
-					            <tr>
-					            	<td colspan="3">
-					       				<button type="button" class="btn btn-info" style="margin: 30px;" onclick="optionUpdate_move(${option.menuOptionNum})">수정</button>
-					           			<button type="button" class="btn btn-danger" style="margin: 30px;" onclick="optionDelete_move(${option.menuOptionNum})">삭제</button>
-					            	</td>
-					          	</tr>
-					          	<tr style="display: none;">
-					          		<td>
-				           				<input type="text" name="menuOptionNum" value="${option.menuOptionNum}">
-					       			</td>
-					   			</tr>
-				        	</table>
-			        	</form>
-				    </c:forEach>
+				    
+			      	<!-- option -->
+			      	<div class="filters-content">
+				        <div class="row grid">
+						    <c:forEach items="${optionList}" var="option" varStatus="cnt">
+					        	<form id="frm${cnt.count}" action="/option/menuOptionUpdate">
+							      <div class="col-sm-6 col-lg-4 all">
+						        	<table style="margin: 10px;">
+						            	<tr>
+						            		<th>옵션 이름</th><th>가격</th><th>품절 여부</th>
+						            	</tr>
+						            	<tr>
+						            		<td>${option.option}</td>
+						            		<td>${option.optionPrice}원</td>
+					            			<c:choose>
+					            				<c:when test="${option.optionStatus eq false}">
+								            		<td style="color: green;">판매가능</td>
+					            				</c:when>
+					            				<c:otherwise>
+					            					<td style="color: red;">품절</td>
+					            				</c:otherwise>
+					            			</c:choose>
+					            		</tr>
+							            <tr>
+							            	<td colspan="3">
+							       				<button type="button" class="btn btn-info" style="margin: 30px;" onclick="optionUpdate_move(${cnt.count})">수정</button>
+							           			<button type="button" class="btn btn-danger" style="margin: 30px;" onclick="optionDelete_move(${cnt.count})">삭제</button>
+							            	</td>
+							          	</tr>
+							          	<tr style="display: none;">
+							          		<td>
+						           				<input type="text" name="menuOptionNum" value="${option.menuOptionNum}">
+						           				<input type="text" name="menuNum" value="${menu.menuNum}">
+						           				<input type="text" name="crNum" value="${menu.crNum}">
+							       			</td>
+							   			</tr>
+						        	</table>
+						          </div>
+					        	</form>
+						    </c:forEach>
+					    </div>
+			    	</div>
 			    </div>
 			  </section>
 	      </div>
@@ -143,10 +156,28 @@
   <%@include file="../includes/footer.jsp" %>
 <script type="text/javascript">
 	$(document).ready(function() {
+	  if(${insertOk}==1){
+			alert("옵션이 등록되었습니다.");
+		} else if(${insertOk}==0){
+			alert("옵션 등록이 실패하셨습니다!");
+		}
+    });
+</script>
+<script type="text/javascript">
+	$(document).ready(function() {
+	  if(${updateOk}==1){
+			alert("옵션이 수정되었습니다.");
+		} else if(${updateOk}==0){
+			alert("옵션 수정이 실패하셨습니다!");
+		}
+    });
+</script>
+<script type="text/javascript">
+	$(document).ready(function() {
 	  if(${deleteOk}==1){
-			alert("메뉴가 성공적으로 삭제되었습니다.");
-		} else if(${deleteOk}==1){
-			alert("메뉴 삭제에 실패하셨습니다!");
+			alert("옵션이 삭제되었습니다.");
+		} else if(${deleteOk}==0){
+			alert("옵션 삭제에 실패하셨습니다!");
 		}
     });
 </script>

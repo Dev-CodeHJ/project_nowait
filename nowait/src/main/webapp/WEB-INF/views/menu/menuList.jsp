@@ -77,12 +77,14 @@
 					            			</c:if>
 				            			</c:forEach>
 				            		</td>
-				            		<td>
-				            			<c:choose>
-				            				<c:when test="${menu.menuStatus eq false}">판매가능</c:when>
-				            				<c:otherwise>품절</c:otherwise>
-				            			</c:choose>
-				            		</td>
+				            		<c:choose>
+			            				<c:when test="${menu.menuStatus eq false}">
+						            		<td style="color: green;">판매가능</td>
+			            				</c:when>
+			            				<c:otherwise>
+			            					<td style="color: red;">품절</td>
+			            				</c:otherwise>
+			            			</c:choose>
 			            		</tr>
 					            <tr>
 					            	<td colspan="5">

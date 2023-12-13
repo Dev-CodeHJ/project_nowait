@@ -139,7 +139,7 @@
 	          return false;
 	          
 	      } else if (!num_pattern.test($("#price").val())) {
-	          alert("가격에는 숫자만 들어갈 수 있습니다!");
+	          alert("가격을 입력해주세요!(가격 형식이 올바르지 않습니다!)");
 	          $("#price").focus();
 	          return false;
 	          

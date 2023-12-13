@@ -30,19 +30,19 @@ public class MenuOptionServiceImpl implements MenuOptionService{
 	}
 
 	@Override
-	public int addOption(MenuOptionVO opVO) {
+	public int addOption(MenuOptionVO moVO) {
 		
-		return optionMapper.insertOption(opVO);
+		return optionMapper.insertOption(moVO);
 	}
 
 	@Override
-	public int updateOption(MenuOptionVO opVO) {
+	public int updateOption(MenuOptionVO moVO) {
 		
 		int result = 0;
-		MenuOptionVO find = optionMapper.selectOption(opVO.getMenuOptionNum());
+		MenuOptionVO find = optionMapper.selectOption(moVO.getMenuOptionNum());
 		
 		if(find != null) {
-			result = optionMapper.updateOption(opVO);
+			result = optionMapper.updateOption(moVO);
 		}
 		
 		return result;
@@ -53,11 +53,11 @@ public class MenuOptionServiceImpl implements MenuOptionService{
 		
 		int result = 0;
 		MenuOptionVO find = optionMapper.selectOption(menuOptionNum);
-		
+		System.out.println("MenuOptionVO : " + find);
 		if(find != null) {
 			result = optionMapper.deleteOption(menuOptionNum);
 		}
-		
+		System.out.println("result : " + result);
 		return result;
 	}
 

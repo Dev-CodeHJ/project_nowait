@@ -32,6 +32,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	
 	<delete id="deleteOption">
+		delete from menu_option where menu_option_num = #{menuOptionNum}
+	</delete>
+	
+	<delete id="deleteAll">
 		delete from menu_option where menu_num = #{menuNum}
 	</delete>
 	

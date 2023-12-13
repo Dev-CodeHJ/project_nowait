@@ -44,79 +44,47 @@
 		  <div class="col-md-9">
 			  <section class="food_section layout_padding-bottom">
 			    <div class="container">
-		            <form id="frm1" action="/menu/menuUpdate" enctype="multipart/form-data" method="post" style="padding: 100px;">
-				        <h2 align="center">메뉴 수정 페이지</h2>
-				         
+		            <form id="frm1" action="/option/menuOptionRegister" method="post" style="padding: 100px;">
+				        <h2 align="center">옵션 수정 페이지</h2>
+
 				        <table>
 				            <tr style="display: none;">
-								<td><input type="text" name="menuNum" id="menuNum" value="${menu.menuNum}"></td>
-								<td><input type="text" name="crNum" id="crNum" value="${menu.crNum}"></td>
+								<td><input type="text" name="menuNum" id="menuNum" value="${option.menuNum}"></td>
 							</tr>
 				            <tr>
-				               <th>메뉴 이름</th>
-				               <td><input type="text" name="menuName" id="menuName" value="${menu.menuName}"></td>
+				               <th>옵션 이름</th>
+				               <td><input type="text" name="option" id="option" value="${option.option}"></td>
 				            </tr>
-				            <tr>
-								<th>메뉴 카테고리</th>
-								<td>
-									<select name="menuCategory" id="menuCategory">
-										<c:forEach items="${menuCategoryList}" var="menuCategory">
-											<option value="${menuCategory.name}"
-												<c:if test="${menu.menuCategory eq menuCategory.name}">selected="selected"</c:if>
-											>
-												${menuCategory.value}
-											</option>
-										</c:forEach>
-									</select>
-								</td>
-							</tr>
 							<tr>
-								<td>메뉴 사진</td>
-								<td><input type="file" name="file" id="file" value="${menu.uploadFileName}"></td>
-							</tr>
-							<tr>
-								<th>가격</th>
-								<td><input type="text" name="price" id="price" value="${menu.price}"></td>
-							</tr>
-							<tr>
-								<th>인기메뉴 여부</th>
-								<td>
-									<select name="popularity" id="popularity">
-										<c:forEach items="${popularityList}" var="popular">
-											<option value="${popular.name}"
-												<c:if test="${menu.popularity eq popular.name}">selected="selected"</c:if>
-											>
-												${popular.value}
-											</option>
-										</c:forEach>
-									</select>
-								</td>
+								<th>추가금액</th>
+								<td><input type="text" name="optionPrice" id="optionPrice" value="${option.optionPrice}"></td>
 							</tr>
 							<tr>
 								<th>품절 여부</th>
 								<td>
-									<select name="menuStatus" id="menuStatus">
+									<select name="optionStatus" id="optionStatus">
 										<option value="0"
-											<c:if test="${menu.menuStatus eq false}">selected="selected"</c:if>
+											<c:if test="${option.optionStatus eq false}">selected="selected"</c:if>
 										>판매가능</option>
 										<option value="1"
-											<c:if test="${menu.menuStatus eq true}">selected="selected"</c:if>
+											<c:if test="${option.optionStatus eq true}">selected="selected"</c:if>
 										>품절</option>
 									</select>
 								</td>
 							</tr>
 				            <tr>
 				            	<td colspan="2" align="center">
-				                   <div class="btn-box">
+				                   <div class="btn-box" style="margin-top: 10px;">
 				                      <a href="#" onclick="menuGet_move()" style="background-color: blue;">이전</a>
 				                      <a href="#" onclick="return register_chk()" id="btn_register" style="background-color: green; margin-left: 20px;">수정완료</a>
 				                   </div>
 				            	</td>
 				          	</tr>
 				  	  	</table>
+
 					</form>
 			      	<form id="frm" action="/menu/menuList">
-	          			<input type="hidden" name="crNum" value="${menu.crNum}">
+	          			<input type="hidden" name="crNum" value="${crNum}">
 	          		</form>
 	          		<form id="frm0" action="/menu/menuGet">
 	          			<input type="hidden" name="menuNum" value="${menu.menuNum}">
@@ -132,24 +100,21 @@
 	$(document).ready(function() {
     $("#btn_register").click(function register_chk() {
     	  
-	      if ($("#menuName").val() == "") {
-	          alert("메뉴 이름을 입려해주세요!");
-	          $("#menuName").focus();
+    	var num_pattern = /\d/;
+    	
+	      if ($("#option").val() == "") {
+	          alert("옵션 이름을 입려해주세요!");
+	          $("#option").focus();
 	          return false;
 	          
-	      } else if ($("#menuCategory").val() == "99") {
-	          alert("메뉴 카테고리를 선택해주세요!");
-	          $("#menuCategory").focus();
+	      } else if (!num_pattern.test($("#optionPrice").val())) {
+	    	  alert("가격을 입력해주세요!(가격 형식이 올바르지 않습니다!)");
+	          $("#optionPrice").focus();
 	          return false;
 	          
-	      } else if ($("#popularity").val() == "99") {
-	          alert("인기메뉴 여부를 선택해주세요!");
-	          $("#popularity").focus();
-	          return false;
-	          
-	      } else if ($("#menuStatus").val() == "99") {
+	      } else if ($("#optionStatus").val() == "99") {
 	          alert("품절 여부를 선택해주세요!");
-	          $("#menuStatus").focus();
+	          $("#optionStatus").focus();
 	          return false;
 	      }
 	      document.getElementById('frm1').submit();
