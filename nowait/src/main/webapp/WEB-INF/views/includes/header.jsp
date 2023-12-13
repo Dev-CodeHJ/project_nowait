@@ -83,10 +83,10 @@
 					                <a class="nav-link" href="/owner/ownerHome">${member.ownerId}님, 환영합니다<span class="sr-only">(current)</span></a>
 				              	</li>
 					            <li class="nav-item">
-					            	<a class="nav-link" href="/store/newRegister">새 가게등록</a>
+					            	<a class="nav-link" href="/store/storeNewRegister">새 가게등록</a>
 					            </li>
 					            <li class="nav-item">
-					            	<a class="nav-link" href="/store/existRegister">기존 가게등록</a>
+					            	<a class="nav-link" href="/store/storeExistRegister">기존 가게등록</a>
 					            </li>
 			    			</ul>
 				            <div class="user_option">
