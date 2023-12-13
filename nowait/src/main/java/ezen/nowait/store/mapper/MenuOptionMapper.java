@@ -10,7 +10,7 @@ public interface MenuOptionMapper {
 	
 	public MenuOptionVO selectOption(int menuOptionNum);
 	
-	public int selectOptionCnt(int menuNum);
+//	public int selectOptionCnt(int menuNum);
 	
 	public int insertOption(MenuOptionVO opVO);
 	

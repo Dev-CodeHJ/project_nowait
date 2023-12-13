@@ -12,11 +12,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectOption" resultType="ezen.nowait.store.domain.MenuOptionVO">
 		select * from menu_option where menu_option_num = #{menuOptionNum}
 	</select>
-	
+	<!-- 
 	<select id="selectOptionCnt" resultType="_int">
 		select count(*) from menu_option where menu_num = #{menuNum}
 	</select>
-	
+	 -->
 	<insert id="insertOption">
 		insert into menu_option
 		values(null, #{menuNum}, #{option}, #{optionPrice}, #{optionStatus})

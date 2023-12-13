@@ -69,18 +69,19 @@ public class MenuController {
 		System.out.println("/menu/menuGet menuNum : " + menuNum);
 		
 		MenuVO mVO = menuService.findMenu(menuNum);
-		int optionCnt = optionService.findOptionCnt(menuNum);
+//		int optionCnt = optionService.findOptionCnt(menuNum);
+		List<MenuOptionVO> optionList = optionService.findOptionList(menuNum);
 		
-		if(optionCnt != 0) {
-			
-			List<MenuOptionVO> optionList = optionService.findOptionList(menuNum);
-			model.addAttribute("optionList", optionList);
-		}
+//		if(optionCnt != 0) {
+//			List<MenuOptionVO> optionList = optionService.findOptionList(menuNum);
+//			model.addAttribute("optionList", optionList);
+//		}
 		
 		List<CodeVO> list = codeService.findListByCrNum(mVO.getCrNum());
 		List<CodeVO> popularityList = codeService.findList("popularity");
 		
 		model.addAttribute("menu", mVO);
+		model.addAttribute("optionList", optionList);
 		
 		model.addAttribute("menuCategoryList", list);
 		model.addAttribute("popularityList", popularityList);
@@ -124,11 +125,11 @@ public class MenuController {
 		return "redirect:/menu/menuList";
 	}
 	
-	@ResponseBody
-    @GetMapping("/images/{filename}")
-    public Resource downloadImage(@PathVariable String filename) throws MalformedURLException {
-        return (Resource) new UrlResource("file:" + fileStore.getFullPath(filename));
-    }
+//	@ResponseBody
+//    @GetMapping("/images/{filename}")
+//    public Resource downloadImage(@PathVariable String filename) throws MalformedURLException {
+//        return (Resource) new UrlResource("file:" + fileStore.getFullPath(filename));
+//    }
 	
 	@GetMapping("/menuUpdate")
 	public void menuUpdate(int menuNum, Model model) {

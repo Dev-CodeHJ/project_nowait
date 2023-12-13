@@ -12,12 +12,15 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MenuOptionServiceImpl implements MenuOptionService{
 
-	private MenuOptionMapper optionMapper;
+	private final MenuOptionMapper optionMapper;
 	
 	@Override
 	public List<MenuOptionVO> findOptionList(int menuNum) {
 		
-		return optionMapper.selectOptionList(menuNum);
+		List<MenuOptionVO> list = optionMapper.selectOptionList(menuNum);
+		System.out.println("list : " + list);
+		
+		return list;
 	}
 
 	@Override
@@ -58,10 +61,10 @@ public class MenuOptionServiceImpl implements MenuOptionService{
 		return result;
 	}
 
-	@Override
-	public int findOptionCnt(int menuNum) {
-		
-		return optionMapper.selectOptionCnt(menuNum);
-	}
+//	@Override
+//	public int findOptionCnt(int menuNum) {
+//		
+//		return optionMapper.selectOptionCnt(menuNum);
+//	}
 
 }

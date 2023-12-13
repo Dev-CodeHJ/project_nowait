@@ -10,7 +10,7 @@ public interface MenuOptionService {
 	
 	public MenuOptionVO findOption(int menuOptionNum);
 	
-	public int findOptionCnt(int menuNum);
+//	public int findOptionCnt(int menuNum);
 	
 	public int addOption(MenuOptionVO opVO);
 	
