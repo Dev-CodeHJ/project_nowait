@@ -1,7 +1,5 @@
 package ezen.nowait.order.controller;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
-
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,22 +13,29 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import ezen.nowait.member.domain.OwnerVO;
 import ezen.nowait.member.domain.UserVO;
 import ezen.nowait.member.service.UserService;
 import ezen.nowait.order.domain.OrderVO;
 import ezen.nowait.order.service.OrderService;
-import lombok.AllArgsConstructor;
+import ezen.nowait.store.domain.MenuVO;
+import ezen.nowait.store.service.MenuService;
+import ezen.nowait.store.service.StoreService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
 @Controller
 @Log4j
 @RequestMapping("/order")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class OrderController {
 
-	private OrderService orderservice;
-	private UserService userservice;
+	private final OrderService orderservice;
+	
+	private final UserService userservice;
+	
+	private final StoreService storeService;
+	
+	private final MenuService menuService;
 	
 	HttpSession session;
 
@@ -109,7 +114,12 @@ public class OrderController {
 
 	//손님이 홈에서 가게메뉴보기 페이지 이동
 	@GetMapping("/choiceMenu")
-	public void choiceMenu() {}
+	public void choiceMenu(String crNum, Model model) {
+		
+		List<MenuVO> menuList = menuService.findMenuList(crNum);
+		
+		model.addAttribute("menuList", menuList);
+	}
 
 	//손님이 홈에서 가게메뉴보기 페이지 이동
 	@GetMapping("/choiceDetailMenu")

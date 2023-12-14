@@ -1,5 +1,7 @@
 package ezen.nowait.member.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -16,19 +18,29 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ezen.nowait.member.domain.UserVO;
 import ezen.nowait.member.service.UserService;
 import ezen.nowait.order.service.OrderService;
+import ezen.nowait.store.domain.MenuVO;
+import ezen.nowait.store.domain.StoreVO;
+import ezen.nowait.store.service.MenuService;
 import ezen.nowait.store.service.StoreService;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
 @Controller
 @Log4j
 @RequestMapping("/user")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class UserController {
 
 	private final UserService userservice;
-	private OrderService orderservice;
-	private StoreService storeService;
+	
+	private final OrderService orderservice;
+	
+	private final StoreService storeService;
+	
+	private final MenuService menuService;
+	
+	HttpSession	session;
 		
 	//손님이 홈에서 가게메뉴보기 페이지 이동
 	@GetMapping("/menuOrder")
@@ -51,12 +63,13 @@ public class UserController {
 	
 	//손님로그인 후 처리페이지로 이동
 	@PostMapping("/userLogin")
-	public String login(String userId, String userPw, HttpServletRequest request, Model model, RedirectAttributes rttr) {
+	public String login(String userId, String userPw, HttpServletRequest request, RedirectAttributes rttr) {
       
       log.info("id : " + userId);
       log.info("pw : " + userPw);
       
-      HttpSession session = request.getSession();
+      session = request.getSession();
+      
       int result = userservice.userLogin(userId, userPw);
       
       if(result == 1) {   /* ownerService.loginOwner(ownerId, ownerPw)
@@ -67,19 +80,33 @@ public class UserController {
          UserVO uVO = userservice.userGet(userId);
          session.setAttribute("member", uVO);
          session.setAttribute("result", 2);
-         model.addAttribute("list", storeService.findAll());
          System.out.println("로그인 성공");
          return "redirect:/user/userHome";
       } else {
     	  System.out.println("로그인 실패");
     	  rttr.addFlashAttribute("result", result);
-    	  return "/user/userLogin";    	  
+    	  return "redirect:/user/userLogin";    	  
       }
     }
 	
 	//손님 홈 이동
 	@GetMapping("/userHome")
-	public void userHome() {}
+	public void userHome(Model model) {
+		
+		List<StoreVO> storeList = storeService.findAll();
+		List<MenuVO> menuList;
+		
+		
+		model.addAttribute("list", storeList);
+		
+		for(int i=0; i<storeList.size(); i++) {
+			
+			String crNum = storeList.get(i).getCrNum();
+			
+			menuList = menuService.findMenuList(crNum);
+			
+		}
+	}
 
 	//손님 리뷰관리 이동
 	@GetMapping("/userReview")

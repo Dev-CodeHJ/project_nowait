@@ -18,20 +18,25 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ezen.nowait.code.domain.CodeVO;
 import ezen.nowait.code.service.CodeService;
 import ezen.nowait.member.domain.OwnerVO;
+import ezen.nowait.store.domain.MenuVO;
 import ezen.nowait.store.domain.StoreVO;
+import ezen.nowait.store.service.MenuService;
 import ezen.nowait.store.service.StoreService;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
 @Controller
 @Log4j
 @RequestMapping("/store")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class StoreController {
 
-	private StoreService storeService;
+	private final StoreService storeService;
 	
-	private CodeService codeService;
+	private final CodeService codeService;
+	
+	private final MenuService menuService;
 	
 	HttpSession session;
 	
@@ -43,8 +48,20 @@ public class StoreController {
 	
 	@GetMapping("/storeUserGet")
 	public void userGet(String crNum, Model model) {
+		
 		System.out.println("crNum : " + crNum);
-		model.addAttribute("store", storeService.findByCrNum(crNum));
+		
+		List<MenuVO> menuList = menuService.findMenuList(crNum);
+		model.addAttribute("menuList", menuList);
+		
+		StoreVO sVO = storeService.findByCrNum(crNum);
+		model.addAttribute("store", sVO);
+		
+		List<CodeVO> menuCategoryList = codeService.findListByCrNum(crNum);
+		model.addAttribute("menuCategoryList", menuCategoryList);
+		
+		List<CodeVO> popularityList = codeService.findList("popularity");
+		model.addAttribute("popularityList", popularityList);
 	}
 	
 	@GetMapping("/storeOwnerGet")
@@ -92,6 +109,41 @@ public class StoreController {
 		rttr.addAttribute("crNum", crNum);
 		
 		return "redirect:/owner/ownerHome";
+	}
+	
+	@GetMapping("/storeImgRegister")
+	public void imgRegister(String crNum, Model model) {
+		
+		System.out.println("/store/storeImgRegister crNum : " + crNum);
+		
+		List<MenuVO> menuList = menuService.findMenuList(crNum);
+		
+		model.addAttribute("crNum", crNum);
+		model.addAttribute("menuList", menuList);
+	}
+	
+	@PostMapping("/storeImgRegister")
+	public String imgRegister(String crNum, String uploadFileName, String storeFileName, RedirectAttributes rttr) {
+		
+		System.out.println("--post-- storeImgRegister crNum : " + crNum);
+		System.out.println("uploadFileName : " + uploadFileName);
+		System.out.println("storeFileName : " + storeFileName);
+		
+		StoreVO sVO = storeService.findByCrNum(crNum);
+		int imgUpload = 0;
+		
+		if(sVO != null) {
+			
+			sVO.setUploadFileName(uploadFileName);
+			sVO.setStoreFileName(storeFileName);
+			
+			imgUpload = storeService.updateStore(sVO);
+		}
+		
+		rttr.addAttribute("crNum", crNum);
+		rttr.addFlashAttribute("imgUpload", imgUpload);
+		
+		return "redirect:/store/storeOwnerGet";
 	}
 	
 	//@GetMapping(path = "/storeUpdate/{crNum}")

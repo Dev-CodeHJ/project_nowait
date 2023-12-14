@@ -42,8 +42,21 @@
 				    <div class="container">
 				         <table>
 				            <tr>
-				               <th>사업자 등록번호</th>
-				               <td>${store.crNum}</td>
+				               	<th>가게 대표사진</th>
+				               	<td>
+				               		<c:choose>
+				               			<c:when test="${store.storeFileName ne null and store.storeFileName ne ''}">
+						               		<img src="/resources/images/${store.storeFileName}" alt="${store.uploadFileName}" width="200" height="200">
+				               			</c:when>
+				               			<c:otherwise>
+				               				<img src="/resources/images/defaultImg" alt="기본이미지" width="200" height="200">
+				               			</c:otherwise>
+				               		</c:choose>
+				               	</td>
+				            </tr>
+				            <tr>
+				               	<th>사업자 등록번호</th>
+				               	<td>${store.crNum}</td>
 				            </tr>
 				            <tr>
 								<th>가게 이름</th>
@@ -87,6 +100,9 @@
 				       			</td>
 				   			</tr>
 				         </table>
+		            	<div class="btn-box">
+					       	<a href="#" onclick="imgRegister_move()" style="background-color: green;">대표사진 등록</a>
+		                </div>
 				    </div>
 				  </section>
 	      </div>
@@ -98,6 +114,16 @@
   <script src="https://code.jquery.com/jquery.js"></script>
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
   <script type="text/javascript" src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		if(${imgUpload}==0){
+			alert("대표사진 등록에 실패하셨습니다!");
+			imgRegister_move();
+		} else if(${imgUpload}==1){
+			alert("가게 대표사진이 등록되었습니다.");
+		}
+	});
+</script>
 <script type="text/javascript">
 	function store_move() {
 	    document.getElementById('frm').action="/store/storeOwnerGet";
@@ -116,6 +142,11 @@
 	
 	function storeDelete_move() {
 	    document.getElementById('frm').action="/store/storeDelete";
+		document.getElementById('frm').submit();
+	}
+	
+	function imgRegister_move() {
+	    document.getElementById('frm').action="/store/storeImgRegister";
 		document.getElementById('frm').submit();
 	}
 </script>

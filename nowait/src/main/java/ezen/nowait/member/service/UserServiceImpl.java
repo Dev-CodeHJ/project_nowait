@@ -28,8 +28,10 @@ public class UserServiceImpl implements UserService {
 
 		@Override
 		public int userLogin(String userId, String userPw) {
+			
 			UserVO uVO = userMapper.userGet(userId);
-			if(uVO.getUserId() != null && uVO.getUserId() != "") {
+			
+			if(uVO != null){
 				if(uVO.getUserPw().equals(userPw)) {
 					return 1;
 				} else {

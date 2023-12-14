@@ -13,15 +13,6 @@
     border: 1px solid black;
     padding: 10px;
     }
-	<%--
-    td {
-    color: orange;
-    font-weight: bold;
-    text-align: center;
-    border: 1px solid black;
-    padding: 10px;
-    }
-    --%>
 </style>
 
 	<div class="container-fluid">
@@ -73,7 +64,7 @@
 			            			<c:forEach items="${popularityList}" var="popular">
 				            			<c:if test="${menu.popularity eq popular.name}">
 					            			<c:choose>
-					            				<c:when test="${popular.value eq '인기메뉴'}">
+					            				<c:when test="${popular.name eq 1}">
 					            					<th style="color: orange">${popular.value}</th>
 					            				</c:when>
 					            				<c:otherwise>

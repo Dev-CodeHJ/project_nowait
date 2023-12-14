@@ -51,6 +51,8 @@
 				            <tr style="display: none;">
 								<td><input type="text" name="menuNum" id="menuNum" value="${menu.menuNum}"></td>
 								<td><input type="text" name="crNum" id="crNum" value="${menu.crNum}"></td>
+								<td><input type="text" name="uploadFileName" id="uploadFileName" value="${menu.uploadFileName}"></td>
+								<td><input type="text" name="storeFileName" id="storeFileName" value="${menu.storeFileName}"></td>
 							</tr>
 				            <tr>
 				               <th>메뉴 이름</th>
@@ -72,7 +74,7 @@
 							</tr>
 							<tr>
 								<td>메뉴 사진</td>
-								<td><input type="file" name="file" id="file" value="${menu.uploadFileName}"></td>
+								<td><input type="file" name="file" id="file"></td>
 							</tr>
 							<tr>
 								<th>가격</th>

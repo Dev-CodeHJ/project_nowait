@@ -25,12 +25,21 @@
 	
 	      <div class="filters-content">
 	        <div class="row grid">
-		      <c:forEach items="${list}" var="store">
+		      <c:forEach items="${list}" var="store" varStatus="cnt">
 		          <div class="col-sm-6 col-lg-4 all ${store.storeCategory}">
 		            <div class="box">
 		              <div>
 		                <div class="img-box">
-		                  <img src="/resources/images/f1.png" alt="">
+		                  <a href="#" onclick="login_chk()">
+		               		<c:choose>
+		               			<c:when test="${store.storeFileName ne null and store.storeFileName ne ''}">
+				               		<img src="/resources/images/${store.storeFileName}" alt="${store.uploadFileName}" width="200" height="200">
+		               			</c:when>
+		               			<c:otherwise>
+		               				<img src="/resources/images/defaultImg.png" alt="기본이미지" width="200" height="200">
+		               			</c:otherwise>
+		               		</c:choose>
+		                  </a>
 		                </div>
 		                <div class="detail-box">
 		                  <h5>
@@ -67,5 +76,10 @@
 	  </section>
 	  <%-- end food section --%>
   <%@include file="includes/footer.jsp" %>
+<script type="text/javascript">
+	function login_chk() {
+		alert("로그인 후 주문이 가능합니다!");
+	}
+</script>
 </body>
 </html>
