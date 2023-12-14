@@ -18,9 +18,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<c:import url="/top"/>
 
-<h1 class="text-success text-center"> ${loginUser.userid}님 장바구니</h1>
+<h1 class="text-success text-center"> ${user.userId}님 장바구니</h1>
 <!-- 주문 폼 시작--------------------- -->
 <form name="orderF" id="orderF" action="orderCart">
 	<table class="table table-striped">
@@ -51,7 +50,7 @@
 			</td>
 			<td>
 				${cp.pname}<br>
-				<a href="../prodDetail.do?pnum=${cp.pnum}" target="_blank">
+				<a href="../?pnum=${cp.pnum}" target="_blank">
 				<img src="../images/${cp.pimage1}" class="img-thumbnail"
 				alt="${cp.pname }"
 				style="width:140px"></a>
@@ -60,15 +59,9 @@
 			<input type="number" name="oqty" id="oqty${st.count}" value="${cp.oqty}" min="1" max="50" size="3"> 개
 			<button type="button" class="btn btn-info" onclick="cartEdit('${cp.cartNum}','${st.count}')">수정</button>
 			</td>
-			<td>
-				<fmt:formatNumber value="${cp.saleprice}" pattern="###,###"/>원
-				<br>
-				<span class="badge badge-danger">${cp.point}</span>POINT
-			</td>
 			<td style="font-weight:bold">
 				<fmt:formatNumber value="${cp.totalPrice}" pattern="###,###"/>원
 				<br>
-				<span class="badge badge-danger">${cp.totalPoint}</span>POINT
 			</td>
 			<td>
 			<a class="btn btn-outline-danger" onclick="cartDel('${cp.cartNum}','${cp.pnum}')">삭제</a>
@@ -84,10 +77,6 @@
 				<span class="text-danger">
 				<fmt:formatNumber value="${cartTotalPrice}" pattern="###,###"/>
 				</span> 원</h5>
-				<h5>장바구니 총포인트: 
-				<span class="text-success">
-				<fmt:formatNumber value="${cartTotalPoint}" pattern="###,###"/>
-				</span> point</h5>
 			</td>
 			<td colspan="3">
 				<button type="button" onclick="goOrder()" class="btn btn-warning">주문하기</button>

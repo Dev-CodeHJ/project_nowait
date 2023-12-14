@@ -69,7 +69,7 @@ public class UserController {
          session.setAttribute("result", 2);
          model.addAttribute("list", storeService.findAll());
          System.out.println("로그인 성공");
-         return "/user/userHome";
+         return "redirect:/user/userHome";
       } else {
     	  System.out.println("로그인 실패");
     	  rttr.addFlashAttribute("result", result);

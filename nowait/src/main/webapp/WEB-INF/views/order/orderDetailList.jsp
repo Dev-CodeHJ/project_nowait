@@ -11,8 +11,6 @@
 	<h1>회원주문상세조회</h1>
 	
     
-    		<table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
-
 			 <c:forEach items="${orderDetail}" var="orderDetail">
 			 
 		    		<table class="order_table">

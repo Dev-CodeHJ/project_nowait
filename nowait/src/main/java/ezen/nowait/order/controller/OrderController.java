@@ -108,8 +108,12 @@ public class OrderController {
   	
 
 	//손님이 홈에서 가게메뉴보기 페이지 이동
-	@GetMapping("/menuOrder")
-	public void menuOrder() {}
+	@GetMapping("/choiceMenu")
+	public void choiceMenu() {}
+
+	//손님이 홈에서 가게메뉴보기 페이지 이동
+	@GetMapping("/choiceDetailMenu")
+	public void choiceDetailMenu() {}
 	
 	
 	//손님 장바구니 이동

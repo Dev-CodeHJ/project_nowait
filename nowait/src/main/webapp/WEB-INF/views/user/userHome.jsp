@@ -36,7 +36,7 @@
 	                </div>
 	                <div class="detail-box">
 	                  <h5>
-	                   <a class="store-name" href="/order/menuOrder">${store.storeName}</a><!-- 온클릭시 스토어유저겟 -->
+	                  ${store.storeName}
 	                  </h5>
 	                  <p>
 	                    ${store.storeInfo}
@@ -62,10 +62,10 @@
                 </div>
                 <div class="detail-box">
                   <h5>
-                    Delicious Burger
+                     <a class="store-name"  style="cursor:pointer"  href="/order/choiceMenu">창무네 수제버거</a>
                   </h5>
                   <p>
-                    Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam voluptatem repellendus sed eaque
+                   맛있어요!
                   </p>
                   <div class="options">
                     <h6>

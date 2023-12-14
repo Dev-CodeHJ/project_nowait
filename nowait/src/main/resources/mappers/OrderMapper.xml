@@ -22,10 +22,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<insert id="orderInsert">
 	INSERT INTO order 
-	VALUES
-	(#{order_num} , #{user_id} , #{cr_num} ,  #{pay_method} , #{reserv_num} , #{reserv_time} , 
-	#{order_time} , #{total_price} , #{request_msg})
+	VALUES (#{order_num}, #{user_id}, #{cr_num},  #{pay_method}, #{reserv_num}, #{reserv_time}, 
+	#{order_time}, #{total_price}, #{request_msg})
 	</insert>
-
 
 </mapper>
