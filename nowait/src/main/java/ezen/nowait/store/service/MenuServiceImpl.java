@@ -33,7 +33,24 @@ public class MenuServiceImpl implements MenuService{
 	@Override
 	public int addMenu(MenuVO mVO) {
 		
-		return menuMapper.insertMenu(mVO);
+		int insertOk = menuMapper.insertMenu(mVO);
+		int insertOp = 0;
+		int menuNum = 0;
+		
+		if(insertOk >= 1) {
+			
+			menuNum = mVO.getMenuNum();
+			System.out.println("menuNum : " + menuNum);
+			MenuOptionVO moVO = new MenuOptionVO();
+			
+			moVO.setMenuNum(menuNum);
+			moVO.setOption("선택없음");
+			moVO.setOptionPrice(0);
+			moVO.setOptionStatus(false);
+			
+			insertOp = optionMapper.insertOption(moVO);
+		}
+		return insertOp;
 	}
 
 	@Override

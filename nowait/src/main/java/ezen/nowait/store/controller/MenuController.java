@@ -64,13 +64,7 @@ public class MenuController {
 		System.out.println("/menu/menuGet menuNum : " + menuNum);
 		
 		MenuVO mVO = menuService.findMenu(menuNum);
-//		int optionCnt = optionService.findOptionCnt(menuNum);
 		List<MenuOptionVO> optionList = optionService.findOptionList(menuNum);
-		
-//		if(optionCnt != 0) {
-//			List<MenuOptionVO> optionList = optionService.findOptionList(menuNum);
-//			model.addAttribute("optionList", optionList);
-//		}
 		
 		List<CodeVO> list = codeService.findListByCrNum(mVO.getCrNum());
 		List<CodeVO> popularityList = codeService.findList("popularity");
@@ -80,6 +74,45 @@ public class MenuController {
 		
 		model.addAttribute("menuCategoryList", list);
 		model.addAttribute("popularityList", popularityList);
+	}
+	
+	@GetMapping("/menuUserGet")
+	public void userGet(int menuNum, Model model) {
+		
+		System.out.println("/menu/menuUserGet menuNum : " + menuNum);
+		
+		MenuVO mVO = menuService.findMenu(menuNum);
+		List<MenuOptionVO> optionList = optionService.findOptionList(menuNum);
+		
+		List<CodeVO> list = codeService.findListByCrNum(mVO.getCrNum());
+		List<CodeVO> popularityList = codeService.findList("popularity");
+		
+		model.addAttribute("menu", mVO);
+		model.addAttribute("optionList", optionList);
+		
+		model.addAttribute("menuCategoryList", list);
+		model.addAttribute("popularityList", popularityList);
+	}
+	
+	@PostMapping("/menuUserGet")
+	public String userGet(int menuNum, int menuOptionNum, RedirectAttributes rttr) {
+		
+		System.out.println("--post--menuUserGet menuNum : " + menuNum);
+		System.out.println("--post--menuUserGet menuOptionNum : " + menuOptionNum);
+		
+		MenuVO mVO = menuService.findMenu(menuNum);
+		List<MenuOptionVO> optionList = optionService.findOptionList(menuNum);
+		
+		List<CodeVO> list = codeService.findListByCrNum(mVO.getCrNum());
+		List<CodeVO> popularityList = codeService.findList("popularity");
+		
+		rttr.addAttribute("menu", mVO);
+		rttr.addAttribute("optionList", optionList);
+		
+		rttr.addAttribute("menuCategoryList", list);
+		rttr.addAttribute("popularityList", popularityList);
+		
+		return "";
 	}
 	
 	@GetMapping("/menuRegister")
