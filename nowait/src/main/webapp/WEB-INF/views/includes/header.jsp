@@ -33,7 +33,7 @@
   <link href="/resources/css/style.css" rel="stylesheet" />
   <!-- responsive style -->
   <link href="/resources/css/responsive.css" rel="stylesheet" />
-
+<script src="/resources/jquery/jquery-3.3.1.min.js"></script>
 </head>
 
 <body>

@@ -1,5 +1,6 @@
 package ezen.nowait.order.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import ezen.nowait.member.domain.UserVO;
 import ezen.nowait.member.service.UserService;
+import ezen.nowait.order.domain.OrderMenuVO;
 import ezen.nowait.order.domain.OrderVO;
 import ezen.nowait.order.service.OrderService;
+import ezen.nowait.store.domain.MenuOptionVO;
 import ezen.nowait.store.domain.MenuVO;
 import ezen.nowait.store.service.MenuService;
 import ezen.nowait.store.service.StoreService;
@@ -38,6 +41,39 @@ public class OrderController {
 	private final MenuService menuService;
 	
 	HttpSession session;
+	
+	//손님 장바구니 이동
+	@SuppressWarnings("unchecked")
+	@GetMapping("/orderCart")
+	public void userOrder(HttpServletRequest request) {
+		
+		session = request.getSession();
+		
+		List<OrderMenuVO> orderList = new ArrayList<OrderMenuVO>();
+		List<MenuVO> menuList = new ArrayList<MenuVO>();
+		List<MenuOptionVO> optionList = new ArrayList<MenuOptionVO>();
+		MenuVO mVO;
+		
+		if(session.getAttribute("cart") == null) {
+			
+			orderList = new ArrayList<OrderMenuVO>();
+			
+		} else {
+			
+			orderList = (List<OrderMenuVO>) session.getAttribute("cart");
+			
+			for(int i=0; i<orderList.size(); i++) {
+				
+				int menuNum = orderList.get(i).getMenuNum();
+				mVO = menuService.findMenu(menuNum);
+				menuList.add(mVO);
+				
+				int menuOptionNum = orderList.get(i).getMenuOptionNum();
+			}
+		}
+		
+		
+	}
 
 	 
 	//손님 주문목록 이동
@@ -94,23 +130,6 @@ public class OrderController {
 		
 		return "redirect:/order/userOrderList";
 	}
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
 
 	//손님이 홈에서 가게메뉴보기 페이지 이동
 	@GetMapping("/choiceMenu")
@@ -124,11 +143,6 @@ public class OrderController {
 	//손님이 홈에서 가게메뉴보기 페이지 이동
 	@GetMapping("/choiceDetailMenu")
 	public void choiceDetailMenu() {}
-	
-	
-	//손님 장바구니 이동
-	@GetMapping("/orderCart")
-	public void userOrder() {}
 	
 	//장바구니-주문
 	@PostMapping("/orderCart")
@@ -161,24 +175,4 @@ public class OrderController {
 		  
 		  return "redirect:/order/orderCart";
 	  }
-	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-
-
 }

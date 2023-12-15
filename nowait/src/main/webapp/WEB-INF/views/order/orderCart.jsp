@@ -1,23 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page contentType="text/html; charset=UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-    
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>장바구니 주문페이지</title>
-</head>
-<body>
-
-<c:forEach items="${orderInsert}" var="orderInsert">
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@include file="../includes/header.jsp" %>
 
 <h1 class="text-success text-center"> ${user.userId}님 장바구니</h1>
 <!-- 주문 폼 시작--------------------- -->
@@ -34,41 +19,42 @@
 		</tr>
 		</thead>
 		<tbody>
-		<c:if test="${orderList eq null or empty orderList}">
-			<tr>
-				<td colspan="6"><b>담긴 상품이 없습니다.</b></td>
-			</tr>
-		</c:if>
-		<c:if test="${orderList eq null or empty orderList}">
-		<!-- ---------반복문-------------- -->
-		<c:forEach var="cp" items="${orderList}" varStatus="st">
-		<tr>
-			<td>
-			<label>
-				<input type="checkbox" name="opnum" id="pnum${st.count}" value="${cp.pnum}">${cp.pnum}
-			</label>
-			</td>
-			<td>
-				${cp.pname}<br>
-				<a href="../?pnum=${cp.pnum}" target="_blank">
-				<img src="../images/${cp.pimage1}" class="img-thumbnail"
-				alt="${cp.pname }"
-				style="width:140px"></a>
-			</td>
-			<td>
-			<input type="number" name="oqty" id="oqty${st.count}" value="${cp.oqty}" min="1" max="50" size="3"> 개
-			<button type="button" class="btn btn-info" onclick="cartEdit('${cp.cartNum}','${st.count}')">수정</button>
-			</td>
-			<td style="font-weight:bold">
-				<fmt:formatNumber value="${cp.totalPrice}" pattern="###,###"/>원
-				<br>
-			</td>
-			<td>
-			<a class="btn btn-outline-danger" onclick="cartDel('${cp.cartNum}','${cp.pnum}')">삭제</a>
-			</td>
-		</tr>
-		</c:forEach>
-		</c:if>
+		<c:choose>
+			<c:when test="${cart eq null or cart.size() eq 0}">
+				<tr>
+					<td colspan="6"><b>담긴 상품이 없습니다.</b></td>
+				</tr>
+			</c:when>
+			<c:otherwise>
+				<c:forEach var="cp" items="${cart}" varStatus="st">
+				<tr>
+					<td>
+					<label>
+						<input type="checkbox" name="menuNum" id="menuNum" value="${cp.pnum}">${cp.pnum}
+					</label>
+					</td>
+					<td>
+						${cp.pname}<br>
+						<a href="../?pnum=${cp.pnum}" target="_blank">
+						<img src="../images/${cp.pimage1}" class="img-thumbnail"
+						alt="${cp.pname }"
+						style="width:140px"></a>
+					</td>
+					<td>
+					<input type="number" name="oqty" id="oqty${st.count}" value="${cp.oqty}" min="1" max="50" size="3"> 개
+					<button type="button" class="btn btn-info" onclick="cartEdit('${cp.cartNum}','${st.count}')">수정</button>
+					</td>
+					<td style="font-weight:bold">
+						<fmt:formatNumber value="${cp.totalPrice}" pattern="###,###"/>원
+						<br>
+					</td>
+					<td>
+					<a class="btn btn-outline-danger" onclick="cartDel('${cp.cartNum}','${cp.pnum}')">삭제</a>
+					</td>
+				</tr>
+				</c:forEach>
+			</c:otherwise>
+		</c:choose>
 		<!-- ---------------------------- -->
 		
 		<tr>
@@ -101,6 +87,8 @@
 	<input type="hidden" name="oqty">
 </form>
 <!-- ---------------------------- -->
+
+<%@include file="../includes/footer.jsp" %>
 <script>
 	/*체크박스에 체크한 상품(상품번호,주문수량)을 가지고 주문 폼 페이지로 이동*/
 	function goOrder(){
@@ -150,9 +138,5 @@
 		}
 	}
 </script>
-
-</c:forEach>
-
-
 </body>
 </html>

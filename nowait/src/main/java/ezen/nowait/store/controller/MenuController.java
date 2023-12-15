@@ -1,8 +1,10 @@
 package ezen.nowait.store.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -16,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ezen.nowait.code.domain.CodeVO;
 import ezen.nowait.code.service.CodeService;
+import ezen.nowait.order.domain.OrderMenuVO;
 import ezen.nowait.store.domain.MenuOptionVO;
 import ezen.nowait.store.domain.MenuVO;
 import ezen.nowait.store.domain.UploadFile;
@@ -94,25 +97,44 @@ public class MenuController {
 		model.addAttribute("popularityList", popularityList);
 	}
 	
+	@SuppressWarnings("unchecked")
 	@PostMapping("/menuUserGet")
-	public String userGet(int menuNum, int menuOptionNum, RedirectAttributes rttr) {
+	public String userGet(OrderMenuVO omVO, RedirectAttributes rttr, HttpServletRequest request) {
 		
-		System.out.println("--post--menuUserGet menuNum : " + menuNum);
-		System.out.println("--post--menuUserGet menuOptionNum : " + menuOptionNum);
+		System.out.println("--post--menuUserGet menuNum : " + omVO.getMenuNum());
+		System.out.println("--post--menuUserGet menuOptionNum : " + omVO.getMenuOptionNum());
+		System.out.println("--post--menuUserGet menuOptionPrice : " + omVO.getOrderMenuPrice());
 		
+		session = request.getSession();
+		
+		int menuNum = omVO.getMenuNum();
 		MenuVO mVO = menuService.findMenu(menuNum);
-		List<MenuOptionVO> optionList = optionService.findOptionList(menuNum);
+		String crNum = mVO.getCrNum();
 		
-		List<CodeVO> list = codeService.findListByCrNum(mVO.getCrNum());
-		List<CodeVO> popularityList = codeService.findList("popularity");
+		List<OrderMenuVO> orderList;
 		
-		rttr.addAttribute("menu", mVO);
-		rttr.addAttribute("optionList", optionList);
+		if(session.getAttribute("cart") == null) {
+			
+			orderList = new ArrayList<OrderMenuVO>();
+		} else {
+			orderList = (List<OrderMenuVO>) session.getAttribute("cart");
+		}
 		
-		rttr.addAttribute("menuCategoryList", list);
-		rttr.addAttribute("popularityList", popularityList);
+		System.out.println("orderList : " + orderList);
 		
-		return "";
+		boolean addOk = orderList.add(omVO);
+		System.out.println("addOk : " + addOk);
+		System.out.println("add after orderList : " + orderList);
+		
+		if(addOk) {
+			
+			session.setAttribute("cart", orderList);
+		}
+		
+		rttr.addAttribute("crNum", crNum);
+		rttr.addFlashAttribute("addOk", addOk);
+		
+		return "redirect:/store/storeUserGet";
 	}
 	
 	@GetMapping("/menuRegister")

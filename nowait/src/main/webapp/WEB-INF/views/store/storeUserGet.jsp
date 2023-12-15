@@ -116,6 +116,15 @@ th, td {
   	</section>
 <%@include file="../includes/footer.jsp" %>
 <script type="text/javascript">
+	$(document).ready(function() {
+		if(${addOk}==true){
+			alert("선택하신 메뉴가 장바구니에 담겼습니다.");
+		} else {
+			alert("장바구니 담기 실패!");
+		}
+	});
+</script>
+<script type="text/javascript">
 	function menuGet_move(num) {
 	    document.getElementById('frm'+num).action="/menu/menuUserGet";
 		document.getElementById('frm'+num).submit();
