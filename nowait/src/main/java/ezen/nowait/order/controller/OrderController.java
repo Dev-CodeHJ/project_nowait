@@ -193,6 +193,8 @@ public class OrderController {
 	//손님 주문별 상세조회 이동
 	@GetMapping("/orderDetailList")
 	public void orderDetailList(@RequestParam("orderNum") int orderNum, Model model) {
+		
+		orderservice.findOrder(orderNum);
 		model.addAttribute("orderDetail",orderservice.getOrderDetail(orderNum));
 	}
 

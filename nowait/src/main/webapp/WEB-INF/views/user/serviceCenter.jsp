@@ -33,11 +33,7 @@ button{
            <div class="panel-heading">
              <!-- 패널 타이틀1 -->
               <h3 class="panel-title">
-<<<<<<< HEAD
                  <span>나의 관리 메뉴</span>
-=======
-                 <span>가게 관리 메뉴</span>
->>>>>>> main
               </h3>
            </div>
             <!-- 사이드바 메뉴목록1 -->
@@ -82,20 +78,11 @@ Q&A<br><br>
 
 </ul>
 <div>
-<<<<<<< HEAD
-     <button class="btn btn-info" onclick ="location.href='/'">home</button>
-=======
      <button class="btn btn-info" onclick ="location.href='/user/userHome'">home</button>
->>>>>>> main
 </div>
 </div>
 </div>
-</body>
 <%@include file="../includes/footer.jsp" %>
-<<<<<<< HEAD
-</html>
-=======
-</html>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="/resources/demos/style.css">
 <script src="https://code.jquery.com/jquery.js"></script>
@@ -122,4 +109,5 @@ Q&A<br><br>
 		document.getElementById('frm').submit();
 	}
 </script>
->>>>>>> main
+</body>
+</html>
