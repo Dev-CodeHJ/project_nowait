@@ -44,7 +44,7 @@ th, td {
             		<th rowspan="2">
             			<span>가격 : </span><fmt:formatNumber pattern="###,###,###" value="${menu.price}" />원
            			</th>
-            		<th colspan="2">구입 수량</th>
+            		<th colspan="2">구매 수량</th>
             	</tr>
             	<tr>
             		<th colspan="2">
@@ -62,13 +62,13 @@ th, td {
             	<tr>
             		<td colspan="3">옵션 선택</td>
            		</tr>
-				<c:forEach items="${optionList}" var="option">
+				<c:forEach items="${optionList}" var="option" varStatus="cnt">
 					<c:choose>
 						<c:when test="${option.optionStatus eq true}">
 		           			<tr class="soldOut">
 			            		<td colspan="3">
 									<label>
-										<input type="radio" name="menuOptionNum" id="menuOptionNum" value="${option.menuOptionNum}" disabled="disabled">
+										<input type="radio" name="optionCnt" id="optionCnt" value="${cnt.index}" disabled="disabled">
 										${option.option} &nbsp; +${option.optionPrice}원
 									</label>
 			            		</td>
@@ -78,16 +78,13 @@ th, td {
 		           			<tr>
 			            		<th colspan="3">
 									<label>
-										<input type="radio" name="menuOptionNum" id="menuOptionNum" value="${option.menuOptionNum}">
+										<input type="radio" name="optionCnt" id="optionCnt" value="${cnt.index}">
 										${option.option} &nbsp; +${option.optionPrice}원
+										<input type="hidden" name="menuOptionNum${cnt.index}" id="menuOptionNum${cnt.index}" value="${option.menuOptionNum}">
+										<input type="hidden" name="optionPrice${cnt.index}" id="optionPrice${cnt.index}" value="${option.optionPrice}">
 									</label>
 			            		</th>
 			            	</tr>
-							<tr style="display: none;">
-								<td>
-									<input type="text" name="optionPrice" id="optionPrice" value="${option.optionPrice}">
-								</td>
-							</tr>
 						</c:otherwise>
 					</c:choose>
 				</c:forEach>
@@ -101,6 +98,7 @@ th, td {
 	          		<td>
            				<input type="text" name="menuNum" value="${menu.menuNum}">
            				<input type="text" name="price" id="price" value="${menu.price}">
+           				<input type="text" name="menuOptionNum" id="menuOptionNum">
            				<input type="text" name="orderMenuPrice" id="orderMenuPrice">
 	       			</td>
 	   			</tr>
@@ -131,13 +129,17 @@ th, td {
 	$(document).ready(function() {
     $("#btn_register").click(function register_chk() {
     	  
-	      if ($("input[name=menuOptionNum]:radio:checked").length < 1) {
+	      if ($("input[name=optionCnt]:radio:checked").length < 1) {
 	          alert("옵션을 선택해주세요!");
-	          $("#menuOptionNum").focus();
+	          $("#optionCnt").focus();
 	          return false;
 	      }
+	      var optChk = Number($("input[name=optionCnt]:radio:checked").val());
 	      
-	      Number($("#orderMenuPrice").val(Number($("#optionPrice").val()) + Number($("#price").val())));
+	      $("#menuOptionNum").val(document.getElementById('menuOptionNum'+optChk).value);
+	      
+	      var totalPrice = Number(document.getElementById('optionPrice'+optChk).value) + Number($("#price").val());
+	      $("#orderMenuPrice").val(totalPrice);
 	      
 	      document.getElementById('frm0').submit();
           return true;

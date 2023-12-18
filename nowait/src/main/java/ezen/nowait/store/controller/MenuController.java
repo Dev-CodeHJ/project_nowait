@@ -2,7 +2,9 @@ package ezen.nowait.store.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -101,34 +103,50 @@ public class MenuController {
 	@PostMapping("/menuUserGet")
 	public String userGet(OrderMenuVO omVO, RedirectAttributes rttr, HttpServletRequest request) {
 		
-		System.out.println("--post--menuUserGet menuNum : " + omVO.getMenuNum());
-		System.out.println("--post--menuUserGet menuOptionNum : " + omVO.getMenuOptionNum());
-		System.out.println("--post--menuUserGet menuOptionPrice : " + omVO.getOrderMenuPrice());
+		System.out.println("--post--menuUserGet omVO : " + omVO);
 		
 		session = request.getSession();
 		
+		//장바구니에 담은 메뉴PK
 		int menuNum = omVO.getMenuNum();
+		int menuOptionNum = omVO.getMenuOptionNum();
+		
+		//해당 메뉴의 옵션리스트
+		List<MenuOptionVO> optionList = optionService.findOptionList(menuNum);
+		//해당 메뉴정보객체
 		MenuVO mVO = menuService.findMenu(menuNum);
+		MenuOptionVO moVO = optionService.findOption(menuOptionNum);
+		
+		omVO.setOrderMenuPrice(mVO.getPrice()+moVO.getOptionPrice());
+		System.out.println("setOrderMenuPrice : " + omVO.getOrderMenuPrice());
+		
+		//주문한 가게PK
 		String crNum = mVO.getCrNum();
 		
-		List<OrderMenuVO> orderList;
+		//session에 저장할 장바구니List
+		List<Map<String, Object>> cart;
+		//cart에는 메뉴, 메뉴에 있는 옵션리스트, 주문수량, 주문가격이 담긴다
+		Map<String, Object> map = new HashMap<String, Object>();
 		
-		if(session.getAttribute("cart") == null) {
-			
-			orderList = new ArrayList<OrderMenuVO>();
+		map.put("orderMenu", omVO);
+		map.put("menu", mVO);
+		map.put("optionList", optionList);
+		
+		if(session.getAttribute("cart") != null) {
+			cart = (List<Map<String, Object>>) session.getAttribute("cart");
+			System.out.println("exist cart session : " + cart.size());
 		} else {
-			orderList = (List<OrderMenuVO>) session.getAttribute("cart");
+			cart = new ArrayList<Map<String,Object>>();
+			System.out.println("new cart : " + cart);
 		}
 		
-		System.out.println("orderList : " + orderList);
-		
-		boolean addOk = orderList.add(omVO);
+		boolean addOk = cart.add(map);
 		System.out.println("addOk : " + addOk);
-		System.out.println("add after orderList : " + orderList);
+		System.out.println("add after cart : " + cart.size());
 		
 		if(addOk) {
 			
-			session.setAttribute("cart", orderList);
+			session.setAttribute("cart", cart);
 		}
 		
 		rttr.addAttribute("crNum", crNum);

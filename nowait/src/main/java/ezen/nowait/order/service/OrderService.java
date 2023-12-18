@@ -6,17 +6,13 @@ import ezen.nowait.order.domain.OrderVO;
 
 public interface OrderService {
 
-
-
-
 	public List<OrderVO> getOrderList(String userId);
 
 	public List<OrderVO> getOrderDetailList(String userId);
 
-	public void orderInsert(OrderVO odVO);
+	public int orderInsert(OrderVO odVO);
 
-	public void orderCartInsert(OrderVO odVO);
+	public int orderCartInsert(OrderVO odVO);
 
-	
-	
+	public OrderVO findOrder(int orderNum);
 }

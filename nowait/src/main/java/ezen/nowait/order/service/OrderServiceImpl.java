@@ -7,14 +7,15 @@ import org.springframework.stereotype.Service;
 import ezen.nowait.order.domain.OrderVO;
 import ezen.nowait.order.mapper.OrderMapper;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
 @Log4j
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
 	
-	private OrderMapper orderMapper;
+	private final OrderMapper orderMapper;
 	
 	@Override
 	public List<OrderVO> getOrderList(String userId) {
@@ -22,8 +23,8 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public void orderInsert(OrderVO odVO) {
-		orderMapper.orderInsert(odVO);
+	public int orderInsert(OrderVO odVO) {
+		return orderMapper.orderInsert(odVO);
 	}
 
 	@Override
@@ -32,10 +33,14 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public void orderCartInsert(OrderVO odVO) {
-		// TODO Auto-generated method stub
-		
+	public int orderCartInsert(OrderVO odVO) {
+		return 0;
 	}
 
-	
+	@Override
+	public OrderVO findOrder(int orderNum) {
+		
+		return orderMapper.selectOrder(orderNum);
+	}
+
 }
