@@ -21,7 +21,6 @@ public class UserServiceImpl implements UserService {
 		return userMapper.userInsert(uVO);		
 	}	
 	
-<<<<<<< HEAD
 	//아이디 중복체크
 		@Override
 		public int userIdCheck(String userId) {
@@ -42,30 +41,8 @@ public class UserServiceImpl implements UserService {
 				}
 			} else {
 				return -1;
-=======
-	@Override
-	public int userIdCheck(String userId) {
-		int result = userMapper.idCheck(userId);
-		return result;
-	}
-	
-	@Override
-	public int userLogin(String userId, String userPw) {
-		UserVO uVO = userMapper.userGet(userId);
-		if(uVO != null) {
-			if(uVO.getUserPw().equals(userPw)) {
-				System.out.println("로그인성공");
-				return 1;
-			} 
-			if(uVO.getUserPw()!=(userPw)) {
-				System.out.println("비번틀림");
-				return 0;
->>>>>>> main
 			}
 		}
-		System.out.println("아이디없음");
-		return -1;	
-	} 			
 	
 	@Override
 	public UserVO userGet(String userId) {

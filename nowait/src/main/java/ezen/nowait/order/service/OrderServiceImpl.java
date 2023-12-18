@@ -28,8 +28,8 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public OrderVO getOrderDetailList(int orderNum) {
-		return orderMapper.getOrderDetailList(orderNum);
+	public OrderVO getOrderDetail(int orderNum) {
+		return orderMapper.getOrderDetail(orderNum);
 	}
 
 	@Override

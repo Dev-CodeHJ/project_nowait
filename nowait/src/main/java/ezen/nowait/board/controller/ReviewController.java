@@ -55,7 +55,7 @@ public class ReviewController {
 	@GetMapping("/insertReview")
 	public void insertReview(int orderNum,Model model) {
 		
-		OrderVO oVO = orderservice.getOrderDetailList(orderNum);
+		OrderVO oVO = orderservice.getOrderDetail(orderNum);
 		model.addAttribute("order",oVO);
 	}
 	

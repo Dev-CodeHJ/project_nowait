@@ -8,7 +8,7 @@ public interface OrderService {
 
 	public List<OrderVO> getOrderList(String userId);
 
-	public OrderVO getOrderDetailList(int orderNum);
+	public OrderVO getOrderDetail(int orderNum);
 
 	public int orderInsert(OrderVO odVO);
 

@@ -13,7 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE user_id=#{userId}
 	</select>
 
-	<select id="getOrderDetailList" resultType="ezen.nowait.order.domain.OrderVO">
+	<select id="getOrderDetail" resultType="ezen.nowait.order.domain.OrderVO">
 		select 	o.order_num AS orderNum
 				, o.user_id AS userId
 		        , o.cr_num AS crNum
@@ -34,7 +34,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 					AND o.cr_num	= r.cr_num
 		            AND o.order_num	= r.order_num
 		WHERE o.order_num=#{orderNum}
-		;
 	</select>
 	
 	<select id="selectOrder" resultType="ezen.nowait.order.domain.OrderVO">

@@ -193,7 +193,7 @@ public class OrderController {
 	//손님 주문별 상세조회 이동
 	@GetMapping("/orderDetailList")
 	public void orderDetailList(@RequestParam("orderNum") int orderNum, Model model) {
-		model.addAttribute("orderDetail",orderservice.getOrderDetailList(orderNum));
+		model.addAttribute("orderDetail",orderservice.getOrderDetail(orderNum));
 	}
 
 	//손님상세페이지에서 리뷰쓰기페이지 이동
