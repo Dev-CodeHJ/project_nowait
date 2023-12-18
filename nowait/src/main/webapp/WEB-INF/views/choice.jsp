@@ -1,15 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@include file="includes/header.jsp" %>
+<html>
+
+
 <style>
+
 @font-face {
-    font-family: 'HakgyoansimGaeulsopungB';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/HakgyoansimGaeulsopungB.woff2') format('woff2');
-    font-weight: 700;
+   font-family: 'Tenada';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-2@1.0/Tenada.woff2') format('woff2');
+    font-weight: normal;
     font-style: normal;
 }
+
 h2{
-	font-family:'HakgyoansimGaeulsopungB';
+ font-family: 'Tenada';
 }
 
 button{

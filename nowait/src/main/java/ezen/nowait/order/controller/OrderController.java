@@ -115,7 +115,6 @@ public class OrderController {
 	@GetMapping("/choiceDetailMenu")
 	public void choiceDetailMenu() {}
 	
-	
 	//손님 장바구니 이동
 	@GetMapping("/orderCart")
 	public void userOrder() {}
@@ -133,15 +132,15 @@ public class OrderController {
 	@GetMapping("/orderView")
 	public void orderView() {}
 	
-	 @RequestMapping(value = "/orderView",method=RequestMethod.POST)
-	  public String orderView(HttpSession session, HttpServletRequest request, HttpServletResponse response,
-			  OrderVO orderVO, Model model,int totalPrice) throws Exception{
+	@RequestMapping(value = "/orderView",method=RequestMethod.POST)
+	public String orderView(HttpSession session, HttpServletRequest request, HttpServletResponse response,
+		OrderVO orderVO, Model model,int totalPrice) throws Exception{
 		  
 	  session.setAttribute("orderlist", orderVO);
 	  session.setAttribute("totalPrice", totalPrice);
 
-		  return "/orderBill";
-	  }
+	  return "/orderBill";
+	}
 	
 	//메뉴담기시 장바구니세션
 	 @PostMapping("/orderInsert")
@@ -153,22 +152,5 @@ public class OrderController {
 	  }
 	
   	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-
 
 }

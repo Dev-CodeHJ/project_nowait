@@ -2,6 +2,20 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+
+<style>
+
+@font-face {
+   font-family: 'Tenada';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-2@1.0/Tenada.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+h4{
+ font-family: 'Tenada';
+}
+</style>
 <body>
  <!-- footer section -->
   <footer class="footer_section">
@@ -13,10 +27,11 @@
               Contact Us
             </h4>
             <div class="contact_link_box">
-              <a href="">
+              <a href="https://swig.ezenac.co.kr/m/index.asp?gclid=EAIaIQobChMI8aeTvtqQgwMV9eIWBR04LAuWEAAYASAAEgL2h_D_BwE">
                 <i class="fa fa-map-marker" aria-hidden="true"></i>
                 <span>
-                  Location
+                  Location<br>
+                  경기도 수원시 매산로1가 11-9 KR
                 </span>
               </a>
               <a href="">
@@ -37,25 +52,25 @@
         <div class="col-md-4 footer-col">
           <div class="footer_detail">
             <a href="" class="footer-logo">
-              Feane
+              NOWAIT
             </a>
             <p>
-              Necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with
+             기다리지말고 미리 예약주문!
             </p>
             <div class="footer_social">
-              <a href="">
+              <a href="https://www.facebook.com/?locale=ko_KR">
                 <i class="fa fa-facebook" aria-hidden="true"></i>
               </a>
-              <a href="">
+              <a href="https://twitter.com/?lang=ko">
                 <i class="fa fa-twitter" aria-hidden="true"></i>
               </a>
-              <a href="">
+              <a href="https://kr.linkedin.com/">
                 <i class="fa fa-linkedin" aria-hidden="true"></i>
               </a>
-              <a href="">
+              <a href="https://www.instagram.com/">
                 <i class="fa fa-instagram" aria-hidden="true"></i>
               </a>
-              <a href="">
+              <a href="https://www.pinterest.co.kr/">
                 <i class="fa fa-pinterest" aria-hidden="true"></i>
               </a>
             </div>
@@ -66,10 +81,10 @@
             Opening Hours
           </h4>
           <p>
-            Everyday
+            MON-FRI
           </p>
           <p>
-            10.00 Am -10.00 Pm
+            09.00 Am -06.00 Pm
           </p>
         </div>
       </div>

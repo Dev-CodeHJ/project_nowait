@@ -41,7 +41,6 @@
                                          <input type="text" class="form-control" readonly="readonly" value=<c:out value="${menu.menuImg}"/>>
                                     </tr>
                                 
-                                
                                 </c:forEach>
                              	
                              	</table>
