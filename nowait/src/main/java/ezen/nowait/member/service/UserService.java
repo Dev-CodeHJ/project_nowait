@@ -18,6 +18,7 @@ public interface UserService {
 	public int userRemove(String userId, String userPw);
 	
 	public int userCheckPw(String userId, String userPw);
+	
 }
 
 

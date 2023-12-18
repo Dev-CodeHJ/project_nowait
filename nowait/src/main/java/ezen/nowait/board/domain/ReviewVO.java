@@ -15,4 +15,9 @@ public class ReviewVO {
 	private Date reviewRegdate;
 	private Date reviewUpdatedate;
 	private byte[] reviewImg;
+	private int replyNum;
+	private String ownerId;
+	private String replyContent;
+	private Date replyRegdate;
+	private Date replyUpdatedate;
 }

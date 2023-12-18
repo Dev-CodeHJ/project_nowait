@@ -22,6 +22,8 @@ public interface StoreMapper {
 	
 	public int updateStore(StoreVO sVO);
 	
+	public int reviewSet(Map<String, Object>map);
+	
 //	public int updateOwnerStore(StoreVO sVO);
 	
 	//pk를 받아 store table에 있는 가게 정보 삭제

@@ -4,8 +4,8 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	<mapper namespace="ezen.nowait.board.mapper.ReviewMapper">
 									 
-	<select id="getList" resultType="ezen.nowait.board.domain.ReviewVO">
-		select * from review where user_id = #{userId}
+	<select id="getList" parameterType="hashMap" resultType="ezen.nowait.board.domain.ReviewVO">
+		select * from review where ${name} = #{value}
 	</select>
 	
 	<insert id="insertReview">
@@ -18,7 +18,25 @@
 	</select>
 	
 	<select id="getReview" resultType="ezen.nowait.board.domain.ReviewVO">
-		select * from review where review_num=#{reviewNum}
+		select r.review_num AS reviewNum,
+				r.user_id AS userId,
+				r.cr_num AS crNum,
+				r.order_num AS orderNum,
+				r.review_content AS reviewContent,
+				r.review_regdate AS reviewRegdate,
+				r.review_updatedate AS reviewUpdatedate,
+				r.review_img AS reviewImg,
+				ifnull(p.reply_num, 0) AS replyNum,
+				p.reply_content as replyContent,
+				p.reply_regdate as replyRegdate,
+				p.reply_updatedate as replyUpdatedate
+		from 	review AS r
+				Left outer join
+				reply AS p
+				ON r.review_num = p.review_num
+		WHERE r.review_num = #{reviewNum}
+		;
+		
 	</select>
 	
 	<delete id="deleteReview">

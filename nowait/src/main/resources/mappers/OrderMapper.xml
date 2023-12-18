@@ -43,6 +43,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	(#{order_num} , #{user_id} , #{cr_num} ,  #{pay_method} , #{reserv_num} , #{reserv_time} , 
 	#{order_time} , #{total_price} , #{request_msg})
 	</insert>
+	
+	<delete id="orderDelete">
+		delete from `order` where order_num = #{orderNum}
+	</delete>
 
 
 </mapper>

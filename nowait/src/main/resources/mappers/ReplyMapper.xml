@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace="ezen.nowait.board.mapper.ReplyMapper">
+									 
+	<insert id="insertReply">
+		insert into reply(review_num,reply_content)
+		values(#{reviewNum},#{replyContent})
+	</insert>
+	
+	<select id="getReply" resultType="ezen.nowait.board.domain.ReplyVO">
+		select * from reply where review_num=#{reviewNum}
+	</select>
+	
+	<delete id="deleteReply">
+		delete from reply where reply_num=#{replyNum}
+	</delete>
+	
+	<update id="updateReply">
+		update reply 
+		set reply_content = #{replyContent},
+		 	reply_updatedate= sysdate()
+		 	where reply_num = #{replyNum}
+	</update>
+	
+	<select id="getList" resultType="ezen.nowait.board.domain.ReviewVO" parameterType="hashMap">
+		select * from review where ${name} = #{value}		
+	</select>
+	
+	</mapper>
+	

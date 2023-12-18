@@ -6,7 +6,7 @@ import ezen.nowait.board.domain.ReviewVO;
 
 public interface ReviewService {
 	
-	public List<ReviewVO> getList(String userId);
+	public List<ReviewVO> getList(String name, String value);
 
 	public void insertReview(ReviewVO rVO);
 	
@@ -17,4 +17,6 @@ public interface ReviewService {
 	public int deleteReview(int reviewNum);
 	
 	public ReviewVO getReview2(String reviewContent);
+	
+	public int reviewSet(String name, String value);
 }

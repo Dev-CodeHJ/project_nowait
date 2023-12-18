@@ -30,7 +30,7 @@
 				  <li class="list-group-item"><a href="#" onclick="storeUpdate_move()">가게정보 수정</a></li>
 				  <li class="list-group-item"><a href="#" onclick="storeDelete_move()">가게정보 삭제</a></li>
 				  <li class="list-group-item"><a href="#" onclick="menu_move()">메뉴관리</a></li>
-				  <li class="list-group-item"><a href="#">리뷰관리</a></li>
+				  <li class="list-group-item"><a href="#" onclick="reply_move()">리뷰관리</a></li>                  
 				  <li class="list-group-item"><a href="#">주문&예약관리</a></li>
 				</ul>
 			</div>
@@ -112,6 +112,11 @@
 	
 	function menu_move() {
 	    document.getElementById('frm').action="/menu/menuList";
+		document.getElementById('frm').submit();
+	}
+	
+	function reply_move() {
+	    document.getElementById('frm').action="/reply/storeReply";
 		document.getElementById('frm').submit();
 	}
 </script>

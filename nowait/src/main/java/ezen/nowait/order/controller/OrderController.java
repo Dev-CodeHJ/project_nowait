@@ -110,7 +110,7 @@ public class OrderController {
 	@PostMapping("/orderCart")
 	public String orderPagePost(OrderVO odVO, HttpServletRequest request) {
 		
-		System.out.println(odVO);		
+//		System.out.println(odVO);		
 		
 		return "/orderView";
 	}
@@ -137,24 +137,5 @@ public class OrderController {
 		  
 		  return "redirect:/order/orderCart";
 	  }
-	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-
 
 }

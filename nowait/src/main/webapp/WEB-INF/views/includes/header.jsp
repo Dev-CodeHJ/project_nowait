@@ -101,7 +101,7 @@
               		<%-- 회원로그인 --%>
               		<c:if test="${result eq 2}">
               			
-              			<a class="navbar-brand" href="/home">
+              			<a class="navbar-brand" href="/user/userHome">
 				          <span>NOWAIT</span>
 				        </a>
 		

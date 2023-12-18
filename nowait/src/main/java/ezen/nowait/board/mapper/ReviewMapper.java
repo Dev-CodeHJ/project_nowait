@@ -1,12 +1,14 @@
 package ezen.nowait.board.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import ezen.nowait.board.domain.ReviewVO;
 
 public interface ReviewMapper {
 		
-	public List<ReviewVO> getList(String userId);
+//	public List<ReviewVO> getList(String userId);
+	public List<ReviewVO> getList(Map<String, Object> map);
 	
 	public void insertReview(ReviewVO rVO);
 	

@@ -83,7 +83,7 @@ public class ReviewController {
 		
 		session = request.getSession();
 		UserVO uVO = (UserVO) session.getAttribute("member");
-		List<ReviewVO> list = reviewservice.getList(uVO.getUserId());
+		List<ReviewVO> list = reviewservice.getList("user_id", uVO.getUserId());
 		
 		model.addAttribute("rVO", list);
 	}
@@ -93,6 +93,16 @@ public class ReviewController {
 	public void getReview(@RequestParam("reviewNum") int reviewNum, Model model) {
 		System.out.println("read or update");
 		model.addAttribute("review",reviewservice.getReview(reviewNum));
+	}
+	
+	//리뷰수정 컨트롤러
+	@PostMapping("/updateReview")
+	public String updateReview(ReviewVO rVO,RedirectAttributes rttr) {
+		System.out.println("updateReview:" + rVO);
+		if(reviewservice.updateReview(rVO)) {
+			rttr.addFlashAttribute("update","success");
+		}
+		return "redirect:/board/userReview";
 	}
 	
 	//리뷰 상세보기에서 리뷰삭제 컨트롤러
@@ -110,13 +120,4 @@ public class ReviewController {
 		return "/board/userOderList";
 	}		
 	
-	//리뷰수정 컨트롤러
-	@PostMapping("/updateReview")
-	public String updateReview(ReviewVO rVO,RedirectAttributes rttr) {
-		System.out.println("updateReview:" + rVO);
-			if(reviewservice.updateReview(rVO)) {
-				rttr.addFlashAttribute("update","success");
-			}
-			return "redirect:/board/userReview";
-		}
 }

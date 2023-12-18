@@ -16,4 +16,7 @@ public class StoreVO {
 	private String storeInfo;
 	private int orderCnt;
 	private int reviewCnt;
+	private String userId;
+	private String menuName;
+	private int reservCheck;
 }
