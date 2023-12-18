@@ -5,6 +5,17 @@
 <%@include file="../includes/header.jsp" %>
 <!DOCTYPE html>
 <html lang="en">
+<style>
+	@font-face {
+   font-family: 'Tenada';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-2@1.0/Tenada.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+	}
+	h2, span{
+	   font-family: 'Tenada';
+	}
+</style>
 
   <section class="food_section layout_padding-bottom">
     <div class="container">
@@ -37,7 +48,7 @@
     </div>
   </section>
   <!-- end food section -->
-  <%@include file="../includes/footer.jsp" %>
+ <%@include file="../includes/footer.jsp" %>
 <script type="text/javascript">
    $(document).ready(function() {
       if(${result}==0){
@@ -49,17 +60,18 @@
 </script>
 <script type="text/javascript">
       function login_chk() {
-      if(document.getElementById("userId").value==''){
-         alert("아이디를 입력해주세요!");
-         $("#userId").focus();
-         return false;
-      }
-      if(document.getElementById("userPw").value==''){
-         alert("비밀번호를 입력해주세요!");
-         $("#userPw").focus();
-         return false;
-      }
-      document.getElementById('frm').submit();
+	      if(document.getElementById("userId").value==''){	    	 
+	         alert("아이디를 입력해주세요!");
+	         $("#userId").focus();
+	         return false;
+	      }
+	      if(document.getElementById("userPw").value==''){
+	         alert("비밀번호를 입력해주세요!");
+	         $("#userPw").focus();
+	         return false;
+	      } else {
+	      document.getElementById('frm').submit();
+	      }
       }
 </script>
 </body>

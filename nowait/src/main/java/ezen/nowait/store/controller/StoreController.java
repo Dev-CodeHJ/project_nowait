@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import ezen.nowait.board.mapper.ReplyMapper;
 import ezen.nowait.code.domain.CodeVO;
 import ezen.nowait.code.service.CodeService;
 import ezen.nowait.member.domain.OwnerVO;
@@ -29,6 +30,10 @@ import lombok.extern.log4j.Log4j;
 @RequestMapping("/store")
 @RequiredArgsConstructor
 public class StoreController {
+	
+	private ReplyMapper replyMapper;
+	
+	private ReplyMapper reviewmapper;
 
 	private final StoreService storeService;
 	
@@ -230,4 +235,5 @@ public class StoreController {
 		
 		return "redirect:/store/storeDeleteAction/"+crNum;
 	}
+	
 }

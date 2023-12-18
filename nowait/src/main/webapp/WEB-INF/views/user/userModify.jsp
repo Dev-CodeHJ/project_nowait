@@ -2,6 +2,15 @@
     pageEncoding="UTF-8"%>
 <%@include file="../includes/header.jsp" %>
 <style>
+	@font-face {
+   font-family: 'Tenada';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-2@1.0/Tenada.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+	}
+	h2, span{
+	   font-family: 'Tenada';
+	}
 	table {
 	margin: auto;
     border: 1px solid black;
@@ -13,9 +22,33 @@
     padding: 10px;
     }
 </style>
-  <section class="food_section layout_padding-bottom">
+<div class="container-fluid">
+	  <div class="row">
+	  	<div class="col-md-3" style="padding-top: 30px; right-padding:100px; float:left;">
+			<!-- 사이드 바 메뉴-->
+			<div class="panel panel-info">
+			  <div class="panel-heading">
+		    	<!-- 패널 타이틀1 -->
+		  		<h3 class="panel-title">
+	   			  <span>주문,예약,리뷰 관리</span>
+		  		</h3>
+			  </div>
+				<!-- 사이드바 메뉴목록1 -->
+			<form id="frm">
+				<ul class="list-group">
+				  <li class="list-group-item"><a href="#" onclick="userGet_move()">회원정보</a></li>		
+				  <li class="list-group-item"><a href="#" onclick="orderList_move()">주문내역</a></li>
+				  <li class="list-group-item"><a href="#" onclick="reviewList_move()">리뷰내역</a></li>
+				  <li class="list-group-item"><a href="#">장바구니</a></li>
+				  <li class="list-group-item"><a href="#" onclick="serviceCenter_move()">고객센터</a></li>
+				</ul>
+			</form>
+			</div>
+		</div> 
+
+  <section class="food_section layout_padding-bottom" style="margin-left:150px; float:left;">
     <div class="container">
-    	<form id="frm" action="/user/userModify" method="post" style="padding: 50px;">
+    	<form id="frm2" action="/user/userModify" method="post" style="padding: 10px;">
          <h2 align="center" style="padding: 10px; margin: 10px;">내 정보</h2>
          <p align="center" style="color: grey;">(*표시는 필수 입력사항)</p>
          <table>
@@ -80,15 +113,45 @@
 	        </tr>
             <tr>
             	<td colspan="2">
-           			<button type="button" class="btn btn-primary" style="margin: 20px;" onclick="location.href='/user/userGet'">돌아가기</button>
-           			<button type="submit" class="btn btn-success" style="margin: 20px;" onclick="" id="btn_update">수정완료</button>
+           			<button type="button" class="btn btn-info" style="margin: 20px;" onclick="location.href='/user/userGet'">돌아가기</button>
+           			<button type="submit" class="btn btn-info" style="margin: 20px;" onclick="" id="btn_update">수정완료</button>
             	</td>
           	</tr>
          </table>
     	</form>
     </div>
   </section>
+  	 </div>
+    </div>
+  
   <%@include file="../includes/footer.jsp" %>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://code.jquery.com/jquery.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<script type="text/javascript" src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script type="text/javascript">
+
+	function userGet_move() {
+	    document.getElementById('frm').action="/user/userGet";
+		document.getElementById('frm').submit();
+	}
+	
+	function orderList_move() {
+	    document.getElementById('frm').action="/order/userOrderList";
+		document.getElementById('frm').submit();
+	}
+	
+	function reviewList_move() {
+	    document.getElementById('frm').action="/board/userReview";
+		document.getElementById('frm').submit();
+	}
+	
+	function serviceCenter_move() {
+	    document.getElementById('frm').action="/user/serviceCenter";
+		document.getElementById('frm').submit();
+	}
+</script>
   <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
   <link rel="stylesheet" href="/resources/demos/style.css">
   <script src="https://code.jquery.com/jquery.js"></script>
@@ -169,7 +232,7 @@
 	          alert("회원정보가 수정되었습니다, 다시 로그인해주세요!");
 	      }
 		  $("#userBirth").datepicker();
-	      document.getElementById('frm').submit();
+	      document.getElementById('frm2').submit();
           return true;
 	  });
 });

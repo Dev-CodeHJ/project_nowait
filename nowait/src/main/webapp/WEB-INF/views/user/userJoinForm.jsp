@@ -6,6 +6,18 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<style>
+	@font-face {
+   font-family: 'Tenada';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-2@1.0/Tenada.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+	}
+	h2, span{
+	   font-family: 'Tenada';
+	}
+</style>
+
   <section class="food_section layout_padding-bottom">
     <div class="container">
       <div class="heading_container heading_center">
@@ -58,6 +70,12 @@
             </td>
          </tr>
             <tr>
+         <tr>
+            <td>주소</td>
+            <td>
+               <input type="text" name="userAddr" id="userAddr"><br>         
+            </td>
+         </tr>
                <td colspan="2" align="center">
                    <div class="btn-box">
                       <a href="#" onclick="return join_chk()" id="btn_join">회원가입</a>

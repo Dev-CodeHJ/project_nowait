@@ -3,7 +3,10 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-    
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@include file="../includes/header.jsp" %>
 <!DOCTYPE html>
 
 <html>
@@ -62,36 +65,36 @@ button{
 	   	<label>주문날짜</label>
 	   	<fmt:formatDate pattern="yy-MM-dd" value="${odVO.orderTime}"/>
 	    </div>
-	    
+
 	    <div class="form-group">
     	<label>주문번호</label>
         <c:out value="${odVO.orderNum}" ></c:out>
     	</div>
-	                    
+
     	<div class="form-group">
     	<label>가게이름</label>
 		<c:out value="${storeName}"></c:out>
     	</div>
-    				
+
     	<div class="form-group">
     	<label>주문메뉴이름</label>
 	    	<c:forEach items="${menuList}" var="menu">
 		        <c:out value="${menu.menuName}"></c:out>
 	    	</c:forEach>
     	</div>
-    				
+
     	<div class="form-group">
     	<label>메뉴옵션이름</label>
 	    	<c:forEach items="${menuOptionList}" var="option">
 		    	<c:out value="${option.option}"></c:out>
 	    	</c:forEach>
     	</div>
-    	
+
     	<div class="form-group">
     	<label>예약유형(포장or방문)</label>
     	<c:out value="${odVO.reservCheck}"></c:out>
     	</div>
-   		
+
     	<div class="form-group">
     	<label>예약인원</label>
     	<c:out value="${odVO.reservNum}"></c:out>
@@ -101,17 +104,17 @@ button{
     	<label>예약시간</label>
     	<c:out value="${odVO.orderTime}"></c:out>
     	</div>	
-    	
+
     	<div class="form-group">
     	<label>요청사항</label>
     	<c:out value="${odVO.requestMsg}"></c:out>
     	</div>	
-    	
+
     	<div class="form-group">
     	<label>결제방식</label>
     	<c:out value="${odVO.payMethod}"></c:out>
     	</div>	
-    	
+
     	<div class="form-group">
     	<label>총주문금액</label>
     	<c:out value="${odVO.totalPrice}"></c:out>

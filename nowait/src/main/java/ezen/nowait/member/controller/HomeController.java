@@ -11,19 +11,38 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+<<<<<<< HEAD
 import ezen.nowait.store.domain.StoreVO;
 import ezen.nowait.store.service.StoreService;
 import lombok.RequiredArgsConstructor;
+=======
+import ezen.nowait.member.service.UserService;
+import ezen.nowait.store.domain.StoreVO;
+import ezen.nowait.store.service.StoreService;
+import lombok.AllArgsConstructor;
+
+>>>>>>> main
 
 /**
  * Handles requests for the application home page.
  */
 @Controller
+<<<<<<< HEAD
 @RequiredArgsConstructor
 public class HomeController {
 	
 	private final StoreService storeService;
 	
+=======
+@AllArgsConstructor
+public class HomeController {
+	
+	private StoreService storeService;
+	
+	private UserService userservice;
+	
+
+>>>>>>> main
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)

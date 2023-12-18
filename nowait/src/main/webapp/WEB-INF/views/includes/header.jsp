@@ -118,7 +118,7 @@
 					            	<a class="nav-link" href="/order/userOrderList">주문내역</a>
 					            </li>
 					            <li class="nav-item">
-					            	<a class="nav-link" href="/user/userReview">리뷰내역</a>
+					            	<a class="nav-link" href="/board/userReview">리뷰내역</a>
 					            </li>
 					            <li class="nav-item">
 					            	<a class="nav-link" href="/user/serviceCenter">고객센터</a>

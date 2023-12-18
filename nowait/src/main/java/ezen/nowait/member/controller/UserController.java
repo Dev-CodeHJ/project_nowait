@@ -1,20 +1,24 @@
 package ezen.nowait.member.controller;
+<<<<<<< HEAD
 
 import java.util.List;
 
+=======
+>>>>>>> main
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import ezen.nowait.board.service.ReviewService;
 import ezen.nowait.member.domain.UserVO;
 import ezen.nowait.member.service.UserService;
 import ezen.nowait.order.service.OrderService;
@@ -28,6 +32,7 @@ import lombok.extern.log4j.Log4j;
 
 @Controller
 @Log4j
+<<<<<<< HEAD
 @RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {
@@ -42,6 +47,17 @@ public class UserController {
 	
 	HttpSession	session;
 		
+=======
+@RequestMapping("/user/*")
+@AllArgsConstructor
+public class UserController {
+
+	private UserService userservice;
+	private OrderService orderservice;
+	private StoreService storeService;
+	private ReviewService reviewservice;
+	
+>>>>>>> main
 	//손님이 홈에서 가게메뉴보기 페이지 이동
 	@GetMapping("/menuOrder")
 	public void menuOrder() {}
@@ -52,6 +68,21 @@ public class UserController {
 	
 	//회원가입 완료 후 페이지 이동
 	@PostMapping("/userJoinForm")
+	public String join(UserVO uVO, HttpServletRequest request) {
+		
+		System.out.println("userJoin................");
+		
+		HttpSession session = request.getSession();
+		
+		int result = userservice.userInsert(uVO);
+		session.setAttribute("result", result);
+		
+		if(result == 1) {
+			return "/user/userLogin";
+		}
+		return "/choice";
+	}
+	
 	public String join(UserVO uVO) {
 		userservice.userInsert(uVO);
 		return "user/userLogin";
@@ -68,27 +99,42 @@ public class UserController {
       log.info("id : " + userId);
       log.info("pw : " + userPw);
       
+<<<<<<< HEAD
       session = request.getSession();
       
       int result = userservice.userLogin(userId, userPw);
+=======
+      HttpSession session = request.getSession();
+>>>>>>> main
       
-      if(result == 1) {   /* ownerService.loginOwner(ownerId, ownerPw)
+      int result = userservice.userLogin(userId, userPw);
+      System.out.println("result : " + result);
+      
+      if(result == 1) {   /* ownerService.loginOwner(userId, userPw)
                            1 : 로그인 성공
                            0 : 비밀번호 불일치
                            -1 : 아이디 불일치 */
+<<<<<<< HEAD
    
          UserVO uVO = userservice.userGet(userId);
          session.setAttribute("member", uVO);
          session.setAttribute("result", 2);
+=======
+         session.setAttribute("member", userservice.userGet(userId));
+         session.setAttribute("result", result+1);         
+>>>>>>> main
          System.out.println("로그인 성공");
          return "redirect:/user/userHome";
       } else {
-    	  System.out.println("로그인 실패");
     	  rttr.addFlashAttribute("result", result);
+<<<<<<< HEAD
+=======
+    	  System.out.println("로그인 실패");
+>>>>>>> main
     	  return "redirect:/user/userLogin";    	  
       }
     }
-	
+
 	//손님 홈 이동
 	@GetMapping("/userHome")
 	public void userHome(Model model) {
@@ -110,7 +156,9 @@ public class UserController {
 
 	//손님 리뷰관리 이동
 	@GetMapping("/userReview")
-	public void userReview() {}
+	public void userReview() {
+		System.out.println("zzzz");
+	}
 	
 	//손님 로그아웃 처리 페이지이동
 	@GetMapping("/userLogout")
@@ -134,16 +182,12 @@ public class UserController {
 	      } else {
 	         result = "NO";
 	      }
-	      return result;
-	      
+	      return result;	      
 	   }
 
-	
 	//손님 정보조회
 	@GetMapping("/userGet")
 	public void userget() {	}
-
-	
 
 	//손님 수정조회페이지로
 	@GetMapping("/userModify")
@@ -165,14 +209,14 @@ public class UserController {
 	    	System.out.println("수정 실패");
 	        return "/user/userModify";
 	    }
-
 	}
-	
+
 	//회원탈퇴페이지로
 	@GetMapping("/userRemove")
 	public void userRemove() {}
 	
 	//회원탈퇴
+	@Transactional
 	@PostMapping("/userRemove")
 	public String userRemove(String userId, String userPw, RedirectAttributes rttr) {
 		int deleteOk = userservice.userRemove(userId, userPw);
@@ -183,10 +227,10 @@ public class UserController {
 		return "redirect:/user/userRemove";
 	}
 	
-
 	//고객센터
 	@GetMapping({"/serviceCenter"})
 	public void get(@RequestParam(value="/serviceCenter", required=false) String serviceCenter) {
 		log.info("/servicecenter");
 	}
+
 }

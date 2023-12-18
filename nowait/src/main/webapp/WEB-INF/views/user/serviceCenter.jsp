@@ -33,7 +33,11 @@ button{
            <div class="panel-heading">
              <!-- 패널 타이틀1 -->
               <h3 class="panel-title">
+<<<<<<< HEAD
                  <span>나의 관리 메뉴</span>
+=======
+                 <span>가게 관리 메뉴</span>
+>>>>>>> main
               </h3>
            </div>
             <!-- 사이드바 메뉴목록1 -->
@@ -78,10 +82,44 @@ Q&A<br><br>
 
 </ul>
 <div>
+<<<<<<< HEAD
      <button class="btn btn-info" onclick ="location.href='/'">home</button>
+=======
+     <button class="btn btn-info" onclick ="location.href='/user/userHome'">home</button>
+>>>>>>> main
 </div>
 </div>
 </div>
 </body>
 <%@include file="../includes/footer.jsp" %>
+<<<<<<< HEAD
 </html>
+=======
+</html>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://code.jquery.com/jquery.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<script type="text/javascript" src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script type="text/javascript">
+	function userGet_move() {
+	    document.getElementById('frm').action="/user/userGet";
+		document.getElementById('frm').submit();
+	}
+	
+	function orderList_move() {
+	    document.getElementById('frm').action="/order/userOrderList";
+		document.getElementById('frm').submit();
+	}
+	
+	function reviewList_move() {
+	    document.getElementById('frm').action="/board/userReview";
+		document.getElementById('frm').submit();
+	}
+	
+	function serviceCenter_move() {
+	    document.getElementById('frm').action="/user/serviceCenter";
+		document.getElementById('frm').submit();
+	}
+</script>
+>>>>>>> main
