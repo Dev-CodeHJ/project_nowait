@@ -1,6 +1,8 @@
 package ezen.nowait.member.controller;
 
-import java.util.List;
+import java.text.DateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,9 +12,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import ezen.nowait.member.service.UserService;
 import ezen.nowait.store.domain.StoreVO;
 import ezen.nowait.store.service.StoreService;
 import lombok.AllArgsConstructor;
+
 
 /**
  * Handles requests for the application home page.
@@ -23,14 +27,24 @@ public class HomeController {
 	
 	private StoreService storeService;
 	
+	private UserService userservice;
+	
+
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
+	/**
+	 * Simply selects the home view to render by returning its name.
+	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Model model) {
-		logger.info("home..............");
+	public String home(Locale locale, Model model) {
+		logger.info("Welcome home! The client locale is {}.", locale);
 		
-		List<StoreVO> sVO = storeService.findAll();
-		model.addAttribute("list", sVO);
+		Date date = new Date();
+		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+		
+		String formattedDate = dateFormat.format(date);
+		
+		model.addAttribute("serverTime", formattedDate );
 		
 		return "home";
 	}

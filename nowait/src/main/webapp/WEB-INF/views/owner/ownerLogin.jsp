@@ -5,6 +5,17 @@
 <%@include file="../includes/header.jsp" %>
 <!DOCTYPE html>
 <html lang="en">
+<style>
+	@font-face {
+   font-family: 'Tenada';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-2@1.0/Tenada.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+	}
+	h2, span{
+	   font-family: 'Tenada';
+	}
+</style>
 
   <section class="food_section layout_padding-bottom">
     <div class="container">

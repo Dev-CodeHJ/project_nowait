@@ -68,6 +68,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where cr_num = #{crNum}
 	</update> -->
 	
+	<update id="reviewSet" parameterType="hashMap">
+		update store
+		set review_cnt = #{reviewCnt}
+		where cr_num = #{crNum}
+	</update>
+	
 	<delete id="deleteStore">
 		delete from store where cr_num = #{crNum}
 	</delete>
