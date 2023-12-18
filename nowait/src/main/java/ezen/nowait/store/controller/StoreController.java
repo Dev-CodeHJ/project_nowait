@@ -26,7 +26,7 @@ import lombok.extern.log4j.Log4j;
 
 @Controller
 @Log4j
-@RequestMapping("/store/*")
+@RequestMapping("/store")
 @AllArgsConstructor
 public class StoreController {
 	
@@ -46,15 +46,14 @@ public class StoreController {
 //		model.addAttribute("store", storeService.findByCrNum(crNum));
 //	}
 	
-	@GetMapping(path = "/storeUserGet/{crNum}")
-	public String userGet(@PathVariable String crNum, Model model) {
+	@GetMapping("/storeUserGet")
+	public void userGet(String crNum, Model model) {
 		System.out.println("crNum : " + crNum);
 		model.addAttribute("store", storeService.findByCrNum(crNum));
-		return "/store/storeUserGet";
 	}
 	
-	@GetMapping(path = "/storeOwnerGet/{crNum}")
-	public String ownerGet(@PathVariable String crNum, Model model) {
+	@GetMapping("/storeOwnerGet")
+	public void ownerGet(String crNum, Model model) {
 		System.out.println("crNum : " + crNum);
 		
 		StoreVO sVO = storeService.findByCrNum(crNum);
@@ -62,59 +61,42 @@ public class StoreController {
 		
 		CodeVO cVO = codeService.findOne("store_category", sVO.getStoreCategory());
 		model.addAttribute("storeCategory", cVO);
-		
-		return "/store/storeOwnerGet";
 	}
 	
-//	@GetMapping("/getByCategory")
-//	public void getByCategory(Model model, int storeCategory) {
-//		log.info("getByCategory");
-//		model.addAttribute("getByCategory", storeService.findByCategory(storeCategory));
-//	}
-//	@GetMapping("/getByOwnerId")
-//	public void getByOwnerId(Model model, String ownerId) {
-//		log.info("getByOwnerId");
-//		model.addAttribute("list", storeService.findByOwnerId(ownerId));
-//	}
 	@GetMapping("/storeNewRegister")
 	public void register() {}
 	
 	@PostMapping("storeNewRegister")
-	public String register(@RequestParam("ownerId")String ownerId, StoreVO sVO) {
+	public String register(@RequestParam("ownerId")String ownerId, StoreVO sVO, RedirectAttributes rttr) {
 		System.out.println("ownerId : " + ownerId);
 		System.out.println("crNum : " + sVO.getCrNum());
 		
-		int result = storeService.addStore(sVO);
+		int insertOk = storeService.addStore(ownerId, sVO);
 		
-		if(result == 1) {
-			String crNum = (String)sVO.getCrNum();
-			System.out.println("crNum : " + crNum);
-			
-			int result2 = storeService.addOwnerStore(ownerId, crNum, sVO.getSecretCode());
-			System.out.println("result2 : " + result2);
-			if(result2 == 1) {
-				return "redirect:/owner/ownerHome";
-			}
-		}
-		return "/store/storeNewRegister";
+		rttr.addFlashAttribute("insertOk", insertOk);
+		
+		return "redirect:/owner/ownerHome";
 	}
 	
 	@GetMapping("/storeExistRegister")
 	public void load() {}
 	
 	@PostMapping("storeExistRegister")
-	public String load(String crNum, String secretCode, HttpServletRequest request) {
+	public String load(String crNum, String secretCode, HttpServletRequest request, RedirectAttributes rttr) {
+		
+		System.out.println("storeExistRegister crNum : " + crNum);
+		System.out.println("storeExistRegister secretCode : " + secretCode);
 		
 		session = request.getSession();
 		OwnerVO oVO = (OwnerVO)session.getAttribute("member");
 		
 		System.out.println("OwnerId : "+ oVO.getOwnerId());
-		int result = storeService.addOwnerStore(oVO.getOwnerId(), crNum, secretCode);
+		int loadOk = storeService.addOwnerStore(oVO.getOwnerId(), crNum, secretCode);
 		
-		if(result == 1) {
-			return "redirect:/owner/ownerHome";
-		}
-		return "/store/storeExistRegister";
+		rttr.addFlashAttribute("loadOk", loadOk);
+		rttr.addAttribute("crNum", crNum);
+		
+		return "redirect:/owner/ownerHome";
 	}
 	
 	//@GetMapping(path = "/storeUpdate/{crNum}")
@@ -131,14 +113,14 @@ public class StoreController {
 	}
 	
 	@PostMapping("/storeUpdate")
-	public String update(@RequestParam("ownerId")String ownerId, StoreVO sVO) {
+	public String update(@RequestParam("ownerId")String ownerId, StoreVO sVO, RedirectAttributes rttr) {
 		
-		int result = storeService.updateStore(sVO);
+		int updateOk = storeService.updateStore(sVO);
+
+		rttr.addFlashAttribute("updateOk", updateOk);
+		rttr.addAttribute("crNum", sVO.getCrNum());
 		
-		if(result == 1) {
-			return "redirect:/owner/ownerHome";
-		}
-		return "/store/storeUpdate";
+		return "redirect:/store/storeOwnerGet";
 	}
 	
 //	@GetMapping(path = "/storeDelete/{crNum}")

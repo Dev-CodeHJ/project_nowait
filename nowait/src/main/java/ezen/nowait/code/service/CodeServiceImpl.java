@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import ezen.nowait.code.domain.CodeVO;
 import ezen.nowait.code.mapper.CodeMapper;
+import ezen.nowait.store.mapper.MenuMapper;
 import lombok.AllArgsConstructor;
 
 @Service
@@ -15,6 +16,8 @@ import lombok.AllArgsConstructor;
 public class CodeServiceImpl implements CodeService{
 	
 	private CodeMapper codeMapper;
+	
+	private MenuMapper menuMapper;
 	
 	@Override
 	public List<CodeVO> findList(String id) {
@@ -78,13 +81,21 @@ public class CodeServiceImpl implements CodeService{
 	}
 
 	@Override
-	public int updateMenuCategory(String crNum, int name, CodeVO cVO) {
+	public int updateMenuCategory(int name, CodeVO cVO) {
 
+		String crNum = cVO.getCrNum();
 		int cnt = selectCnt(crNum, name);
+		int cnt2 = selectCnt(crNum, cVO.getName());
 		
 		System.out.println("codeService update categoryCnt : " + cnt);
 		
-		if(cnt == 1) {
+		if((cnt == 1 && cnt2 == 0) || name == cVO.getName()) {
+			
+			Map<String, Object> map2 = new HashMap<String, Object>();
+			
+			map2.put("crNum", crNum);
+			map2.put("menuCategory", name);
+			map2.put("setCategory", cVO.getName());
 			
 			Map<String, Object> map = new HashMap<String, Object>();
 			
@@ -93,7 +104,14 @@ public class CodeServiceImpl implements CodeService{
 			map.put("setName", cVO.getName());
 			map.put("value", cVO.getValue());
 			
-			return codeMapper.updateMenuCategory(map);
+			int result = codeMapper.updateMenuCategory(map);
+			
+			if(result >= 1) {
+				
+				menuMapper.updateMenuCategory(map2);
+			}
+			
+			return result;
 		}
 		
 		return 0;
@@ -108,12 +126,25 @@ public class CodeServiceImpl implements CodeService{
 		
 		if(cnt == 1) {
 			
+			Map<String, Object> map2 = new HashMap<String, Object>();
+			
+			map2.put("crNum", crNum);
+			map2.put("menuCategory", name);
+			map2.put("setCategory", 0);
+			
 			Map<String, Object> map = new HashMap<String, Object>();
 			
 			map.put("crNum", crNum);
 			map.put("name", name);
 			
-			return codeMapper.deleteMenuCategory(map);
+			int result = codeMapper.deleteMenuCategory(map);
+			
+			if(result >= 1) {
+				
+				menuMapper.updateMenuCategory(map2);
+			}
+
+			return result;
 		}
 		
 		return 0;

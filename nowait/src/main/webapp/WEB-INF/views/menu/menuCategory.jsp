@@ -32,8 +32,7 @@
 			  </div>
 				<!-- 사이드바 메뉴목록1 -->
 				<ul class="list-group">
-				  <li class="list-group-item"><a href="#" onclick="storeUpdate_move()">가게정보 수정</a></li>
-				  <li class="list-group-item"><a href="#" onclick="storeDelete_move()">가게정보 삭제</a></li>
+				  <li class="list-group-item"><a href="#" onclick="store_move()">가게관리</a></li>
 				  <li class="list-group-item"><a href="#" onclick="menu_move()">메뉴관리</a></li>
 				  <li class="list-group-item"><a href="#">리뷰관리</a></li>
 				  <li class="list-group-item"><a href="#">주문&예약관리</a></li>
@@ -56,17 +55,17 @@
 						       			</td>
 						   			</tr>
 					            	<tr>
-					            		<th>카테고리 번호</th>
-					            		<td>${menuCategory.name}</td>
+					            		<td>카테고리 번호</td>
+					            		<td>카테고리 이름</td>
 					            	</tr>
 					            	<tr>
-					            		<th>카테고리 이름</th>
-					            		<td>${menuCategory.value}</td>
+					            		<th>${menuCategory.name}</th>
+					            		<th>${menuCategory.value}</th>
 					            	</tr>
 						            <tr>
 						            	<td colspan="2">
-						       				<button type="submit" class="btn btn-primary" style="margin: 30px;" onclick="categoryUpdate_move(${menuCategory.name})">카테고리 수정</button>
-						           			<button type="submit" class="btn btn-danger" style="margin: 30px;" onclick="categoryDelete_move(${menuCategory.name})">카테고리 삭제</button>
+						       				<button type="submit" class="btn btn-info" style="margin: 30px;" onclick="categoryUpdate_move(${menuCategory.name})">카테고리 수정</button>
+						           			<button type="button" class="btn btn-danger" style="margin: 30px;" onclick="categoryDelete_move(${menuCategory.name})">카테고리 삭제</button>
 						            	</td>
 						          	</tr>
 					        	</table>
@@ -91,21 +90,35 @@
   <%@include file="../includes/footer.jsp" %>
 <script type="text/javascript">
 	$(document).ready(function() {
-	  if(${insertOk}==0){
+		if(${insertOk}==0){
 			alert("이미 존재하는 카테고리 번호입니다!");
-			document.getElementById('frm').action="/menu/categoryRegister";
-			document.getElementById('frm').submit();
+			categoryRegister_move();
+		} else if(${insertOk}==1){
+			alert("카테고리가 성공적으로 등록되었습니다.");
 		}
     });
 </script>
 <script type="text/javascript">
-	function storeUpdate_move() {
-		document.getElementById('frm').action="/store/storeUpdate";
-		document.getElementById('frm').submit();
-	}
-	
-	function storeDelete_move() {
-	    document.getElementById('frm').action="/store/storeDelete";
+	$(document).ready(function() {
+		if(${deleteOk}==0){
+			alert("카테고리 삭제에 실패하셨습니다!");
+		} else if(${deleteOk}==1){
+			alert("카테고리가 성공적으로 삭제되었습니다.");
+		}
+    });
+</script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		if(${updateOk}==0){
+			alert("이미 존재하는 카테고리 번호입니다!");
+		} else if(${updateOk}==1){
+			alert("카테고리가 성공적으로 수정되었습니다.");
+		}
+    });
+</script>
+<script type="text/javascript">
+	function store_move() {
+	    document.getElementById('frm').action="/store/storeOwnerGet";
 		document.getElementById('frm').submit();
 	}
 	
@@ -120,7 +133,7 @@
 	}
 	
 	function categoryDelete_move(num) {
-	    if(confirm("선택하신 메뉴를 정말 삭제하시겠습니까?")) {
+	    if(confirm("선택하신 카테고리를 정말 삭제하시겠습니까?")) {
 			document.getElementById('frm'+num).action="/menu/categoryDelete";
 			document.getElementById('frm'+num).submit();
 	    }

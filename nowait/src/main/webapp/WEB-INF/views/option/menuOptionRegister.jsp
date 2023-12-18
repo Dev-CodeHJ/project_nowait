@@ -44,30 +44,36 @@
 		  <div class="col-md-9">
 			  <section class="food_section layout_padding-bottom">
 			    <div class="container">
-		            <form id="frm1" action="/menu/categoryRegister" method="post" style="padding: 100px;">
-				        <h2 align="center">카테고리 등록 페이지</h2>
+		            <form id="frm1" action="/option/menuOptionRegister" method="post" style="padding: 100px;">
+				        <h2 align="center">옵션 등록 페이지</h2>
 				         
 				        <table>
 				            <tr style="display: none;">
+								<td><input type="text" name="menuNum" id="menuNum" value="${menuNum}"></td>
+							</tr>
+				            <tr>
+				               <th>옵션 이름</th>
+				               <td><input type="text" name="option" id="option"></td>
+				            </tr>
+							<tr>
+								<th>추가금액</th>
+								<td><input type="text" name="optionPrice" id="optionPrice"></td>
+							</tr>
+							<tr>
+								<th>품절 여부</th>
 								<td>
-									<input type="text" name="crNum" id="crNum" value="${crNum}">
-									<input type="text" name="id" id="id" value="menu_category">
+									<select name="optionStatus" id="optionStatus">
+										<option value="99" selected="selected">-선택-</option>
+										<option value="0">판매가능</option>
+										<option value="1">품절</option>
+									</select>
 								</td>
 							</tr>
 				            <tr>
-				               <th>카테고리 번호</th>
-				               <td><input type="text" name="name" id="name" placeholder="중복불가"></td>
-				            </tr>
-				            <tr>
-								<th>카테고리 이름</th>
-								<td><input type="text" name="value" id="value"></td>
-							</tr>
-				            <tr>
 				            	<td colspan="2" align="center">
-				                   <div class="btn-box">
-				                      <a href="#" onclick="category_move()" style="background-color: blue;">카테고리관리</a>
-				                      <a href="#" onclick="return register_chk()" id="btn_register" style="margin-left: 30px; background-color: green;">등록하기</a>
-				                      <!-- <button type="button" class="btn btn-success" onclick="return register_chk()" id="btn_register" style="margin: 30px;">등록하기</button> -->
+				                   <div class="btn-box" style="margin-top: 10px;">
+				                      <a href="#" onclick="menuGet_move()" style="background-color: blue;">이전</a>
+				                      <a href="#" onclick="return register_chk()" id="btn_register" style="background-color: green; margin-left: 20px;">등록하기</a>
 				                   </div>
 				            	</td>
 				          	</tr>
@@ -75,6 +81,9 @@
 					</form>
 			      	<form id="frm" action="/menu/menuList">
 	          			<input type="hidden" name="crNum" value="${crNum}">
+	          		</form>
+	          		<form id="frm0" action="/menu/menuGet">
+	          			<input type="hidden" name="menuNum" id="menuNum" value="${menuNum}">
 	          		</form>
 			    </div>
 			  </section>
@@ -86,26 +95,22 @@
 <script type="text/javascript">
 	$(document).ready(function() {
     $("#btn_register").click(function register_chk() {
-    	
+    	  
     	var num_pattern = /\d/;
     	
-	      if ($("#name").val() == "") {
-	          alert("카테고리 번호를 입려해주세요!");
-	          $("#name").focus();
-	          return false;
-	      } else if (!num_pattern.test($("#name").val())) {
-	          alert("카테고리 번호에는 숫자만 들어갈 수 있습니다!");
-	          $("#name").focus();
+	      if ($("#option").val() == "") {
+	          alert("옵션 이름을 입려해주세요!");
+	          $("#option").focus();
 	          return false;
 	          
-	      } else if ($("#name").val() <= 0) {
-	          alert("카테고리 번호는 1부터 설정할 수 있습니다!");
-	          $("#name").focus();
+	      } else if (!num_pattern.test($("#optionPrice").val())) {
+	    	  alert("가격을 입력해주세요!(가격 형식이 올바르지 않습니다!)");
+	          $("#optionPrice").focus();
 	          return false;
 	          
-	      }  else if ($("#value").val() == "") {
-	          alert("카테고리 이름을 입려해주세요!");
-	          $("#value").focus();
+	      } else if ($("#optionStatus").val() == "99") {
+	          alert("품절 여부를 선택해주세요!");
+	          $("#optionStatus").focus();
 	          return false;
 	      }
 	      document.getElementById('frm1').submit();
@@ -124,9 +129,9 @@
 		document.getElementById('frm').submit();
 	}
 	
-	function category_move() {
-		document.getElementById('frm').action="/menu/menuCategory";
-		document.getElementById('frm').submit();
+	function menuGet_move() {
+	    document.getElementById('frm0').action="/menu/menuGet";
+		document.getElementById('frm0').submit();
 	}
 </script>
 </body>

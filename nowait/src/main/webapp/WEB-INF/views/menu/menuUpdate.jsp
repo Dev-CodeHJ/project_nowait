@@ -32,8 +32,7 @@
 			  </div>
 				<!-- 사이드바 메뉴목록1 -->
 				<ul class="list-group">
-				  <li class="list-group-item"><a href="#" onclick="storeUpdate_move()">가게정보 수정</a></li>
-				  <li class="list-group-item"><a href="#" onclick="storeDelete_move()">가게정보 삭제</a></li>
+				  <li class="list-group-item"><a href="#" onclick="store_move()">가게관리</a></li>
 				  <li class="list-group-item"><a href="#" onclick="menu_move()">메뉴관리</a></li>
 				  <li class="list-group-item"><a href="#">리뷰관리</a></li>
 				  <li class="list-group-item"><a href="#">주문&예약관리</a></li>
@@ -45,12 +44,13 @@
 		  <div class="col-md-9">
 			  <section class="food_section layout_padding-bottom">
 			    <div class="container">
-		            <form id="frm1" action="/menu/menuRegister" enctype="multipart/form-data" method="post" style="padding: 100px;">
+		            <form id="frm1" action="/menu/menuUpdate" enctype="multipart/form-data" method="post" style="padding: 100px;">
 				        <h2 align="center">메뉴 수정 페이지</h2>
 				         
 				        <table>
 				            <tr style="display: none;">
-								<td><input type="text" name="crNum" id="crNum" value="${crNum}"></td>
+								<td><input type="text" name="menuNum" id="menuNum" value="${menu.menuNum}"></td>
+								<td><input type="text" name="crNum" id="crNum" value="${menu.crNum}"></td>
 							</tr>
 				            <tr>
 				               <th>메뉴 이름</th>
@@ -72,11 +72,11 @@
 							</tr>
 							<tr>
 								<td>메뉴 사진</td>
-								<td><input type="file" name="menuImg" id="menuImg"></td>
+								<td><input type="file" name="file" id="file" value="${menu.uploadFileName}"></td>
 							</tr>
 							<tr>
 								<th>가격</th>
-								<td><input type="text" name="price" id="price"></td>
+								<td><input type="text" name="price" id="price" value="${menu.price}"></td>
 							</tr>
 							<tr>
 								<th>인기메뉴 여부</th>
@@ -96,21 +96,20 @@
 								<th>품절 여부</th>
 								<td>
 									<select name="menuStatus" id="menuStatus">
-										<c:forEach items="${menuStatusList}" var="status">
-											<option value="${status.name}"
-												<c:if test="${menu.menuStatus eq status.name}">selected="selected"</c:if>
-											>
-												${status.value}
-											</option>
-										</c:forEach>
+										<option value="0"
+											<c:if test="${menu.menuStatus eq false}">selected="selected"</c:if>
+										>판매가능</option>
+										<option value="1"
+											<c:if test="${menu.menuStatus eq true}">selected="selected"</c:if>
+										>품절</option>
 									</select>
 								</td>
 							</tr>
 				            <tr>
 				            	<td colspan="2" align="center">
 				                   <div class="btn-box">
-				                      <a href="#" onclick="category_move()" style="background-color: blue;">카테고리관리</a>
-				                      <a href="#" onclick="return register_chk()" id="btn_register" style="background-color: green; margin-left: 20px;">등록하기</a>
+				                      <a href="#" onclick="menu_move()" style="background-color: blue;">이전</a>
+				                      <a href="#" onclick="return register_chk()" id="btn_register" style="background-color: green; margin-left: 20px;">수정완료</a>
 				                   </div>
 				            	</td>
 				          	</tr>
@@ -156,23 +155,13 @@
     });
 </script>
 <script type="text/javascript">
-	function storeUpdate_move() {
-		document.getElementById('frm').action="/store/storeUpdate";
-		document.getElementById('frm').submit();
-	}
-	
-	function storeDelete_move() {
-	    document.getElementById('frm').action="/store/storeDelete";
+	function store_move() {
+	    document.getElementById('frm').action="/store/storeOwnerGet";
 		document.getElementById('frm').submit();
 	}
 	
 	function menu_move() {
 	    document.getElementById('frm').action="/menu/menuList";
-		document.getElementById('frm').submit();
-	}
-	
-	function category_move() {
-		document.getElementById('frm').action="/menu/menuCategory";
 		document.getElementById('frm').submit();
 	}
 </script>

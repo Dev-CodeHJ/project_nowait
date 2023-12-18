@@ -27,8 +27,7 @@
 			  </div>
 				<!-- 사이드바 메뉴목록1 -->
 				<ul class="list-group">
-				  <li class="list-group-item"><a href="#" onclick="storeUpdate_move()">가게정보 수정</a></li>
-				  <li class="list-group-item"><a href="#" onclick="storeDelete_move()">가게정보 삭제</a></li>
+				  <li class="list-group-item"><a href="#" onclick="store_move()">가게관리</a></li>
 				  <li class="list-group-item"><a href="#" onclick="menu_move()">메뉴관리</a></li>
 				  <li class="list-group-item"><a href="#" onclick="reply_move()">리뷰관리</a></li>                  
 				  <li class="list-group-item"><a href="#">주문&예약관리</a></li>
@@ -76,13 +75,13 @@
 							</tr>
 				            <tr>
 				            	<td colspan="2">
-				       				<button type="submit" class="btn btn-primary" style="margin: 30px;" onclick="update_move()">가게정보 수정</button>
-				           			<button type="submit" class="btn btn-danger" style="margin: 30px;" onclick="delete_move()">가게정보 삭제</button>
+				       				<button type="submit" class="btn btn-primary" style="margin: 30px;" onclick="storeUpdate_move()">가게정보 수정</button>
+				           			<button type="submit" class="btn btn-danger" style="margin: 30px;" onclick="storeDelete_move()">가게정보 삭제</button>
 				            	</td>
 				          	</tr>
 				          	<tr style="display: none;">
 				          		<td>
-				           			<form id="frm" action="/store/storeUpdate">
+				           			<form id="frm" action="/store/storeOwnerGet">
 				           				<input type="text" name="crNum" value="${store.crNum}">
 				           			</form>
 				       			</td>
@@ -100,6 +99,16 @@
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
   <script type="text/javascript" src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript">
+	function store_move() {
+	    document.getElementById('frm').action="/store/storeOwnerGet";
+		document.getElementById('frm').submit();
+	}
+	
+	function menu_move() {
+	    document.getElementById('frm').action="/menu/menuList";
+		document.getElementById('frm').submit();
+	}
+	
 	function storeUpdate_move() {
 		document.getElementById('frm').action="/store/storeUpdate";
 		document.getElementById('frm').submit();
@@ -109,12 +118,7 @@
 	    document.getElementById('frm').action="/store/storeDelete";
 		document.getElementById('frm').submit();
 	}
-	
-	function menu_move() {
-	    document.getElementById('frm').action="/menu/menuList";
-		document.getElementById('frm').submit();
-	}
-	
+  
 	function reply_move() {
 	    document.getElementById('frm').action="/reply/storeReply";
 		document.getElementById('frm').submit();

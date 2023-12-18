@@ -1,6 +1,7 @@
 package ezen.nowait.store.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import ezen.nowait.store.domain.MenuVO;
 
@@ -14,5 +15,9 @@ public interface MenuMapper {
 	
 	public int updateMenu(MenuVO mVO);
 	
+	public int updateMenuCategory(Map<String, Object> map);
+	
 	public int deleteMenu(int menuNum);
+	
+	public int deleteAll(String crNum);
 }

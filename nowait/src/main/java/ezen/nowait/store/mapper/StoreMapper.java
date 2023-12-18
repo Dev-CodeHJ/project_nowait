@@ -22,7 +22,9 @@ public interface StoreMapper {
 	
 	public int updateStore(StoreVO sVO);
 	
-	public int reviewSet(Map<String, Object>map);
+	public int orderCntUp(String crNum);
+	
+	public int reviewSet(Map<String, Object> map);
 	
 //	public int updateOwnerStore(StoreVO sVO);
 	

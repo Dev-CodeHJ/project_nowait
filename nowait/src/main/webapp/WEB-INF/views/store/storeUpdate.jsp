@@ -6,91 +6,116 @@
 <!DOCTYPE html>
 <html lang="en">
 
-  <section class="food_section layout_padding-bottom">
-    <div class="container">
-      <div class="heading_container heading_center">
-      </div>
-      <form id="frm" action="/store/storeUpdate" method="post" style="padding: 100px;">
-         <h2 align="center">가게정보 수정페이지</h2>
-         <p align="center" style="color: grey;">(*표시는 필수 입력사항)</p>
-         <table style="margin: auto; border-collapse: separate; border-spacing: 20px 20px;">
-            <tr style="display: none;">
-				<td><input type="text" name="ownerId" id="ownerId" value="${member.ownerId}"></td>
-			</tr>
-            <tr>
-               <th>*사업자 등록번호</th>
-               <td><input type="text" name="crNum" id="crNum" value="${store.crNum}" readonly="readonly"  style="text-align: center; background-color: silver;"></td>
-            </tr>
-            <tr>
-               <th>*가게 비밀번호</th>
-               <td>
-	               <input type="password" name="secretCode" id="secretCode">
-               </td>
-            </tr>
-            <tr>
-               <th>*비밀번호 확인</th>
-               <td><input type="password" name="secretCode2" id="secretCode2"></td>
-            </tr>
-            <tr>
-               <td colspan="2" align="right"><p style="color: grey;">*가게비밀번호는 가게정보 불러오기, 가게정보 삭제 시 사용됩니다.</p></td>
-            </tr>
-			<tr>
-				<th>*가게 이름</th>
-				<td><input type="text" name="storeName" id="storeName" value="${store.storeName}"></td>
-			</tr>
-            <tr>
-				<th>*카테고리</th>
-				<td>
-					<select name="storeCategory">
-						<c:forEach items="${categoryList}" var="category">
-							<option value="${category.name}"
-								<c:if test='${store.storeCategory eq category.name}'>
-									selected="selected"
-								</c:if>>
-								${category.value}
-							</option>
-						</c:forEach>
-					</select>
-				</td>
-			</tr>
-			<tr>
-				<th>*주소</th>
-				<td><input type="text" name="storeAddr" id="storeAddr" value="${store.storeAddr}"></td>
-			</tr>
-			<tr>
-				<td>전화번호</td>
-				<td><input type="text" name="storeTel" id="storeTel" value="${store.storeTel}"></td>
-			</tr>
-			<tr>
-				<td>이메일</td>
-				<td><input type="text" name="storeEmail" id="storeEmail" value="${store.storeEmail}"></td>
-			</tr>
-			<tr>
-				<td>영업시간</td>
-				<td><input type="text" name="opentime" id="opentime" value="${store.opentime}"></td>
-			</tr>
-			<tr>
-				<td>공지사항</td>
-				<td><input type="text" name="storeInfo" id="storeInfo" value="${store.storeInfo}"></td>
-			</tr>
-            <tr>
-            	<td align="center">
-		       		<div class="btn-box">
-		       			<a href="/store/storeOwnerGet/${store.crNum}" style="background-color: green;">가게정보페이지</a>
-		       		</div>
-			    </td>
-            	<td align="center">
-                   <div class="btn-box">
-                      <a href="#" onclick="return join_chk()" id="btn_join">등록하기</a>
-                   </div>
-            	</td>
-          	</tr>
-         </table>
-      </form>
-      
-    </div>
-  </section>
-  
+	<div class="container-fluid">
+	  <div class="row">
+	  	<div class="col-md-3" style="padding-top: 30px;">
+			<!-- 사이드 바 메뉴-->
+			<div class="panel panel-info">
+			  <div class="panel-heading">
+		    	<!-- 패널 타이틀1 -->
+		  		<h3 class="panel-title">
+	   			  <span>가게 관리 메뉴</span>
+		  		</h3>
+			  </div>
+				<!-- 사이드바 메뉴목록1 -->
+				<ul class="list-group">
+				  <li class="list-group-item"><a href="#" onclick="store_move()">가게관리</a></li>
+				  <li class="list-group-item"><a href="#" onclick="menu_move()">메뉴관리</a></li>
+				  <li class="list-group-item"><a href="#">리뷰관리</a></li>
+				  <li class="list-group-item"><a href="#">주문&예약관리</a></li>
+				</ul>
+			</div>
+		</div> 
+
+		<!-- body -->
+		  <div class="col-md-9">
+			  <section class="food_section layout_padding-bottom">
+			    <div class="container">
+			      <form id="frm1" action="/store/storeUpdate" method="post" style="padding: 100px;">
+			         <h2 align="center">가게정보 수정페이지</h2>
+			         <p align="center" style="color: grey;">(*표시는 필수 입력사항)</p>
+			         <table style="margin: auto; border-collapse: separate; border-spacing: 20px 20px;">
+			            <tr style="display: none;">
+							<td><input type="text" name="ownerId" id="ownerId" value="${member.ownerId}"></td>
+						</tr>
+			            <tr>
+			               <th>*사업자 등록번호</th>
+			               <td><input type="text" name="crNum" id="crNum" value="${store.crNum}" readonly="readonly"  style="text-align: center; background-color: silver;"></td>
+			            </tr>
+			            <tr>
+			               <th>*가게 비밀번호</th>
+			               <td>
+				               <input type="password" name="secretCode" id="secretCode">
+			               </td>
+			            </tr>
+			            <tr>
+			               <th>*비밀번호 확인</th>
+			               <td><input type="password" name="secretCode2" id="secretCode2"></td>
+			            </tr>
+			            <tr>
+			               <td colspan="2" align="right"><p style="color: grey;">*가게비밀번호는 가게정보 불러오기, 가게정보 삭제 시 사용됩니다.</p></td>
+			            </tr>
+						<tr>
+							<th>*가게 이름</th>
+							<td><input type="text" name="storeName" id="storeName" value="${store.storeName}"></td>
+						</tr>
+			            <tr>
+							<th>*카테고리</th>
+							<td>
+								<select name="storeCategory">
+									<c:forEach items="${categoryList}" var="category">
+										<option value="${category.name}"
+											<c:if test='${store.storeCategory eq category.name}'>
+												selected="selected"
+											</c:if>>
+											${category.value}
+										</option>
+									</c:forEach>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th>*주소</th>
+							<td><input type="text" name="storeAddr" id="storeAddr" value="${store.storeAddr}"></td>
+						</tr>
+						<tr>
+							<td>전화번호</td>
+							<td><input type="text" name="storeTel" id="storeTel" value="${store.storeTel}"></td>
+						</tr>
+						<tr>
+							<td>이메일</td>
+							<td><input type="text" name="storeEmail" id="storeEmail" value="${store.storeEmail}"></td>
+						</tr>
+						<tr>
+							<td>영업시간</td>
+							<td><input type="text" name="opentime" id="opentime" value="${store.opentime}"></td>
+						</tr>
+						<tr>
+							<td>공지사항</td>
+							<td><input type="text" name="storeInfo" id="storeInfo" value="${store.storeInfo}"></td>
+						</tr>
+			            <tr>
+			            	<td align="center">
+					       		<div class="btn-box">
+					       			<a href="#" onclick="store_move()" style="background-color: green;">이전</a>
+					       		</div>
+						    </td>
+			            	<td align="center">
+			                   <div class="btn-box">
+			                      <a href="#" onclick="return join_chk()" id="btn_join">수정완료</a>
+			                   </div>
+			            	</td>
+			          	</tr>
+			         </table>
+			      </form>
+		            <form id="frm" action="/store/storeOwnerGet">
+           				<input type="hidden" name="crNum" value="${store.crNum}">
+           			</form>
+			    </div>
+			  </section>
+	      </div>
+	  </div>
+	</div>
   
   <%@include file="../includes/footer.jsp" %>
 <script type="text/javascript">
@@ -121,10 +146,21 @@
 	          return false;
 	      
 	      }
-	      document.getElementById('frm').submit();
+	      document.getElementById('frm1').submit();
           return true;
 	  });
     });
+</script>
+<script type="text/javascript">
+	function store_move() {
+	    document.getElementById('frm').action="/store/storeOwnerGet";
+		document.getElementById('frm').submit();
+	}
+	
+	function menu_move() {
+	    document.getElementById('frm').action="/menu/menuList";
+		document.getElementById('frm').submit();
+	}
 </script>
 </body>
 </html>

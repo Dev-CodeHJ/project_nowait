@@ -71,10 +71,15 @@
 				<td><input type="text" name="storeInfo" id="storeInfo"></td>
 			</tr>
             <tr>
-            	<td colspan="2" align="center">
-                   <div class="btn-box">
-                      <a href="#" onclick="return join_chk()" id="btn_join">등록하기</a>
-                   </div>
+            	<td align="center">
+	            	<div class="btn-box">
+				       	<a href="#" onclick="owner_move()" style="background-color: green;">이전</a>
+	                </div>
+            	</td>
+            	<td align="center">
+	            	<div class="btn-box">
+		                <a href="#" onclick="return join_chk()" id="btn_join">등록하기</a>
+	                </div>
             	</td>
           	</tr>
          </table>
@@ -117,6 +122,11 @@
           return true;
 	  });
     });
+</script>
+<script type="text/javascript">
+	function owner_move() {
+		location.href="/owner/ownerHome";
+	}
 </script>
 </body>
 </html>

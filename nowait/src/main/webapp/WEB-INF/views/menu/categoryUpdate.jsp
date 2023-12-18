@@ -44,37 +44,36 @@
 		  <div class="col-md-9">
 			  <section class="food_section layout_padding-bottom">
 			    <div class="container">
-		            <form id="frm1" action="/menu/categoryRegister" method="post" style="padding: 100px;">
-				        <h2 align="center">카테고리 등록 페이지</h2>
+		            <form id="frm1" action="/menu/categoryUpdate" method="post" style="padding: 100px;">
+				        <h2 align="center">메뉴 수정 페이지</h2>
 				         
 				        <table>
 				            <tr style="display: none;">
 								<td>
-									<input type="text" name="crNum" id="crNum" value="${crNum}">
-									<input type="text" name="id" id="id" value="menu_category">
+									<input type="text" name="crNum" id="crNum" value="${category.crNum}">
+									<input type="text" name="getName" id="getName" value="${category.name}">
 								</td>
 							</tr>
 				            <tr>
 				               <th>카테고리 번호</th>
-				               <td><input type="text" name="name" id="name" placeholder="중복불가"></td>
+				               <td><input type="text" name="name" id="name" value="${category.name}"></td>
 				            </tr>
 				            <tr>
 								<th>카테고리 이름</th>
-								<td><input type="text" name="value" id="value"></td>
+								<td><input type="text" name="value" id="value" value="${category.value}"></td>
 							</tr>
 				            <tr>
 				            	<td colspan="2" align="center">
 				                   <div class="btn-box">
 				                      <a href="#" onclick="category_move()" style="background-color: blue;">카테고리관리</a>
-				                      <a href="#" onclick="return register_chk()" id="btn_register" style="margin-left: 30px; background-color: green;">등록하기</a>
-				                      <!-- <button type="button" class="btn btn-success" onclick="return register_chk()" id="btn_register" style="margin: 30px;">등록하기</button> -->
+				                      <a href="#" onclick="return register_chk()" id="btn_register" style="margin-left: 30px; background-color: green;">수정완료</a>
 				                   </div>
 				            	</td>
 				          	</tr>
 				  	  	</table>
 					</form>
 			      	<form id="frm" action="/menu/menuList">
-	          			<input type="hidden" name="crNum" value="${crNum}">
+	          			<input type="hidden" name="crNum" value="${category.crNum}">
 	          		</form>
 			    </div>
 			  </section>
@@ -98,12 +97,7 @@
 	          $("#name").focus();
 	          return false;
 	          
-	      } else if ($("#name").val() <= 0) {
-	          alert("카테고리 번호는 1부터 설정할 수 있습니다!");
-	          $("#name").focus();
-	          return false;
-	          
-	      }  else if ($("#value").val() == "") {
+	      } else if ($("#value").val() == "") {
 	          alert("카테고리 이름을 입려해주세요!");
 	          $("#value").focus();
 	          return false;
