@@ -14,33 +14,14 @@
     padding: 10px;
     }
 </style>
-
-	<div class="container-fluid">
-	  <div class="row">
-	  	<div class="col-md-3" style="padding-top: 30px;">
-			<!-- 사이드 바 메뉴-->
-			<div class="panel panel-info">
-			  <div class="panel-heading">
-		    	<!-- 패널 타이틀1 -->
-		  		<h3 class="panel-title">
-	   			  <span>가게 관리 메뉴</span>
-		  		</h3>
-			  </div>
-				<!-- 사이드바 메뉴목록1 -->
-				<ul class="list-group">
-				  <li class="list-group-item"><a href="#" onclick="store_move()">가게관리</a></li>
-				  <li class="list-group-item"><a href="#" onclick="menu_move()">메뉴관리</a></li>
-				  <li class="list-group-item"><a href="#">리뷰관리</a></li>
-				  <li class="list-group-item"><a href="#">주문&예약관리</a></li>
-				</ul>
-			</div>
-		</div> 
-		
+<body>
+      <div class="container">
+  
 		<!-- body -->
 		  <div class="col-md-9">
 			  <section class="food_section layout_padding-bottom">
 			    <div class="container">
-         			<h2 style="padding: 10px; margin-left: 25%;">메뉴관리 페이지</h2>
+					<h1>가게 주문 메뉴목록 페이지</h1>
 		            <c:forEach items="${menuList}" var="menu" varStatus="cnt">
 			        	<form id="frm${cnt.count}" action="/menu/menuUpdate">
 				        	<table>
@@ -64,7 +45,7 @@
 			            			<c:forEach items="${popularityList}" var="popular">
 				            			<c:if test="${menu.popularity eq popular.name}">
 					            			<c:choose>
-					            				<c:when test="${popular.name eq 1}">
+					            				<c:when test="${popular.value eq '인기메뉴'}">
 					            					<th style="color: orange">${popular.value}</th>
 					            				</c:when>
 					            				<c:otherwise>
@@ -110,74 +91,55 @@
 			    </div>
 			  </section>
 	      </div>
-	  </div>
-	</div>
+                                 <!-- 
+	      <table class="table table-striped table-bordered table-hover" >
+                                 <c:forEach items="${menuList}" var="menu">
+                                    <tr>
+                                        <th>메뉴번호</th>
+                                        <td><input type="text" readonly="readonly" value=<c:out value="${menu.menuNum}"/>></td>
+                                        
+                                    </tr>
+                                    <tr>
+                                        <th>메뉴이름</th>
+                                       <a href='/order/choiceDetailMenu?menuNum=<c:out value="${menu.menuNum }"/>'>
+                                	${menu.menuName}</a>
+                        
+                                    </tr>
+                                    <tr>
+                                        <th>메뉴가격</th>
+                                          <input type="text" class="form-control" readonly="readonly" value=<c:out value="${menu.price }"/>>
+									</tr>
+									<tr>
+                                        <th>인기여부</th>
+                                         <input type="text" class="form-control" readonly="readonly" value=<c:out value="${menu.popularity}"/>>
+                                    </tr>
+                                    <tr>
+                                        <th>품절여부</th>
+                                         <input type="text" class="form-control" readonly="readonly" value=<c:out value="${menu.menuStatus}"/>>
+                                    </tr>
+                                    <tr>
+                                        <th>메뉴사진</th>
+                                         <input type="text" class="form-control" readonly="readonly" value=<c:out value="${menu.menuImg}"/>>
+                                    </tr>
+                                
+                                
+                                </c:forEach>
+                             	 
 
-  <%@include file="../includes/footer.jsp" %>
-<script type="text/javascript">
-	$(document).ready(function() {
-	  if(${insertOk}==1){
-			alert("메뉴가 성공적으로 등록되었습니다.");
-		} else if(${insertOk}==0){
-			alert("메뉴 등록에 실패하셨습니다!");
-		}
-    });
-</script>
-<script type="text/javascript">
-	$(document).ready(function() {
-	  if(${updateOk}==1){
-			alert("메뉴가 성공적으로 수정되었습니다.");
-		} else if(${updateOk}==0){
-			alert("메뉴 수정에 실패하셨습니다!");
-		}
-    });
-</script>
-<script type="text/javascript">
-	$(document).ready(function() {
-	  if(${deleteOk}==1){
-			alert("메뉴가 성공적으로 삭제되었습니다.");
-		} else if(${deleteOk}==0){
-			alert("메뉴 삭제에 실패하셨습니다!");
-		}
-    });
-</script>
-<script type="text/javascript">
-	function store_move() {
-	    document.getElementById('frm').action="/store/storeOwnerGet";
-		document.getElementById('frm').submit();
-	}
+                             	</table>
+                             	 -->
+							
 	
-	function menu_move() {
-	    document.getElementById('frm').action="/menu/menuList";
-		document.getElementById('frm').submit();
-	}
 	
-	function menuGet_move(menuNum) {
-		document.getElementById('frm'+menuNum).action="/menu/menuGet";
-		document.getElementById('frm'+menuNum).submit();
-	}
 	
-	function menuUpdate_move(menuNum) {
-		document.getElementById('frm'+menuNum).action="/menu/menuUpdate";
-		document.getElementById('frm'+menuNum).submit();
-	}
 	
-	function menuDelete_move(menuNum) {
-	    if(confirm("선택하신 메뉴를 정말 삭제하시겠습니까?")) {
-			document.getElementById('frm'+menuNum).action="/menu/menuDelete";
-			document.getElementById('frm'+menuNum).submit();
-	    }
-	}
 	
-	function menuRegister_move() {
-		document.getElementById('frm').action="/menu/menuRegister";
-		document.getElementById('frm').submit();
-	}
 	
-	function category_move() {
-		document.getElementById('frm').action="/menu/menuCategory";
-		document.getElementById('frm').submit();
-	}
-</script>
+	
+	
+	
+	
+	
+		<%@include file="../includes/footer.jsp" %>	
 </body>
 </html>

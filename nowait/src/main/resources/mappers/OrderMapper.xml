@@ -36,17 +36,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE o.order_num=#{orderNum}
 		;
 	</select>
+	
+	<select id="selectOrder" resultType="ezen.nowait.order.domain.OrderVO">
+		SELECT
+		*
+		FROM `order`
+		WHERE order_num = #{orderNum}
+	</select>
 
-	<insert id="orderInsert">
-	INSERT INTO order 
-	VALUES
-	(#{order_num} , #{user_id} , #{cr_num} ,  #{pay_method} , #{reserv_num} , #{reserv_time} , 
-	#{order_time} , #{total_price} , #{request_msg})
+	<insert id="orderInsert" parameterType="ezen.nowait.order.domain.OrderVO" useGeneratedKeys="true"
+        keyProperty="orderNum" keyColumn="order_num">
+		INSERT INTO `order`
+		VALUES (null, #{userId}, #{crNum}, #{reservCheck}, #{payMethod}, #{reservNum}, #{reservTime}, default, #{totalPrice}, #{requestMsg})
 	</insert>
 	
 	<delete id="orderDelete">
 		delete from `order` where order_num = #{orderNum}
 	</delete>
-
 
 </mapper>

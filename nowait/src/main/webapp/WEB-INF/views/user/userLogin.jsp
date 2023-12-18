@@ -50,13 +50,13 @@
   <!-- end food section -->
  <%@include file="../includes/footer.jsp" %>
 <script type="text/javascript">
-	$(document).ready(function() {
-		if(${result}==0){
-			alert("비밀번호가 일치하지 않습니다!");
-		} else if(${result}==-1){
-			alert("아이디가 일치하지 않습니다!");
-		}
-	});
+   $(document).ready(function() {
+      if(${result}==0){
+         alert("비밀번호가 일치하지 않습니다!");
+      } else if(${result}==-1){
+         alert("존재하지 않는 아이디입니다!");
+      }
+   });
 </script>
 <script type="text/javascript">
       function login_chk() {

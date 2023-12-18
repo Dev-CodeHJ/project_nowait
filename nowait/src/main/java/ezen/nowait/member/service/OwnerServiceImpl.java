@@ -62,9 +62,12 @@ public class OwnerServiceImpl implements OwnerService{
 
 	@Override
 	public int loginOwner(String ownerId, String ownerPw) {
+		
 		log.info("loginOwner............." + ownerId);
 		log.info("loginOwner............." + ownerPw);
+		
 		OwnerVO oVO = ownerMapper.selectOwner(ownerId);
+		
 		if(oVO != null) {
 			log.info("ownerId is not null.........");
 			if(oVO.getOwnerPw().equals(ownerPw)) {

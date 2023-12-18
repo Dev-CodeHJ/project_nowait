@@ -28,10 +28,15 @@
 		            <div class="box">
 		              <div>
 		                <div class="img-box">
-		                  <!-- <input type="image" src="/resources/images/f1.png" onclick="location.href='/store/storeOwnerGet"> -->
 		                  <a href="#" onclick="store_move(${cnt.index})">
-		                  	<img src="/resources/images/f1.png" alt="">
-		                  	<!-- <input type="hidden" name="crNum" value="${store.crNum}">-->
+		               		<c:choose>
+		               			<c:when test="${store.storeFileName ne null and store.storeFileName ne ''}">
+				               		<img src="/resources/images/${store.storeFileName}" alt="${store.uploadFileName}" width="200" height="200">
+		               			</c:when>
+		               			<c:otherwise>
+		               				<img src="/resources/images/defaultImg.png" alt="기본이미지" width="200" height="200">
+		               			</c:otherwise>
+		               		</c:choose>
 		                  </a>
 		                </div>
 		                <div class="detail-box">

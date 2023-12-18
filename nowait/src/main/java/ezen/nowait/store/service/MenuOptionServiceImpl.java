@@ -18,7 +18,6 @@ public class MenuOptionServiceImpl implements MenuOptionService{
 	public List<MenuOptionVO> findOptionList(int menuNum) {
 		
 		List<MenuOptionVO> list = optionMapper.selectOptionList(menuNum);
-		System.out.println("list : " + list);
 		
 		return list;
 	}

@@ -13,7 +13,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from menu where menu_num = #{menuNum}
 	</select>
 	
-	<insert id="insertMenu">
+	<insert id="insertMenu" parameterType="ezen.nowait.store.domain.MenuVO" useGeneratedKeys="true"
+        keyProperty="menuNum" keyColumn="menu_num">
 		insert into menu
 		values(null, #{crNum}, #{menuCategory}, #{menuName}, #{uploadFileName}, #{storeFileName}, #{price}, #{popularity}, #{menuStatus})
 	</insert>

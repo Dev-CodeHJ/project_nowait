@@ -1,4 +1,10 @@
 package ezen.nowait.member.controller;
+<<<<<<< HEAD
+
+import java.util.List;
+
+=======
+>>>>>>> main
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -16,12 +22,32 @@ import ezen.nowait.board.service.ReviewService;
 import ezen.nowait.member.domain.UserVO;
 import ezen.nowait.member.service.UserService;
 import ezen.nowait.order.service.OrderService;
+import ezen.nowait.store.domain.MenuVO;
+import ezen.nowait.store.domain.StoreVO;
+import ezen.nowait.store.service.MenuService;
 import ezen.nowait.store.service.StoreService;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
 @Controller
 @Log4j
+<<<<<<< HEAD
+@RequestMapping("/user")
+@RequiredArgsConstructor
+public class UserController {
+
+	private final UserService userservice;
+	
+	private final OrderService orderservice;
+	
+	private final StoreService storeService;
+	
+	private final MenuService menuService;
+	
+	HttpSession	session;
+		
+=======
 @RequestMapping("/user/*")
 @AllArgsConstructor
 public class UserController {
@@ -31,6 +57,7 @@ public class UserController {
 	private StoreService storeService;
 	private ReviewService reviewservice;
 	
+>>>>>>> main
 	//손님이 홈에서 가게메뉴보기 페이지 이동
 	@GetMapping("/menuOrder")
 	public void menuOrder() {}
@@ -67,12 +94,18 @@ public class UserController {
 	
 	//손님로그인 후 처리페이지로 이동
 	@PostMapping("/userLogin")
-	public String login(String userId, String userPw, HttpServletRequest request, Model model, RedirectAttributes rttr) {
+	public String login(String userId, String userPw, HttpServletRequest request, RedirectAttributes rttr) {
       
       log.info("id : " + userId);
       log.info("pw : " + userPw);
       
+<<<<<<< HEAD
+      session = request.getSession();
+      
+      int result = userservice.userLogin(userId, userPw);
+=======
       HttpSession session = request.getSession();
+>>>>>>> main
       
       int result = userservice.userLogin(userId, userPw);
       System.out.println("result : " + result);
@@ -81,20 +114,45 @@ public class UserController {
                            1 : 로그인 성공
                            0 : 비밀번호 불일치
                            -1 : 아이디 불일치 */
+<<<<<<< HEAD
+   
+         UserVO uVO = userservice.userGet(userId);
+         session.setAttribute("member", uVO);
+         session.setAttribute("result", 2);
+=======
          session.setAttribute("member", userservice.userGet(userId));
          session.setAttribute("result", result+1);         
+>>>>>>> main
          System.out.println("로그인 성공");
          return "redirect:/user/userHome";
       } else {
     	  rttr.addFlashAttribute("result", result);
+<<<<<<< HEAD
+=======
     	  System.out.println("로그인 실패");
+>>>>>>> main
     	  return "redirect:/user/userLogin";    	  
       }
     }
 
 	//손님 홈 이동
 	@GetMapping("/userHome")
-	public void userHome() {}
+	public void userHome(Model model) {
+		
+		List<StoreVO> storeList = storeService.findAll();
+		List<MenuVO> menuList;
+		
+		
+		model.addAttribute("list", storeList);
+		
+		for(int i=0; i<storeList.size(); i++) {
+			
+			String crNum = storeList.get(i).getCrNum();
+			
+			menuList = menuService.findMenuList(crNum);
+			
+		}
+	}
 
 	//손님 리뷰관리 이동
 	@GetMapping("/userReview")

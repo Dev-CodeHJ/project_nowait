@@ -21,6 +21,28 @@ public class UserServiceImpl implements UserService {
 		return userMapper.userInsert(uVO);		
 	}	
 	
+<<<<<<< HEAD
+	//아이디 중복체크
+		@Override
+		public int userIdCheck(String userId) {
+			int result = userMapper.idCheck(userId);
+			return result;
+		}
+
+		@Override
+		public int userLogin(String userId, String userPw) {
+			
+			UserVO uVO = userMapper.userGet(userId);
+			
+			if(uVO != null){
+				if(uVO.getUserPw().equals(userPw)) {
+					return 1;
+				} else {
+					return 0;
+				}
+			} else {
+				return -1;
+=======
 	@Override
 	public int userIdCheck(String userId) {
 		int result = userMapper.idCheck(userId);
@@ -38,6 +60,7 @@ public class UserServiceImpl implements UserService {
 			if(uVO.getUserPw()!=(userPw)) {
 				System.out.println("비번틀림");
 				return 0;
+>>>>>>> main
 			}
 		}
 		System.out.println("아이디없음");

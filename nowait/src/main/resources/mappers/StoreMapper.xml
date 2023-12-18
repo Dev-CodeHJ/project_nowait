@@ -28,7 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<insert id="insertStore">
 		insert into store
-		values(#{crNum}, #{secretCode}, #{storeName}, #{storeCategory}, #{storeAddr}, #{storeTel}, #{storeEmail}, #{opentime}, #{storeInfo}, default, default)
+		values(#{crNum}, #{secretCode}, #{storeName}, #{storeCategory}, #{storeAddr}, #{storeTel}, #{storeEmail}, #{opentime}, #{storeInfo}, default, default, null, null)
 	</insert>
 	
 	<!-- (owner_id, cr_num, secret_code) -->
@@ -46,7 +46,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		store_tel = #{storeTel},
 		store_email = #{storeEmail},
 		opentime = #{opentime},
-		store_info = #{storeInfo}
+		store_info = #{storeInfo},
+		upload_file_name = #{uploadFileName},
+		store_file_name = #{storeFileName}
 		where cr_num = #{crNum}
 	</update>
 	

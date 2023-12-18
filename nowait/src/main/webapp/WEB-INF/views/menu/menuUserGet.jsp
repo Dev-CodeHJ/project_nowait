@@ -4,150 +4,151 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@include file="../includes/header.jsp" %>
 <style>
-	table {
+table {
     border: 1px solid black;
     border-collapse: collapse;
+    margin: auto;
 	}
-	th, td {
+th, td {
     text-align: center;
     border: 1px solid black;
     padding: 10px;
-    }
-	<%--
-    --%>
+}
+.soldOut {
+	color: gray;
+}
+</style>
+<style>
+ div.goods div.goodsImg { float:left; width:350px; }
+ div.goods div.goodsImg img { width:350px; height:auto; }
+ 
+ div.goods div.goodsInfo { float:right; width:330px; font-size:22px; }
+ div.goods div.goodsInfo p { margin:0 0 20px 0; }
+ div.goods div.goodsInfo p span { display:inline-block; width:100px; margin-right:15px; }
+ 
+ div.goods div.goodsInfo p.cartStock input { font-size:22px; width:50px; padding:5px; margin:0; border:1px solid #eee; }
+ div.goods div.goodsInfo p.cartStock button { font-size:26px; border:none; background:none; }
+ div.goods div.goodsInfo p.addToCart { text-align:right; }
+ div.goods div.gdsDes { font-size:18px; clear:both; padding-top:30px; }
 </style>
 
-	<div class="container-fluid">
-	  <div class="row">
-	  	<div class="col-md-3" style="padding-top: 30px;">
-			<!-- 사이드 바 메뉴-->
-			<div class="panel panel-info">
-			  <div class="panel-heading">
-		    	<!-- 패널 타이틀1 -->
-		  		<h3 class="panel-title">
-	   			  <span>가게 관리 메뉴</span>
-		  		</h3>
-			  </div>
-				<!-- 사이드바 메뉴목록1 -->
-				<ul class="list-group">
-				  <li class="list-group-item"><a href="#" onclick="storeUpdate_move()">가게정보 수정</a></li>
-				  <li class="list-group-item"><a href="#" onclick="storeDelete_move()">가게정보 삭제</a></li>
-				  <li class="list-group-item"><a href="#" onclick="menu_move()">메뉴관리</a></li>
-				  <li class="list-group-item"><a href="#">리뷰관리</a></li>
-				  <li class="list-group-item"><a href="#">주문&예약관리</a></li>
-				</ul>
-			</div>
-		</div> 
-		
-		<!-- body -->
-		  <div class="col-md-9">
-			  <section class="food_section layout_padding-bottom">
-			    <div class="container">
-         			<h2 style="padding: 10px; margin-left: 25%;">메뉴관리 페이지</h2>
-		            <c:forEach items="${menuList}" var="menu">
-			        	<form id="frm${menu.menuNum}" action="/menu/menuUpdate">
-				        	<table>
-				            	<tr>
-				            		<th>메뉴 이름</th><th>메뉴 카테고리</th><th>가격</th><th>인기메뉴 여부</th><th>품절 여부</th><th rowspan="2"><img src="${menu.menuImg}" alt=""></th>
-				            	</tr>
-				            	<tr>
-				            		<td>${menu.menuName}</td>
-				            		<td>
-				            			<c:forEach items="${menuCategoryList}" var="menuCategory">
-					            			<c:if test="${menu.menuCategory eq menuCategory.name}">
-					            				${menuCategory.value}
-					            			</c:if>
-				            			</c:forEach>
-				            		</td>
-				            		<td>${menu.price}원</td>
-				            		<td>
-				            			<c:forEach items="${popularityList}" var="popular">
-					            			<c:if test="${menu.popularity eq popular.name}">
-					            				${popular.value}
-					            			</c:if>
-				            			</c:forEach>
-				            		</td>
-				            		<td>
-				            			<c:forEach items="${menuStatusList}" var="status">
-					            			<c:if test="${menu.menuStatus eq status.name}">
-					            				${status.value}
-					            			</c:if>
-				            			</c:forEach>
-				            		</td>
-			            		</tr>
-					            <tr>
-					            	<td colspan="6">
-					       				<button type="submit" class="btn btn-primary" style="margin: 30px;" onclick="menuUpdate_move(${menu.menuNum})">메뉴정보 수정</button>
-					           			<button type="button" class="btn btn-danger" style="margin: 30px;" onclick="menuDelete_move(${menu.menuNum})">메뉴정보 삭제</button>
-					            	</td>
-					          	</tr>
-					          	<tr style="display: none;">
-					          		<td>
-				           				<input type="text" name="menuNum" value="${menu.menuNum}">
-					       			</td>
-					   			</tr>
-				        	</table>
-			        	</form>
-		            </c:forEach>
-		            <form id="frm" action="/menu/menuList">
-           				<input type="hidden" name="crNum" value="${crNum}">
-           			</form>
-		            <div class="btn-box" style="margin-right: 30%;">
-				    	<a href="#" onclick="category_move()">카테고리 관리</a>
-				    	<a href="#" onclick="menuRegister_move()" style="margin-left: 20px; background-color: green;">메뉴 등록</a>
-				    </div>
-			            <!-- 
-			             style="cursor:pointer;color:#blue;" onClick="location.href='/menu/menuGet?menuNum=${menu.menuNum}'"
-			             -->
-			    </div>
-			  </section>
-	      </div>
-	  </div>
-	</div>
+  <section class="food_section layout_padding-bottom">
+    <div class="container">
+      <form id="frm0" action="/menu/menuUserGet" method="post" style="padding: 50px;">
+         <h2 align="center" style="padding-bottom: 20px;">장바구니 담기 페이지</h2>
+        	<table>
+            	<tr>
+            		<th rowspan="2">
+            			<span>${menu.menuName}</span>
+            		</th>
+            		<th rowspan="2">
+            			<span>가격 : </span><fmt:formatNumber pattern="###,###,###" value="${menu.price}" />원
+           			</th>
+            		<th colspan="2">구매 수량</th>
+            	</tr>
+            	<tr>
+            		<th colspan="2">
+						<div class="goods">
+						   <div class="goodsInfo">
+						    <p class="cartStock">
+								<button type="button" class="minus">-</button>
+								<input type="text" name="orderCnt" class="numBox" min="1" value="1" readonly="readonly"/>
+								<button type="button" class="plus">+</button>  
+						    </p>
+						   </div>
+						</div>
+            		</th>
+				</tr>
+            	<tr>
+            		<td colspan="3">옵션 선택</td>
+           		</tr>
+				<c:forEach items="${optionList}" var="option" varStatus="cnt">
+					<c:choose>
+						<c:when test="${option.optionStatus eq true}">
+		           			<tr class="soldOut">
+			            		<td colspan="3">
+									<label>
+										<input type="radio" name="optionCnt" id="optionCnt" value="${cnt.index}" disabled="disabled">
+										${option.option} &nbsp; +${option.optionPrice}원
+									</label>
+			            		</td>
+			            	</tr>
+						</c:when>
+						<c:otherwise>
+		           			<tr>
+			            		<th colspan="3">
+									<label>
+										<input type="radio" name="optionCnt" id="optionCnt" value="${cnt.index}">
+										${option.option} &nbsp; +${option.optionPrice}원
+										<input type="hidden" name="menuOptionNum${cnt.index}" id="menuOptionNum${cnt.index}" value="${option.menuOptionNum}">
+										<input type="hidden" name="optionPrice${cnt.index}" id="optionPrice${cnt.index}" value="${option.optionPrice}">
+									</label>
+			            		</th>
+			            	</tr>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
+	            <tr>
+	            	<td colspan="3">
+	       				<button type="button" class="btn btn-success" style="margin: 30px;" onclick="storeUserGet_move()">이전</button>
+	       				<button type="submit" class="btn btn-info" style="margin: 30px;" onclick="return register_chk()" id="btn_register">장바구니 담기</button>
+	            	</td>
+	          	</tr>
+	          	<tr style="display: none;">
+	          		<td>
+           				<input type="text" name="menuNum" value="${menu.menuNum}">
+           				<input type="text" name="price" id="price" value="${menu.price}">
+           				<input type="text" name="menuOptionNum" id="menuOptionNum">
+           				<input type="text" name="orderMenuPrice" id="orderMenuPrice">
+	       			</td>
+	   			</tr>
+        	</table>
+      </form>
+      <form id="frm" action="/store/storeUserGet">
+	  	<input type="hidden" name="crNum" value="${menu.crNum}">
+	  </form>
+    </div>
+  </section>
 
   <%@include file="../includes/footer.jsp" %>
 <script type="text/javascript">
+  $(".plus").click(function(){
+   $(".numBox").val(Number($(".numBox").val())+ 1);
+  });
+  
+  $(".minus").click(function(){
+	  
+   if($(".numBox").val() <= 1) {
+	    $(".numBox").val();
+	   } else {
+	  $(".numBox").val(Number($(".numBox").val())- 1);
+   }
+  });
+</script>
+<script type="text/javascript">
 	$(document).ready(function() {
-	  if(${deleteOk}==1){
-			alert("메뉴가 성공적으로 삭제되었습니다");
-		}
+    $("#btn_register").click(function register_chk() {
+    	  
+	      if ($("input[name=optionCnt]:radio:checked").length < 1) {
+	          alert("옵션을 선택해주세요!");
+	          $("#optionCnt").focus();
+	          return false;
+	      }
+	      var optChk = Number($("input[name=optionCnt]:radio:checked").val());
+	      
+	      $("#menuOptionNum").val(document.getElementById('menuOptionNum'+optChk).value);
+	      
+	      var totalPrice = Number(document.getElementById('optionPrice'+optChk).value) + Number($("#price").val());
+	      $("#orderMenuPrice").val(totalPrice);
+	      
+	      document.getElementById('frm0').submit();
+          return true;
+	  });
     });
 </script>
 <script type="text/javascript">
-	function storeUpdate_move() {
-		document.getElementById('frm').action="/store/storeUpdate";
-		document.getElementById('frm').submit();
-	}
-	
-	function storeDelete_move() {
-	    document.getElementById('frm').action="/store/storeDelete";
-		document.getElementById('frm').submit();
-	}
-	
-	function menu_move() {
-	    document.getElementById('frm').action="/menu/menuList";
-		document.getElementById('frm').submit();
-	}
-	
-	function menuUpdate_move(menuNum) {
-		document.getElementById('frm'+menuNum).action="/menu/menuUpdate";
-		document.getElementById('frm'+menuNum).submit();
-	}
-	
-	function menuDelete_move(menuNum) {
-	    if(confirm("선택하신 메뉴를 정말 삭제하시겠습니까?")) {
-			document.getElementById('frm'+menuNum).action="/menu/menuDelete";
-			document.getElementById('frm'+menuNum).submit();
-	    }
-	}
-	
-	function menuRegister_move() {
-		document.getElementById('frm').action="/menu/menuRegister";
-		document.getElementById('frm').submit();
-	}
-	
-	function category_move() {
-		document.getElementById('frm').action="/menu/menuCategory";
+	function storeUserGet_move() {
+	    document.getElementById('frm').action="/store/storeUserGet";
 		document.getElementById('frm').submit();
 	}
 </script>

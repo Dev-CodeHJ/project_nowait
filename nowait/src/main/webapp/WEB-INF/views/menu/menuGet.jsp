@@ -119,7 +119,7 @@
 							      <div class="col-sm-6 col-lg-4 all">
 						        	<table style="margin: 10px;">
 						            	<tr>
-						            		<td>옵션 이름</td><td>가격</td><td>품절 여부</td>
+						            		<td>옵션 이름</td><td>추가금액</td><td>품절 여부</td>
 						            	</tr>
 						            	<tr>
 						            		<th>${option.option}</th>

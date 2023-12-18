@@ -1,8 +1,12 @@
 package ezen.nowait.store.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -16,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ezen.nowait.code.domain.CodeVO;
 import ezen.nowait.code.service.CodeService;
+import ezen.nowait.order.domain.OrderMenuVO;
 import ezen.nowait.store.domain.MenuOptionVO;
 import ezen.nowait.store.domain.MenuVO;
 import ezen.nowait.store.domain.UploadFile;
@@ -64,13 +69,7 @@ public class MenuController {
 		System.out.println("/menu/menuGet menuNum : " + menuNum);
 		
 		MenuVO mVO = menuService.findMenu(menuNum);
-//		int optionCnt = optionService.findOptionCnt(menuNum);
 		List<MenuOptionVO> optionList = optionService.findOptionList(menuNum);
-		
-//		if(optionCnt != 0) {
-//			List<MenuOptionVO> optionList = optionService.findOptionList(menuNum);
-//			model.addAttribute("optionList", optionList);
-//		}
 		
 		List<CodeVO> list = codeService.findListByCrNum(mVO.getCrNum());
 		List<CodeVO> popularityList = codeService.findList("popularity");
@@ -80,6 +79,80 @@ public class MenuController {
 		
 		model.addAttribute("menuCategoryList", list);
 		model.addAttribute("popularityList", popularityList);
+	}
+	
+	@GetMapping("/menuUserGet")
+	public void userGet(int menuNum, Model model) {
+		
+		System.out.println("/menu/menuUserGet menuNum : " + menuNum);
+		
+		MenuVO mVO = menuService.findMenu(menuNum);
+		List<MenuOptionVO> optionList = optionService.findOptionList(menuNum);
+		
+		List<CodeVO> list = codeService.findListByCrNum(mVO.getCrNum());
+		List<CodeVO> popularityList = codeService.findList("popularity");
+		
+		model.addAttribute("menu", mVO);
+		model.addAttribute("optionList", optionList);
+		
+		model.addAttribute("menuCategoryList", list);
+		model.addAttribute("popularityList", popularityList);
+	}
+	
+	@SuppressWarnings("unchecked")
+	@PostMapping("/menuUserGet")
+	public String userGet(OrderMenuVO omVO, RedirectAttributes rttr, HttpServletRequest request) {
+		
+		System.out.println("--post--menuUserGet omVO : " + omVO);
+		
+		session = request.getSession();
+		
+		//장바구니에 담은 메뉴PK
+		int menuNum = omVO.getMenuNum();
+		int menuOptionNum = omVO.getMenuOptionNum();
+		
+		//해당 메뉴의 옵션리스트
+		List<MenuOptionVO> optionList = optionService.findOptionList(menuNum);
+		//해당 메뉴정보객체
+		MenuVO mVO = menuService.findMenu(menuNum);
+		MenuOptionVO moVO = optionService.findOption(menuOptionNum);
+		
+		omVO.setOrderMenuPrice(mVO.getPrice()+moVO.getOptionPrice());
+		System.out.println("setOrderMenuPrice : " + omVO.getOrderMenuPrice());
+		
+		//주문한 가게PK
+		String crNum = mVO.getCrNum();
+		
+		//session에 저장할 장바구니List
+		List<Map<String, Object>> cart;
+		//cart에는 메뉴, 메뉴에 있는 옵션리스트, 주문수량, 주문가격이 담긴다
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("orderMenu", omVO);
+		map.put("menu", mVO);
+		map.put("optionList", optionList);
+		
+		if(session.getAttribute("cart") != null) {
+			cart = (List<Map<String, Object>>) session.getAttribute("cart");
+			System.out.println("exist cart session : " + cart.size());
+		} else {
+			cart = new ArrayList<Map<String,Object>>();
+			System.out.println("new cart : " + cart);
+		}
+		
+		boolean addOk = cart.add(map);
+		System.out.println("addOk : " + addOk);
+		System.out.println("add after cart : " + cart.size());
+		
+		if(addOk) {
+			
+			session.setAttribute("cart", cart);
+		}
+		
+		rttr.addAttribute("crNum", crNum);
+		rttr.addFlashAttribute("addOk", addOk);
+		
+		return "redirect:/store/storeUserGet";
 	}
 	
 	@GetMapping("/menuRegister")

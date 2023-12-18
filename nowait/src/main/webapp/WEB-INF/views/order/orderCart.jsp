@@ -1,169 +1,329 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page contentType="text/html; charset=UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-    
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>장바구니 주문페이지</title>
-</head>
-<body>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@include file="../includes/header.jsp" %>
+<style>
+table {
+	width: 100%;
+    border: 1px solid black;
+    border-collapse: collapse;
+    margin: auto;
+}
+th, td {
+    text-align: center;
+    border: 1px solid black;
+    padding: 10px;
+}
+h1, h2 {
+	text-align: center;
+	padding: 10px;
+}
+div {
+	text-align: center;
+}
+.soldOut {
+	color: gray;
+}
+.topborder {
+    width: 100%;
+    border-top: 1px solid navy;
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+}
+.noenborder {
+    border: none;
+}
+</style>
+<style>
+ div.goods div.goodsInfo p span { display:inline-block; width:100px; margin-right:15px; }
+ div.goods div.goodsInfo p.cartStock input { font-size:22px; width:50px; padding:5px; margin:5px; border:1px solid #eee; }
+ div.goods div.goodsInfo p.cartStock button { font-size:30px; border:none; background:none; }
+ div.goods div.goodsInfo p.cartStock { text-align:right; padding-right: 10px; margin-bottom: 0px;}
+</style>
 
-<c:forEach items="${orderInsert}" var="orderInsert">
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<section class="food_section layout_padding-bottom">
+	<div class="container">
+        <h1>장바구니 목록</h1>
+    	<c:choose>
+    		<c:when test="${cart eq null or cart.size() eq 0}">
+    			<h2 style="color: gray;">장바구니에 담긴 상품이 존재하지 않습니다.</h2>
+    		</c:when>
+    		<c:otherwise>
+		      <form id="frm" action="/order/orderCart" method="post" style="padding: 10px;">
+    			<c:forEach items="${cart}" var="map" varStatus="cnt">
+		        	<div style="padding: 5px;">
+			        	<table>
+			            	<tr>
+			            		<th colspan="${map.optionList.size()}">
+			            			${map.menu.menuName}&nbsp;
+			            		[기본금액 : <fmt:formatNumber pattern="###,###,###" value="${map.menu.price}"/>원]
+			            		<button type="button" class="btn btn-danger" onclick="cartMenu_delete(${cnt.index})" style="float: right;">X</button>
+			            		</th>
+			            	</tr>
+							<tr>
+								<c:forEach items="${map.optionList}" var="option" varStatus="optCnt">
+									<c:choose>
+										<c:when test="${option.optionStatus eq true}">
+						            		<td class="soldOut">
+												<label>
+													<input type="radio" name="optionCnt${cnt.index}" id="optionCnt${cnt.index}" value="${optCnt.index}" disabled="disabled">
+													${option.option} &nbsp; + <fmt:formatNumber pattern="###,###,###" value="${option.optionPrice}"/>원
+												</label>
+						            		</td>
+										</c:when>
+										<c:otherwise>
+						            		<th>
+												<label>
+													<input type="radio" name="optionCnt${cnt.index}" id="optionCnt${cnt.index}" value="${optCnt.index}" onchange="registerchk()"
+													<c:if test="${map.orderMenu.menuOptionNum eq option.menuOptionNum}">checked="checked"</c:if>
+													>
+													${option.option} &nbsp; + <fmt:formatNumber pattern="###,###,###" value="${option.optionPrice}"/>원
+													<input type="hidden" name="optionNum${cnt.index}" id="optionNum${cnt.index}${optCnt.index}" value="${option.menuOptionNum}">
+													<input type="hidden" name="orderMenuList[${cnt.index}].optPrice" id="optPrice${cnt.index}${optCnt.index}" value="${option.optionPrice}">
+												</label>
+						            		</th>
+										</c:otherwise>
+									</c:choose>
+								</c:forEach>
+							</tr>
+			            	<tr>
+			            		<th colspan="${map.optionList.size()}">
+									<div class="goods">
+									   <div class="goodsInfo">
+									    <p class="cartStock">
+									    	<span>구매수량 : </span>
+											<button type="button" class="minus" onclick="orderCntMinus(${cnt.index})">-</button>
+											<input type="text" name="orderMenuList[${cnt.index}].orderCnt" class="numBox" min="1" value="${map.orderMenu.orderCnt}" readonly="readonly"/>
+											<button type="button" class="plus" onclick="orderCntPlus(${cnt.index})">+</button>
+									    </p>
+									   </div>
+									</div>
+			            		</th>
+							</tr>
+				          	<tr style="display: none;">
+				          		<td>
+			           				<input type="text" name="orderMenuList[${cnt.index}].menuNum" value="${map.menu.menuNum}">
+			           				<input type="text" name="price" id="price${cnt.index}" value="${map.menu.price}">
+			           				<input type="text" name="orderMenuList[${cnt.index}].menuOptionNum" id="menuOptionNum${cnt.index}">
+			           				<input type="text" name="orderMenuList[${cnt.index}].orderMenuPrice" id="orderMenuPrice${cnt.index}">
+				       			</td>
+				   			</tr>
+			        	</table>
+		        	</div>
+    			</c:forEach>
+    			<table class="topborder">
+    				<tr style="display: none;">
+	   					<th>
+	   						<input type="text" name="crNum" value="${cart.get(0).menu.crNum}">
+   						</th>
+    				</tr>
+    				<tr>
+	   					<th colspan="2" class="noenborder">결제 방식</th>
+    				</tr>
+    				<tr>
+    					<td colspan="2" class="noenborder">
+	    					<input type="radio" name="payMethod" value="1"> 카드 &nbsp;
+	    					<input type="radio" name="payMethod" value="2"> 현금
+    					</td>
+    				</tr>
+    			</table>
+    			<table class="topborder">
+    				<tr>
+	   					<th colspan="2" class="noenborder">예약 방식</th>
+    				</tr>
+    				<tr>
+    					<td colspan="2" class="noenborder">
+	    					<input type="radio" name="reservCheck" value="1" onclick="handleRadioButtonChange()"> 포장 주문 &nbsp;
+	    					<input type="radio" name="reservCheck" value="2" onclick="handleRadioButtonChange()"> 홀 방문 식사
+    					</td>
+    				</tr>
+    			</table>
+    			<table class="topborder">
+    				<tr>
+	   					<th colspan="2" class="noenborder">방문 예약 인원 <font style="color: grey;">(홀 방문 식사 선택시)</font></th>
+    				</tr>
+    				<tr>
+    					<td colspan="2" class="noenborder">
+	    					<input type="text" name="reservNum" id="reservNum" disabled="disabled">
+    					</td>
+    				</tr>
+    			</table>
+    			<table class="topborder">
+    				<tr>
+	   					<th colspan="2" class="noenborder">예약 시간</th>
+    				</tr>
+    				<tr>
+    					<td colspan="2" class="noenborder">
+	    					<input type="text" name="reservTime" id="reservTime">
+    					</td>
+    				</tr>
+    			</table>
+    			<table class="topborder">
+    				<tr>
+	   					<th colspan="2" class="noenborder">요청사항</th>
+    				</tr>
+    				<tr>
+    					<td colspan="2" class="noenborder">
+	    					<textarea rows="5" cols="50" name="requestMsg"></textarea>
+    					</td>
+    				</tr>
+    			</table>
+    			<table class="topborder">
+    				<tr>
+	   					<th colspan="2" class="noenborder">
+			    			<div align="center">
+								<button type="button" class="btn btn-success" style="float: left; padding: 15px;" onclick="storeUserGet_move()">메뉴 더 담으러가기</button>
+								<h5>장바구니 총      액: 
+								<span class="text-danger">
+								<input type="number" style="border: none; text-align: right;" name="totalPrice" id="totalPrice" pattern="###,###,###" readonly="readonly">
+								</span> 원</h5>
+								<button type="button" class="btn btn-warning" style="margin: 30px;" id="btn_register">주문하기</button>
+							</div>
+	   					</th>
+    				</tr>
+    			</table>
+		      </form>
+    		</c:otherwise>
+    	</c:choose>
+      <form id="frm0" action="/store/storeUserGet">
+	  	<input type="hidden" name="crNum" value="${cart.get(0).menu.crNum}">
+	  </form>
+      <form id="frm1" action="/order/cartMenuDelete">
+      	<input type="hidden" name="deleteIndex" id="deleteIndex">
+	  </form>
+	</div>
+</section>
 
-<c:import url="/top"/>
-
-<h1 class="text-success text-center"> ${loginUser.userid}님 장바구니</h1>
-<!-- 주문 폼 시작--------------------- -->
-<form name="orderF" id="orderF" action="orderCart">
-	<table class="table table-striped">
-		<thead>
-		<tr class="info">
-			<th class="text-center">가게명</th>
-			<th class="text-center">음식명</th>
-			<th class="text-center">옵션명</th>
-			<th class="text-center">수량</th>
-			<th class="text-center">금액</th>
-			<th class="text-center">삭제</th>
-		</tr>
-		</thead>
-		<tbody>
-		<c:if test="${orderList eq null or empty orderList}">
-			<tr>
-				<td colspan="6"><b>담긴 상품이 없습니다.</b></td>
-			</tr>
-		</c:if>
-		<c:if test="${orderList eq null or empty orderList}">
-		<!-- ---------반복문-------------- -->
-		<c:forEach var="cp" items="${orderList}" varStatus="st">
-		<tr>
-			<td>
-			<label>
-				<input type="checkbox" name="opnum" id="pnum${st.count}" value="${cp.pnum}">${cp.pnum}
-			</label>
-			</td>
-			<td>
-				${cp.pname}<br>
-				<a href="../prodDetail.do?pnum=${cp.pnum}" target="_blank">
-				<img src="../images/${cp.pimage1}" class="img-thumbnail"
-				alt="${cp.pname }"
-				style="width:140px"></a>
-			</td>
-			<td>
-			<input type="number" name="oqty" id="oqty${st.count}" value="${cp.oqty}" min="1" max="50" size="3"> 개
-			<button type="button" class="btn btn-info" onclick="cartEdit('${cp.cartNum}','${st.count}')">수정</button>
-			</td>
-			<td>
-				<fmt:formatNumber value="${cp.saleprice}" pattern="###,###"/>원
-				<br>
-				<span class="badge badge-danger">${cp.point}</span>POINT
-			</td>
-			<td style="font-weight:bold">
-				<fmt:formatNumber value="${cp.totalPrice}" pattern="###,###"/>원
-				<br>
-				<span class="badge badge-danger">${cp.totalPoint}</span>POINT
-			</td>
-			<td>
-			<a class="btn btn-outline-danger" onclick="cartDel('${cp.cartNum}','${cp.pnum}')">삭제</a>
-			</td>
-		</tr>
-		</c:forEach>
-		</c:if>
-		<!-- ---------------------------- -->
-		
-		<tr>
-			<td colspan="3">
-				<h5>장바구니 총      액: 
-				<span class="text-danger">
-				<fmt:formatNumber value="${cartTotalPrice}" pattern="###,###"/>
-				</span> 원</h5>
-				<h5>장바구니 총포인트: 
-				<span class="text-success">
-				<fmt:formatNumber value="${cartTotalPoint}" pattern="###,###"/>
-				</span> point</h5>
-			</td>
-			<td colspan="3">
-				<button type="button" onclick="goOrder()" class="btn btn-warning">주문하기</button>
-				<button type="button" class="btn btn-success" 
-				onclick="location.href='../index.do'">계속쇼핑</button>
-			</td>
-		</tr>
-		
-		</tbody>
-	</table>
-</form>
-<!-- 주문폼 end--------------------- -->
-
-<!-- 삭제 폼 시작-------------------- -->
-<form name="df" action="cartDel">
-	<input type="hidden" name="cartNum">
-</form>
-
-<!-- 수정 폼 시작-------------------- -->
-<form name="ef" action="cartEdit">
-	<input type="hidden" name="cartNum">
-	<input type="hidden" name="oqty">
-</form>
-<!-- ---------------------------- -->
-<script>
-	/*체크박스에 체크한 상품(상품번호,주문수량)을 가지고 주문 폼 페이지로 이동*/
-	function goOrder(){
-		//1. 장바구니에 담긴 상품이 없는 경우
-		var chk=$('input[name="opnum"]');
-		if(chk.length==0){
-			return;
+<%@include file="../includes/footer.jsp" %>
+<script type="text/javascript">
+	$(document).ready(function() {
+		if(${deleteOk}==1){
+			alert("선택하신 메뉴가 장바구니에서 삭제되었습니다.");
+		} else if(${deleteOk}==0) {
+			alert("해당 메뉴 삭제 실패!");
 		}
-		//2. 담긴 상품이 있다면 체크박스 갯수 만큼 반복문 돌면서 체크한 상품과 체크 안된 상품을 구분하여, 체크 안된 상품의 주문 수량은 서버쪽에 적송되지 않도록 disabled 처리한다.
-		var cnt =0;
-		$.each(chk,function(i,ch){
-			if($(ch).is(":checked")){
-				cnt++;
-				$('#oqty'+(i+1)).prop('disabled',false);//비활성화
-			}else{
-				//체크 안된 상품의 주문 수량 비활성화 
-				$('#oqty'+(i+1)).prop('disabled',true);//비활성화
-			}
-		});
-
-		if(cnt==0){
-			alert('주문할 상품을 체크하세요');
-			$('input[name="oqty"]').prop('disabled',false);//비활성화
-			return;	
-		}
-		orderF.submit();
-	}
-
-	
-	function cartEdit(num,count){
-		//alert(num+"/"+count);
-		ef.cartNum.value=num;
-		var qty=$('#oqty'+count).val(); //수정된 수량값을 알 수 있음
-		//alert(qty);
-		ef.oqty.value=qty;
-		ef.method='post';
-		ef.submit();
-	}//----------------------------
-
-	function cartDel(num, pnum){
-		//alert(num);
-		var yn=confirm(pnum+'번 상품을 정말 삭제하시겠습니까?');
-		if(yn){
-		df.cartNum.value=num;
-		df.method='post';
-		df.submit();
-		}
-	}
+	});
 </script>
+<script type="text/javascript">
+	$(document).ready(function() {
+	    	registerchk();
+	    $("#btn_register").click(function(){
+	    	console.log("hi");
+	    	submit();
+	    })
+    });
+</script>
+<script type="text/javascript">
+function handleRadioButtonChange() {
+    var selectedValue = document.querySelector('input[name="reservCheck"]:checked').value;
 
-</c:forEach>
+    // 여기에서 선택된 값에 따라 필요한 항목을 disabled 상태로 설정하거나 해제합니다.
+    if (selectedValue === "1") {
+        document.getElementById("reservNum").disabled = true;
+    } else {
+        document.getElementById("reservNum").disabled = false;
+    }
+}
 
+function orderCntPlus(num){
+	
+	var orderCnt = Number(document.getElementsByName("orderMenuList["+num+"].orderCnt")[0].value);
+	
+	document.getElementsByName("orderMenuList["+num+"].orderCnt")[0].value = orderCnt + 1;
+	registerchk();
+}
 
+function orderCntMinus(num){
+	
+	var orderCnt = Number(document.getElementsByName("orderMenuList["+num+"].orderCnt")[0].value); 
+	
+	if(orderCnt <= 1) {
+		document.getElementsByName("orderMenuList["+num+"].orderCnt")[0].value = orderCnt;
+	} else {
+		document.getElementsByName("orderMenuList["+num+"].orderCnt")[0].value = orderCnt - 1;
+	}
+	registerchk();
+}
+
+function registerchk(){
+	
+	var totalPrice = 0;
+	
+    for(var i = 0; i < ${cart.size()}; i++) {
+  	  
+	      var optChkIndex = $("input[name='optionCnt"+i+"']:radio:checked").val();
+	      console.log(optChkIndex);
+	      
+	      
+	      //var x = Number(document.getElementsByName('orderMenuList['+i+'].optPrice')[optChkIndex].value);
+	      var optionPrice = Number(document.getElementById('optPrice'+i+optChkIndex).value);
+	      console.log(optionPrice);
+	      //var y = Number(document.getElementsByName('optPrice'i)[optChkIndex].value);
+	      //console.log(y);
+	      
+	      //var totalPrice = Number(document.getElementsByName('optPrice'+i)[optChkIndex].value) + Number(document.getElementsByName("price")[i].value);
+	      var menu_option_totalPrice = Number(optionPrice) + Number(document.getElementsByName("price")[i].value);
+	      console.log(menu_option_totalPrice);
+	      
+	      var menuToTalPrice = menu_option_totalPrice * Number(document.getElementsByName("orderMenuList["+i+"].orderCnt")[0].value);
+	      console.log(menuToTalPrice);
+	      
+	      //document.getElementsByName("orderMenuList["+i+"].menuOptionNum")[0].value = document.getElementsByName("optionNum"+i)[optChkIndex].value;
+	      document.getElementsByName("orderMenuList["+i+"].orderMenuPrice")[0].value = menuToTalPrice;
+	      document.getElementsByName("orderMenuList["+i+"].menuOptionNum")[0].value = document.getElementById('optionNum'+i+optChkIndex).value;
+	      
+	      var a = document.getElementsByName("orderMenuList["+i+"].orderMenuPrice")[0].value;
+	      var b = document.getElementsByName("orderMenuList["+i+"].menuOptionNum")[0].value;
+	      
+	      console.log(a);
+	      console.log(b);
+	      totalPrice += Number(document.getElementsByName("orderMenuList["+i+"].orderMenuPrice")[0].value);
+    }
+    console.log(totalPrice);
+    document.getElementsByName("totalPrice")[0].value = totalPrice;
+    //$("#totalPrice").val(Number(totalPrice));
+    console.log(document.getElementsByName("totalPrice")[0].value)
+    /*
+    var optChk = Number($("input[name=optionCnt]:radio:checked").val());
+    document.getElementById('menuOptionNum'+i).value = document.getElementById('optionNum'+i).value;
+    $("#menuOptionNum").val(document.getElementById('optionNum'+optChk).value);
+    
+    var totalPrice = Number(document.getElementById('optPrice'+optChk).value) + Number(document.getElementById('price'+optChk).value);
+    document.getElementById('orderMenuPrice'+optChk).value = document.getElementById('optionNum'+optChk).value;
+    $("#orderMenuPrice").val(totalPrice);
+    */
+}
+
+function submit() {
+	
+	if ($("input[name=payMethod]:radio:checked").length < 1) {
+        alert("결제 방식을 선택해주세요!");
+        $("#payMethod").focus();
+        
+    } else if ($("input[name=reservCheck]:radio:checked").length < 1) {
+    	alert("예약 방식을 선택해주세요!");
+        $("#reservCheck").focus();
+    } else {
+	    document.getElementById('frm').submit();
+    }
+}
+
+function storeUserGet_move() {
+  		
+ 	document.getElementById('frm0').action="/store/storeUserGet";
+	document.getElementById('frm0').submit();
+}
+
+function cartMenu_delete(num) {
+  	if(confirm("해당 메뉴를 장바구니에서 삭제하시겠습니까?")) {
+  		
+  		$("#deleteIndex").val(num);
+  		document.getElementById('frm1').action="/order/cartMenuDelete";
+		document.getElementById('frm1').submit();
+  	}
+}
+</script>
 </body>
 </html>
