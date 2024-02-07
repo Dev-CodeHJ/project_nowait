@@ -1,6 +1,6 @@
-![원자재_디테일](https://github.com/Dev-CodeHJ/ezen_springboot_ERP/assets/103896076/47991666-7d74-4f3e-8fa8-b8a0b136d45a)# :blue_heart: ERP PROJECT
-<img alt="스크린샷 2024-02-04 오후 6 30 38" src="https://github.com/Dev-CodeHJ/ezen_springboot_ERP/assets/103896076/83ce5a62-b694-416b-afe5-3fc85a5e2dde">
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/72a7ff84-df20-44a2-b205-7f43f3531850/1e9212ba-6255-40f3-afc2-e3136b8e2244/Untitled.png)
+![홈화면](https://github.com/Dev-CodeHJ/project_nowait/assets/103896076/ffdbadb9-c085-4f40-a22c-0be0ca910a20)# :blue_heart: Nowait PROJECT
+<img alt="스크린샷 2024-02-04 오후 6 30 38" src="https://github.com/Dev-CodeHJ/project_nowait/assets/103896076/41afd39f-2fce-45ea-8fdb-3a36069e982f">
+
 > ### 식당 예약 및 포장 프로그램 사이트입니다.
 
 
