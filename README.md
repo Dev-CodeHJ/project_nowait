@@ -1,4 +1,7 @@
-![홈화면](https://github.com/Dev-CodeHJ/project_nowait/assets/103896076/ffdbadb9-c085-4f40-a22c-0be0ca910a20)# :blue_heart: Nowait PROJECT
+![홈화면](https://github.com/Dev-CodeHJ/project_nowait/assets/103896076/ffdbadb9-c085-4f40-a22c-0be0ca910a20)
+
+# :blue_heart: Nowait PROJECT
+
 <img alt="스크린샷 2024-02-04 오후 6 30 38" src="https://github.com/Dev-CodeHJ/project_nowait/assets/103896076/41afd39f-2fce-45ea-8fdb-3a36069e982f">
 
 > ### 식당 예약 및 포장 프로그램 사이트입니다.
@@ -6,19 +9,18 @@
 
 
 # :blue_heart: 개발 기간
-:point_right: 2023.12.27 - 2024.01.31 (4주)
+:point_right: 2023.11.24 - 2023.12.15 (3주)
 
 
 
 #  :blue_heart: 개발 인원 및 파트
-:point_right: Full-stack : 4명
+:point_right: Full-stack : 3명
 
 |개발자                 |파트                |
-|---------------------|-------------------|
-|강현규                 |발주 계획 프로세스|
-|박주영                 |구매 발주 프로세스|
-|권나현                 |자재 입고 프로세스|
-|김휘진                 |자재 출고 프로세스|
+|-----------------------|--------------------|
+|김휘진                 |사장, 가게, 메뉴, 주문|
+|손창무                 |리뷰, 댓글           |
+|지연정                 |손님                 |
 
 
 
