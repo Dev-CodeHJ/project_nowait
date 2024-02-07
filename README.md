@@ -32,7 +32,7 @@
 
 
 # :blue_heart: 서비스 소개
-:point_right: 사용자가 회사에서 자재 및 상품을 구매 및 생산하는 것을 편리하게 관리할 수 있는 ERP 프로그램 입니다.
+:point_right: 식당에 가기 전에 미리 포장이나 방문 예약을 해놓을 수 있게 만든 프로그램입니다.
 
 
 
@@ -43,65 +43,72 @@
 
 
 # :blue_heart: ERD
-<img width="887" alt="image" src="https://github.com/Dev-CodeHJ/ezen_springboot_ERP/assets/103896076/864cf402-50e6-41c2-b4b2-dc34fff0ec65">
-
-
-
-# :blue_heart: FLOW CHART
-<img width="464" alt="image" src="https://github.com/Dev-CodeHJ/ezen_springboot_ERP/assets/103896076/a6200072-bf8a-4cf1-b3e4-83bf03792213">
-
+<img width="887" alt="image" src="https://github.com/Dev-CodeHJ/project_nowait/assets/103896076/4e6e1a6f-c4f6-4d21-8b5b-e6c7cfdbed90">
 
 
 # :blue_heart: 구현 기능
-### :open_file_folder: 생산계획서
 
-![생산계획서리스트_미출고](https://github.com/Dev-CodeHJ/ezen_springboot_ERP/assets/103896076/bada9410-3e53-4832-a5ca-28287f239b28)
-#### :point_right: 모든 생산계획서 세부 디테일, 등록, 삭제, 검색 등 기능 구현 및 생산계획서 상태 별로 구분 기능 구현
+### :open_file_folder: 사장님(회원가입, 수정, 삭제)
+
+![사장님_회원가입](https://github.com/Dev-CodeHJ/project_nowait/assets/103896076/45acb59b-64cb-4b4b-8571-6154b9946746)
+#### :point_right: 회원가입 시 아이디 중복검사를 통해 아이디의 unique속성 유지
 #
 
-![생산계획서리스트_검색](https://github.com/Dev-CodeHJ/ezen_springboot_ERP/assets/103896076/860c0511-c0ee-40e8-977c-55caccb24473)
-#### :point_right: 생산계획서 리스트에서 자전거 이름, 마감일로 검색 기능 구현
-#
-
-![생산계획서_등록](https://github.com/Dev-CodeHJ/ezen_springboot_ERP/assets/103896076/b175b06a-9b18-4993-9865-c771733bdc99)
-#### :point_right: 새로운 생산계획서를 등록할 수 있는 기능 구현
-#
-
-![생산계획서_상품검색](https://github.com/Dev-CodeHJ/ezen_springboot_ERP/assets/103896076/542291a2-2f58-4338-a4b8-44fa80a130bb)
-#### :point_right: 생산계획서 등록-상품선택 기능 구현
-#
-
-![생산계획서_원재자선택](https://github.com/Dev-CodeHJ/ezen_springboot_ERP/assets/103896076/8f8e4c14-4f65-4b1a-8984-07139dcd4516)
-#### :point_right: 생산계획서 등록-상품 선택 시 원자재 선택 기능 구현
-#
-
-![생산계획서_등록전](https://github.com/Dev-CodeHJ/ezen_springboot_ERP/assets/103896076/b0702b17-d201-40d4-8657-fb74e361109b)
-#### :point_right: 모든 항목 선택 시 등록 가능-등록 시 생산계획서 리스트에 새로운 생산계획서 생성
-#
-
-![생산계획서_디테일](https://github.com/Dev-CodeHJ/ezen_springboot_ERP/assets/103896076/072ff2e0-39d6-4724-a957-546b182137ab)
-#### :point_right: 생산계획서 클릭 시 해당 생산계획서의 세부항목 확인 및 불출&불출취소 기능 구현
-#### :point_right: 불출&불출취소 시 해당 원자재의 재고 즉각 반영
-#### :point_right: 한 생산계획서의 모든 항복 불출 처리 시 출고처리 버튼 생성 - 버튼 클릭 시 출고완료처리 기능 구현
-#
-
-![생산계획서_출고완료](https://github.com/Dev-CodeHJ/ezen_springboot_ERP/assets/103896076/7c9f2d12-0033-4332-8d30-0e28abaa99a4)
-#### :point_right: 출고완료된 생산계획서만 확인가능한 페이지 - 세부항목 확인 및 출고취소 기능 구현
+![사장님_메인화면](https://github.com/Dev-CodeHJ/project_nowait/assets/103896076/53562f7a-63e7-4d5c-8d09-acb47428b7a3)
+#### :point_right: 사장님 로그인 성공 시 해당 사장님이 등록한 가게 리스트 화면
 
 ***
 
-### :open_file_folder: 원자재
-![원자재_리스트](https://github.com/Dev-CodeHJ/ezen_springboot_ERP/assets/103896076/20b88c83-5d73-40de-91ec-2c52c9a75c70)
-#### :point_right: 원자재 총 재고 리스트(제조업체or단가에 따라 달라지는 원자재들을 원자재명으로 묶은 리스트 화면)
+### :open_file_folder: 가게
+![가게_신규등록](https://github.com/Dev-CodeHJ/project_nowait/assets/103896076/9790c1f3-ac89-4866-8d8b-d6b84ef7bb52)
+#### :point_right: 가게 신규 등록 시 등록하려는 사업자 등록번호는 이미 존재해서는 안된다.
 #
 
-![원자재_디테일](https://github.com/Dev-CodeHJ/ezen_springboot_ERP/assets/103896076/f6f33a0e-5b8f-4e86-a74a-d1f86de4ec1a)
-#### :point_right: 해당 원자재 이름 클릭 시 같은 이름의 모든 자재 목록을 확인 가능
+![가게_기존불러오기](https://github.com/Dev-CodeHJ/project_nowait/assets/103896076/d2162500-c20f-4521-af72-52d728f07b08)
+#### :point_right: 이미 등록되어있는 사업자 등록번호와 비밀코드를 통해 등록되어있는 가게정보를 내 가게정보로 불러온다.
+#
+
+![가게불러오기후_메인](https://github.com/Dev-CodeHJ/project_nowait/assets/103896076/b8faa27e-b7bd-4367-876a-3859c8187794)
+#### :point_right: 가게 등록 및 불러오기 완료 시 내 가게 목록에 가게가 늘어난 것을 확인할 수 있다.
+#
+
+![가게_정보](https://github.com/Dev-CodeHJ/project_nowait/assets/103896076/c884efe0-6716-486a-bee4-05dcd8f09ff9)
+#### :point_right: 가게 클릭 시 가게 상세정보 및 가게 관리메뉴 이용 가능
 
 *** 
 
-### :open_file_folder: 생산품
-![상품_리스트](https://github.com/Dev-CodeHJ/ezen_springboot_ERP/assets/103896076/bbeb2b88-73f8-450b-a3f4-c512bc2cce1d)
-#### :point_right: 생산계획서를 통해 생산한 생산품 재고 리스트
+### :open_file_folder: 메뉴
+
+![메뉴_메뉴관리](https://github.com/Dev-CodeHJ/project_nowait/assets/103896076/37bdc9fc-cb15-456d-b2c0-4a66ad8f9c5b)
+#### :point_right: 해당 가게의 모든 메뉴 목록화면
+#### :point_right: 각 메뉴 별 수정, 삭제, 메뉴 상세정보, 카테고리 관리 등의 기능 구현
+#
+
+![메뉴_카테고리관리](https://github.com/Dev-CodeHJ/project_nowait/assets/103896076/9fd7508e-0f35-4a51-be32-f57cdbb8dca1)
+#### :point_right: 카테고리 등록, 수정, 삭제가 가능한 화면
+#
+
+![메뉴_상세정보](https://github.com/Dev-CodeHJ/project_nowait/assets/103896076/5da9adc0-c2de-4764-bb9c-fb7a46ff22df)
+#### :point_right: 해당 메뉴의 상세정보 화면
+#### :point_right: 해당 메뉴에 대한 수정, 삭제 및 메뉴 옵션 등록, 수정, 삭제 기능 구현
+
+***
+
+### :open_file_folder: 주문
+
+![주문_메인](https://github.com/Dev-CodeHJ/project_nowait/assets/103896076/3de0f935-d2b7-436a-9de3-bfe51f626c80)
+#### :point_right: 손님 로그인 시 모든 가게 목록 출력
+#
+
+![주문_가게](https://github.com/Dev-CodeHJ/project_nowait/assets/103896076/cb2c1292-421f-4657-b42b-cfde858c6642)
+#### :point_right: 주문을 원하는 가게 클릭 시 메뉴를 담을 수 있는 화면으로 이동
+#### :point_right: 원하는 메뉴 장바구니 담기 클릭 시 수량, 메뉴옵션 선택 가능
+#### :point_right: 품절메뉴는 선택 불가능
+#
+
+![주문_장바구니](https://github.com/Dev-CodeHJ/project_nowait/assets/103896076/91514ed2-d322-4e41-84d8-e939f456f8a7)
+#### :point_right: 장바구니 화면 이동 시 장바구니에 있는 모든 메뉴 출력
+#### :point_right: 장바구니에 담긴 메뉴 옵션, 수량 수정 가능
+#### :point_right: 결제 전 결제 방식, 에약 방식 선택(홀 방문 선택 시 방문 인원 입력)
 
 ***
